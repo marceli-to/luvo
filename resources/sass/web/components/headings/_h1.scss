@@ -7,21 +7,21 @@
 h1 {
   color: $color-black;
   @include font-size($fs-md);
-  @include font-pressura-bold();
+  @include font-regular();
   margin-bottom: $space-md;
 
   em {
     color: $color-grey;
-    @include font-pressura-light();
+    @include font-regular();
   }
 
   &.is-news {
     color: $color-black;
-    @include font-pressura-light();
+    @include font-regular();
     em {
       color: $color-black;
       @include font-size($fs-xl);
-      @include font-pressura-bold();
+      @include font-regular();
     }
 
     @include bp-sm() {

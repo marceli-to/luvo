@@ -7,7 +7,7 @@
 label {
   display: block;
 	@include font-size($fs-xs);
-  @include font-pressura-light();
+  @include font-regular();
   margin-bottom: $space-xxs;
 	padding-left: 1px;
 }

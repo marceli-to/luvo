@@ -11,7 +11,7 @@ class UploadController extends Controller
 {
   protected $upload_path;
 
-  protected $prefix = 'sajo-';
+  protected $prefix = 'luksundvogt-';
   
   /**
    * Constructor

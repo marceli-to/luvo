@@ -26,7 +26,7 @@ nav.tabs {
 
   a {
     border-bottom: 2px solid $color-light-grey;
-    color: $color-grey;
+    color: $color-medium-grey;
     display: block;
     @include font-regular();
     @include font-size($fs-sm);

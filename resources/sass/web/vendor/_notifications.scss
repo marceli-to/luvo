@@ -29,7 +29,7 @@
   color: $color-white;
   border-radius: 0;
   @include font-size($fs-xs);
-  @include font-pressura-light();
+  @include font-regular();
   margin: 0;
   padding: $space-sm;
   text-align: center;

@@ -25,33 +25,13 @@
     </header>
     <ul>
       <li>
-        <router-link :to="{name: 'posts'}">
-          <span>Posts</span>
+        <router-link :to="{name: 'home'}">
+          <span>Home</span>
         </router-link>
       </li>
       <li>
-        <router-link :to="{name: 'illustrations'}">
-          <span>Illustrationen</span>
-        </router-link>
-      </li>
-      <li>
-        <router-link :to="{name: 'products'}">
-          <span>Shop</span>
-        </router-link>
-      </li>
-      <li>
-        <router-link :to="{name: 'news'}">
-          <span>News</span>
-        </router-link>
-      </li>
-      <li>
-        <router-link :to="{name: 'about'}">
-          <span>About</span>
-        </router-link>
-      </li>
-      <li>
-        <router-link :to="{name: 'orders'}">
-          <span>Bestellungen</span>
+        <router-link :to="{name: 'teams'}">
+          <span>Teams</span>
         </router-link>
       </li>
     </ul>

@@ -9,7 +9,7 @@
   background-color: $color-black;
   color: $color-white !important;
   @include font-size($fs-sm);
-  @include font-walsheim-black();
+  @include font-regular();
   letter-spacing: 0.02em;
   padding: 10px;
   text-decoration: none;

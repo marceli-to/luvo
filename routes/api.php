@@ -26,20 +26,36 @@ Route::middleware('auth:sanctum')->group(function() {
   Route::post('file/upload','Api\UploadController@file');
   Route::get('files/get','Api\UploadController@getFiles');
 
-  // News
-  Route::get('news', 'Api\NewsController@get');
-  Route::get('news/{news}', 'Api\NewsController@find');
-  Route::post('news', 'Api\NewsController@store');
-  Route::put('news/{news}', 'Api\NewsController@update');
-  Route::post('news/order', 'Api\NewsController@order');
-  Route::get('news/state/{news}', 'Api\NewsController@toggle');
-  Route::delete('news/{news}', 'Api\NewsController@destroy');
+  // Home
+  Route::get('home', 'Api\HomeController@get');
+  Route::get('home/{home}', 'Api\HomeController@find');
+  Route::post('home', 'Api\HomeController@store');
+  Route::put('home/{home}', 'Api\HomeController@update');
+  Route::post('home/order', 'Api\HomeController@order');
+  Route::get('home/state/{home}', 'Api\HomeController@toggle');
+  Route::delete('home/{home}', 'Api\HomeController@destroy');
 
-  // News images
-  Route::get('news/image/state/{newsImage}', 'Api\NewsImageController@toggle');
-  Route::put('news/image/{newsImage}', 'Api\NewsImageController@coords');
-  Route::post('news/image', 'Api\NewsImageController@store');
-  Route::post('news/image/order', 'Api\NewsImageController@order');
-  Route::delete('news/image/{newsImage}', 'Api\NewsImageController@destroy');
+  // Home images
+  Route::get('home/image/state/{homeImage}', 'Api\HomeImageController@toggle');
+  Route::put('home/image/{homeImage}', 'Api\HomeImageController@coords');
+  Route::post('home/image', 'Api\HomeImageController@store');
+  Route::post('home/image/order', 'Api\HomeImageController@order');
+  Route::delete('home/image/{homeImage}', 'Api\HomeImageController@destroy');
  
+  // Team
+  Route::get('team', 'Api\TeamController@get');
+  Route::get('team/{team}', 'Api\TeamController@find');
+  Route::post('team', 'Api\TeamController@store');
+  Route::put('team/{team}', 'Api\TeamController@update');
+  Route::post('home/order', 'Api\TeamController@order');
+  Route::get('team/state/{team}', 'Api\TeamController@toggle');
+  Route::delete('team/{team}', 'Api\TeamController@destroy');
+
+  // Team images
+  Route::get('team/image/state/{teamImage}', 'Api\TeamImageController@toggle');
+  Route::put('team/image/{teamImage}', 'Api\TeamImageController@coords');
+  Route::post('team/image', 'Api\TeamImageController@store');
+  Route::post('team/image/order', 'Api\TeamImageController@order');
+  Route::delete('team/image/{teamImage}', 'Api\TeamImageController@destroy');
+
 });

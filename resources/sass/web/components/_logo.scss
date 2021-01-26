@@ -4,44 +4,6 @@
  * -----------------------------------------------------------------------------
  */
 
-.logo-wrapper {
-  @include bp-sm() {
-    width: 50%;
-  }
-  @include bp-lg() {
-    width: 60%;
-  }
-}
-
 .logo {
-  color: $color-black;
-  display: inline-block;
-  text-decoration: none;
   
-  svg {
-    display: block;
-    height: auto;
-    margin-bottom: 0;
-    width: 60px;
-
-    @include bp-md() {
-      width: 85px;
-    }
-  }
-
-  .logo__name {
-    display: flex;
-    min-width: 225px;
-    span {
-      @include font-size($fs-md);
-
-      &:nth-child(1) {
-        @extend %separator;
-        @include font-walsheim-black;
-      }
-      &:nth-child(2) {
-        @include font-walsheim-light;
-      }
-    }
-  }
 }

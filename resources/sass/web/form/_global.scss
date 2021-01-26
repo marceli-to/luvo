@@ -19,7 +19,7 @@ button {
 	border-bottom: 1px solid $color-black;
 	color: $color-black;
 	display: block;
-	@include font-pressura-light();
+	@include font-regular();
 	@include font-size($fs-sm);
 	padding: 8px 4px;
 	position: relative;

@@ -6,10 +6,13 @@
  */
 
 .brand {
+  display: block;
+  max-width: 480px;
+  width: 100%;
+
   img {
     display: block;
     height: auto;
-    max-width: 120px;
     width: 100%;
   }
 }

@@ -1,10 +1,13 @@
 <?php
 namespace App\Providers;
-use App\Observers\NewsObserver;
-use App\Observers\NewsImageObserver;
-use App\Models\News;
-use App\Models\NewsImage;
-
+use App\Observers\HomeObserver;
+use App\Observers\HomeImageObserver;
+use App\Models\Home;
+use App\Models\HomeImage;
+use App\Observers\TeamObserver;
+use App\Observers\TeamImageObserver;
+use App\Models\Team;
+use App\Models\TeamImage;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,8 +29,9 @@ class AppServiceProvider extends ServiceProvider
    */
   public function boot()
   {
-    // setLocale(LC_ALL, 'de_CH.UTF-8');
-    News::observe(NewsObserver::class);
-    NewsImage::observe(NewsImageObserver::class);
+    Home::observe(HomeObserver::class);
+    HomeImage::observe(HomeImageObserver::class);
+    Team::observe(TeamObserver::class);
+    TeamImage::observe(TeamImage::class);
   }
 }

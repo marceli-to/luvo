@@ -73,7 +73,7 @@ nav.site-menu {
       @extend %separator-menu;
 
       a {
-        @include font-walsheim-black();
+        @include font-regular();
       }
     }
 
@@ -87,7 +87,7 @@ nav.site-menu {
 
   a {
     color: $color-black;
-    @include font-walsheim-light();
+    @include font-regular();
     @include font-size($fs-menu-md);
     text-transform: lowercase;
     transition: color .1s ease-in;
@@ -110,7 +110,7 @@ nav.site-menu {
       }
 
       a.is-active {
-        @include font-walsheim-black();
+        @include font-regular();
       }
     }
   }

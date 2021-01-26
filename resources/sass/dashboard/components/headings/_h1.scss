@@ -5,9 +5,8 @@
  */
 
 h1 {
-  color: $color-medium-grey;
+  color: $color-dark;
   @include font-regular();
-  @include font-size($fs-sm);
-  @include letter-spacing();
+  @include font-size($fs-lg);
   @include responsive-prop('margin-bottom', $space-sm);
 }

@@ -1,124 +1,60 @@
 import ErrorForbidden from '@/views/errors/Forbidden.vue';
 import ErrorNotFound from '@/views/errors/NotFound.vue';
 
+// Dashboard
+import DashboardIndex from '@/views/dashboard/Index.vue';
+
 // Home
-import Home from '@/views/home/Index.vue';
+import HomeIndex from '@/views/home/Index.vue';
+import HomeCreate from '@/views/home/Create.vue';
+import HomeEdit from '@/views/home/Edit.vue';
 
-// Illustrations
-import IllustrationIndex from '@/views/illustration/Index.vue';
-import IllustrationCreate from '@/views/illustration/Create.vue';
-import IllustrationEdit from '@/views/illustration/Edit.vue';
-
-// Shop - Products
-import ProductIndex from '@/views/product/Index.vue';
-import ProductCreate from '@/views/product/Create.vue';
-import ProductEdit from '@/views/product/Edit.vue';
-
-// News
-import NewsIndex from '@/views/news/Index.vue';
-import NewsCreate from '@/views/news/Create.vue';
-import NewsEdit from '@/views/news/Edit.vue';
-
-// Posts
-import PostIndex from '@/views/post/Index.vue';
-
-// About
-import AboutIndex from '@/views/about/Index.vue';
-import AboutCreate from '@/views/about/Create.vue';
-import AboutEdit from '@/views/about/Edit.vue';
-
-// Order
-import OrderIndex from '@/views/order/Index.vue';
+// Teams
+import TeamIndex from '@/views/team/Index.vue';
+import TeamCreate from '@/views/team/Create.vue';
+import TeamEdit from '@/views/team/Edit.vue';
 
 const routes = [
+
+  // Dashboard
+  {
+    name: 'dashboard',
+    path: '/administration',
+    component: DashboardIndex,
+  },
 
   // Home
   {
     name: 'home',
-    path: '/administration',
-    component: Home,
-  },
-  
-  // Illustrations
-  {
-    name: 'illustrations',
-    path: '/administration/illustrations',
-    component: IllustrationIndex,
+    path: '/administration/home',
+    component: HomeIndex,
   },
   {
-    name: 'illustration-create',
-    path: '/administration/illustration/create',
-    component: IllustrationCreate,
+    name: 'home-create',
+    path: '/administration/home/create',
+    component: HomeCreate,
   },
   {
-    name: 'illustration-edit',
-    path: '/administration/illustration/edit/:id',
-    component: IllustrationEdit,
+    name: 'home-edit',
+    path: '/administration/home/edit/:id',
+    component: HomeEdit,
   },
 
-  // Shop - Products
+  // Teams
   {
-    name: 'products',
-    path: '/administration/products',
-    component: ProductIndex,
+    name: 'teams',
+    path: '/administration/teams',
+    component: TeamIndex,
   },
   {
-    name: 'product-create',
-    path: '/administration/product/create',
-    component: ProductCreate,
+    name: 'team-create',
+    path: '/administration/team/create',
+    component: TeamCreate,
   },
   {
-    name: 'product-edit',
-    path: '/administration/product/edit/:id',
-    component: ProductEdit,
-  },
-
-  // News
-  {
-    name: 'news',
-    path: '/administration/news',
-    component: NewsIndex,
-  },
-  {
-    name: 'news-create',
-    path: '/administration/news/create',
-    component: NewsCreate,
-  },
-  {
-    name: 'news-edit',
-    path: '/administration/news/edit/:id',
-    component: NewsEdit,
-  },
-
-  // Posts
-  {
-    name: 'posts',
-    path: '/administration/posts',
-    component: PostIndex,
-  },
-
-  // About
-  {
-    name: 'about',
-    path: '/administration/about',
-    component: AboutIndex,
-  },
-  {
-    name: 'about-create',
-    path: '/administration/about/create',
-    component: AboutCreate,
-  },
-  {
-    name: 'about-edit',
-    path: '/administration/about/edit/:id',
-    component: AboutEdit,
-  },
-
-  // Orders
-  {
-    name: 'orders',
-    path: '/administration/orders',
-    component: OrderIndex,
+    name: 'team-edit',
+    path: '/administration/team/edit/:id',
+    component: TeamEdit,
   },
 
   // Authorization

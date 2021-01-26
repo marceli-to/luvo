@@ -53,7 +53,7 @@
   }
 
   h2 {
-    @include font-pressura-light();
+    @include font-regular();
   }
 
   em, h2 {
@@ -87,7 +87,7 @@
     }
     
     h2 {
-      @include font-pressura-bold();
+      @include font-regular();
       @include font-size($fs-cards-lg);
     }
   }
@@ -139,7 +139,7 @@
       position: relative;
       
       em {
-        @include font-pressura-bold();
+        @include font-regular();
       }
     }
   }

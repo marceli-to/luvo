@@ -7,7 +7,7 @@
 nav.page {
 
   background-color: $color-white;
-  border-left: 2px solid $color-light;
+  border-left: 2px solid $color-light-grey;
   height: 100%;
   right: 0;
   position: fixed;
@@ -50,7 +50,7 @@ nav.page {
   }
 
   ul {
-    border-top: 2px solid $color-light;
+    border-top: 2px solid $color-light-grey;
     width: 100%;
   }
 
@@ -60,7 +60,7 @@ nav.page {
     a {
       align-items: center;
       color: $color-dark;
-      border-bottom: 2px solid $color-light;
+      border-bottom: 2px solid $color-light-grey;
       display: flex;
       @include letter-spacing();
       @include font-size($fs-sm);

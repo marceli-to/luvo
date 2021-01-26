@@ -6,7 +6,7 @@
  */
 
 .alert {
-  @include font-pressura-light();
+  @include font-regular();
   @include font-size($fs-sm);
   margin-bottom: $space-md;
   margin-top: $space-md;
@@ -27,7 +27,7 @@
   }
 
   ul {
-    @include font-pressura-light();
+    @include font-regular();
     margin-top: $space-sm;
     margin-bottom: 0;
   }
@@ -36,7 +36,7 @@
 .alert-warning {
   border: 2px solid $color-black;
   color: $color-black;
-  @include font-pressura-light();
+  @include font-regular();
   margin-bottom: $space-lg;
   margin-top: $space-lg;
   padding: $space-xs;

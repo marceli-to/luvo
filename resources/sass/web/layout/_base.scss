@@ -19,7 +19,7 @@ html {
 body {
 	color: $color-black;
 	@include font-smoothing();
-	@include font-pressura-light();
+	@include font-regular();
 	@include font-size($fs-md);
 	position: relative;
 }
