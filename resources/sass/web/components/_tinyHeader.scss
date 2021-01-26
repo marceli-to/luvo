@@ -1,0 +1,44 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/tinyHeader
+ * -----------------------------------------------------------------------------
+ */
+
+.has-tiny-header {
+
+  header.site-header {
+    @include bp-sm() {
+      background-color: rgba(255, 255, 255, .98);
+      left: 0;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 301;
+
+      > div {
+        height: 50px;
+      }
+    }
+  }
+
+  main.site {
+    @include bp-sm() {
+      padding-top: 150px;
+    }
+  }
+
+  .logo {
+    
+    @include bp-sm() {
+
+      svg {
+        width: 60px;
+      }
+
+      .logo__name {
+        display: none;
+      }
+    }
+  }
+
+}

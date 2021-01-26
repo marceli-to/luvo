@@ -1,0 +1,16 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: component/loader
+ * -----------------------------------------------------------------------------
+ *
+ */
+
+.is-loaded {
+  opacity: 1;
+  transition: opacity .12s ease-out;
+}
+
+.is-loading {
+  opacity: 0;
+  transition: opacity .12s ease-out;
+}

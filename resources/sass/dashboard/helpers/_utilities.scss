@@ -1,0 +1,30 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/utilities
+ * -----------------------------------------------------------------------------
+ */
+
+// Alignments
+.align-center { text-align: center; }
+.align-justify { text-align: justify; }
+.align-left { text-align: left; }
+.align-right { text-align: right; }
+
+.sa-xxs { @include responsive-prop('margin-bottom', $space-xxs); }
+.sa-xs  { @include responsive-prop('margin-bottom', $space-xs); }
+.sa-sm  { @include responsive-prop('margin-bottom', $space-sm); }
+.sa-md  { @include responsive-prop('margin-bottom', $space-md); }
+.sa-lg  { @include responsive-prop('margin-bottom', $space-lg); }
+.sa-xl  { @include responsive-prop('margin-bottom', $space-xl); }
+
+.sb-xxs { @include responsive-prop('margin-top', $space-xxs); }
+.sb-xs  { @include responsive-prop('margin-top', $space-xs); }
+.sb-sm  { @include responsive-prop('margin-top', $space-sm); }
+.sb-md  { @include responsive-prop('margin-top', $space-md); }
+.sb-lg  { @include responsive-prop('margin-top', $space-lg); }
+.sb-xl  { @include responsive-prop('margin-top', $space-xl); }
+
+.color-success { color: $color-success; }
+.color-info { color: $color-info; }
+.color-warning { color: $color-warning; }
+.color-danger { color: $color-danger; }

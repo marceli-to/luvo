@@ -1,0 +1,117 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: layout/menu/site
+ * -----------------------------------------------------------------------------
+ */
+
+.site-menu-wrapper {
+  width: 40%;
+  @include bp-sm() {
+    width: 50%;
+  }
+  @include bp-lg() {
+    width: 40%;
+  }
+}
+
+nav.site-menu {
+  background-color: $color-white;
+  height: 100vh;
+  left: 0;
+  opacity: 0;
+  padding: $space-sm;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  transition: opacity 0s ease-out;
+  width: 100%;
+  z-index: -1;
+
+  &.is-visible {
+    opacity: 1;
+    pointer-events: all;
+    transition: opacity .12s ease-out;
+    z-index: 501;
+  }
+
+  @include bp-sm() {
+    background-color: transparent;
+    display: block;
+    height: auto;
+    opacity: 1 !important;
+    padding: 0;
+    pointer-events: all;
+    position: relative;
+    width: auto;
+    z-index: 501;
+  }
+  
+  ul {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: inherit;
+    
+    @include bp-sm() {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      margin-top: 30px;
+    }
+  }
+
+  li {
+    @extend %separator-menu-thin;
+    padding: $space-xs 0;
+
+    @include bp-sm() {
+      padding: 0;
+    }
+
+    &.is-active {
+      @extend %separator-menu;
+
+      a {
+        @include font-walsheim-black();
+      }
+    }
+
+    &:last-of-type,
+    &.is-last {
+      &:after {
+        display: none;
+      }
+    }
+  }
+
+  a {
+    color: $color-black;
+    @include font-walsheim-light();
+    @include font-size($fs-menu-md);
+    text-transform: lowercase;
+    transition: color .1s ease-in;
+
+    &:hover {
+      color: $color-grey;
+    }
+  }
+
+  .language {
+    display: flex;
+    margin-left: $space-lg;
+
+    li {
+      @extend %separator-menu-lang;
+      &:last-of-type {
+        &:after {
+          display: none;
+        }
+      }
+
+      a.is-active {
+        @include font-walsheim-black();
+      }
+    }
+  }
+}

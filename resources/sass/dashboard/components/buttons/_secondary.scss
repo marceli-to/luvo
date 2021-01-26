@@ -1,0 +1,14 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/buttons/secondary
+ * -----------------------------------------------------------------------------
+ */
+
+.btn-secondary {
+  @extend %btn-primary;
+  background-color: darken($color-grey, 10);
+  color: $color-dark;
+	&:hover {
+		background-color: $color-grey;
+	}
+}

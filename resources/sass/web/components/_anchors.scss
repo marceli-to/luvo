@@ -1,0 +1,16 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: component/anchors
+ * -----------------------------------------------------------------------------
+ *
+ */
+
+%anchor,
+.anchor {
+  text-decoration: none;
+  transition: color .1s ease-out;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}

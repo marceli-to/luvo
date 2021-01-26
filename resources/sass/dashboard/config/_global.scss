@@ -1,0 +1,85 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: config/global
+ * -----------------------------------------------------------------------------
+ *
+ * Global settings and variables
+ *
+ */
+
+ 
+/* Box shadows
+ * -------------------- */
+
+$box-shadow: 0 4px 6px rgba(100, 100, 100, 0.3);
+$box-shadow-xs: 0 1px 1px rgba(100, 100, 100, 0.3);
+$box-shadow-sm: 0 2px 3px rgba(100, 100, 100, 0.3);
+$box-shadow-lg: 0 6px 9px rgba(100, 100, 100, 0.8);
+
+
+/* Default easing
+ * -------------------- */
+
+$easing: cubic-bezier(0.980, 0.310, 0.940, 0.840);
+
+
+/* Urls
+ * -------------------- */
+ 
+$url-images: '../img/';
+$url-icons:  '../img/icons/';
+
+
+/* Breakpoints
+ * -------------------- */
+
+$bp-sm:  768px;
+$bp-md: 1024px;
+$bp-lg: 1280px;
+
+$breakpoints: (
+  sm: $bp-sm,
+  md: $bp-md,
+  lg: $bp-lg,
+);
+
+/* Global element dimensions
+ * ---------------------- */
+
+// Page layout
+$page-max-width:      640px;
+$page-max-width-sm:   728px;
+$page-max-width-md:   860px;
+$page-max-width-lg:   1100px;
+
+$page-max-width: (
+  null:  $page-max-width,
+  sm:    $page-max-width-sm,
+  md:    $page-max-width-md,
+  lg:    $page-max-width-lg
+);
+
+// Header
+$header-height:     60px;
+$header-height-sm:  60px;
+$header-height-md:  80px;
+$header-height-lg:  80px;
+
+$header-heights: (
+  null:  $header-height,
+  sm:    $header-height-sm,
+  md:    $header-height-md,
+  lg:    $header-height-lg
+);
+
+$footer-height:     60px;
+$footer-height:     60px;
+$footer-height-md:  80px;
+$footer-height-lg:  80px;
+
+$footer-heights: (
+  null:  $footer-height,
+  sm:    $footer-height,
+  md:    $footer-height-md,
+  lg:    $footer-height-lg
+);

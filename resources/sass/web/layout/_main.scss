@@ -1,0 +1,26 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: layout/main
+ * -----------------------------------------------------------------------------
+ */
+
+main.site {
+  padding: $space-md 0;
+
+  @include bp-md() {
+    padding: $space-lg 0;
+  }
+
+  > section {
+    @extend %inner-block;
+  }
+
+  a {
+    color: $color-black;
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}

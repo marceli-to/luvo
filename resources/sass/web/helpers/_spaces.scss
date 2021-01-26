@@ -1,0 +1,20 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/spaces
+ * -----------------------------------------------------------------------------
+ *
+ * Helpers for vertical spacing
+ *
+ */
+
+// After
+%sa-none, .sa-none { margin-bottom: 0 !important; }
+%sa-sm, .sa-sm { margin-bottom: $space-sm; }
+%sa-md, .sa-md { margin-bottom: $space-md; }
+%sa-lg, .sa-lg { margin-bottom: $space-lg; }
+
+// Before
+%sb-none, .sb-none { margin-top: 0 !important; }
+%sb-sm, .sb-sm { margin-top: $space-sm; }
+%sb-md, .sb-md { margin-top: $space-md; }
+%sb-lg, .sb-lg { margin-top: $space-lg; }

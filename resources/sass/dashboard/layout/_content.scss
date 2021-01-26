@@ -1,0 +1,25 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: layout/content
+ * -----------------------------------------------------------------------------
+ */
+
+.content {
+  @include bp-lg() {
+    max-width: calc(100% - 200px);
+  }
+
+  &.content--wide {
+    max-width: none !important;
+  }
+
+  a {
+    color: $color-dark-grey;
+    text-decoration: none;
+    transition: color .1s ease-out;
+
+    &:hover {
+      color: $color-black;
+    }
+  }
+}

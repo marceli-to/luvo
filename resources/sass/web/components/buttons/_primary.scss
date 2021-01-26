@@ -1,0 +1,26 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/buttons/primary
+ * -----------------------------------------------------------------------------
+ */
+
+.btn-primary {
+  @extend %btn;
+  background-color: $color-black;
+  color: $color-white !important;
+  @include font-size($fs-sm);
+  @include font-walsheim-black();
+  letter-spacing: 0.02em;
+  padding: 10px;
+  text-decoration: none;
+  transition: all .08s ease-in;
+
+
+  @include bp-md() {
+    padding: 10px 15px;
+  }
+
+  &:hover {
+    background-color: $color-dark;
+  }
+}

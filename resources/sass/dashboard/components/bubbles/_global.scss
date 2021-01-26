@@ -1,0 +1,66 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/bubbles/global
+ * -----------------------------------------------------------------------------
+ */
+
+%bubble,
+.bubble {
+  background-color: transparent;
+  border-radius: 2px;
+  border: none;
+  color: $color-white;
+  display: inline-block !important;
+  @include font-regular();
+  @include font-size($fs-xs);
+  line-height: 1 !important;
+  padding: 6px 8px 6px 8px;
+  position: relative;
+  width: auto;
+
+  &.is-info {
+    background-color: $color-info;
+  }
+
+  &.is-restriction {
+    background-color: $color-light-grey;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    color: $color-dark;
+    text-transform: uppercase;
+    top: -1px;
+  }
+
+  strong {
+    @include font-regular();
+    font-weight: 700;
+  }
+}
+
+.bubble-danger {
+  @extend %bubble;
+  background-color: $color-danger;
+  margin-left: 12px;
+  opacity: 1 !important;
+}
+
+.bubble-info {
+  @extend %bubble;
+  background-color: $color-info;
+  margin-left: 12px;
+  opacity: 1 !important;
+}
+
+.bubble-warning {
+  @extend %bubble;
+  background-color: $color-yellow;
+  margin-left: 10px;
+  opacity: 1 !important;
+}
+
+.bubble-ok {
+  @extend %bubble;
+  background-color: $color-green;
+  margin-left: 10px;
+  opacity: 1 !important;
+}

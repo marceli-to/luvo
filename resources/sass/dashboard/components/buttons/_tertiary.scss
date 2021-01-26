@@ -1,0 +1,14 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/buttons/tertiary
+ * -----------------------------------------------------------------------------
+ */
+
+ .btn-tertiary {
+  @extend %btn-primary;
+  background-color: $color-dark;
+  color: $color-white;
+	&:hover {
+		background-color: lighten($color-dark, 20);
+	}
+}

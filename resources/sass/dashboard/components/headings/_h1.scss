@@ -1,0 +1,13 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/headings/h1
+ * -----------------------------------------------------------------------------
+ */
+
+h1 {
+  color: $color-medium-grey;
+  @include font-regular();
+  @include font-size($fs-sm);
+  @include letter-spacing();
+  @include responsive-prop('margin-bottom', $space-sm);
+}

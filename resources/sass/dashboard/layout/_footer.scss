@@ -1,0 +1,101 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: layout/footer
+ * -----------------------------------------------------------------------------
+ */
+
+footer.page-footer {
+  background-color: $color-white;
+  box-shadow: $box-shadow-lg;
+  bottom: 0;
+  left: 0;
+  @include responsive-prop('height', $footer-heights);
+  position: fixed;
+  transform: translateY(0);
+  width: 100%;
+  z-index: 90;
+  transition: transform .16s ease-out;
+
+  &.is-hidden {
+    transform: translateY(100%);
+    transition: transform .16s ease-out;
+  }
+
+  > div {
+    @extend %page-block;
+    @extend %v-center;
+    @include responsive-prop('height', $footer-heights);
+  }
+    
+  a:not(.btn-preview) {
+    color: $color-dark;
+    @include responsive-prop('margin-left', $space-md);
+    text-decoration: underline;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  .filter {
+    align-items: center;
+    display: flex;
+    justify-content: flex-start;
+
+    .btn-filter {
+      margin-right: 15px;
+    }
+  }
+
+  .search-wrapper {
+    position: relative;
+    width: 100%;
+
+    .icon-delete {
+      @include background-default();
+      background-image: url($url-icons +'x-circle.svg');
+      background-size: 24px auto;
+      background-position: center center;
+      height: 46px;
+      right: 0;
+      position: absolute;
+      top: 0;
+      width: 46px;
+      z-index: 10;
+    }
+  }
+
+  input[type=text].search {
+    border: 2px solid $color-light-grey;
+  }
+}
+
+footer.module-footer {
+  background-color: $color-white;
+  border-top: 2px solid $color-light;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  width: 100%;
+  z-index: 101;
+
+  > div {
+    @extend %page-block;
+    align-items: center;
+    display: flex;
+    line-height: 1;
+    justify-content: flex-start;
+    @include responsive-prop('height', $footer-heights);
+
+    button, a {
+      margin-right: 20px;
+
+      &:last-of-type {
+        margin-right: 0 !important;
+      }
+    }
+
+    button + a {
+      margin-left: 20px;
+    }
+  }
+}

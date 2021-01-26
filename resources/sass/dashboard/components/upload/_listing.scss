@@ -1,0 +1,149 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/upload/listing
+ * -----------------------------------------------------------------------------
+ */
+
+.upload-listing {
+  background-color: transparent;
+  
+  > div {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-gap: 15px;
+  }
+
+  > .is-list {
+    border-top: 2px solid $color-light-grey;
+    display: block;
+  }
+
+  &.is-files {
+
+    > div {
+      display: block;
+    }
+  }
+
+  .upload-item {
+    border: 2px solid $color-light-grey;
+    border-radius: 2px;
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+    min-height: 100px;
+    width: 100%;
+
+    img {
+      background-color: $color-white;
+      display: block;
+      height: auto;
+      padding: 10px;
+      opacity: 1;
+      width: 100%;
+      transition: opacity .12s ease-out;
+    }
+
+    &.is-disabled {
+      img {
+        opacity: 0.6;
+      }
+    }
+
+    .upload__preview {
+      display: block;
+      position: relative;
+      text-decoration: none;
+      width: 100%;
+
+      .image-label {
+        background-color: rgba(0,0,0,.5);
+        bottom: 10px;
+        color: $color-white;
+        @include font-regular();
+        @include font-size($fs-xs);
+        @include letter-spacing();
+        left: 10px;
+        padding: 5px;
+        position: absolute;
+        text-transform: uppercase;
+        width: calc(100% - 20px);
+      }
+    }
+
+    .upload__actions {
+      background-color: $color-white;
+      line-height: 1;
+      padding: 5px 10px 10px 10px;
+      text-align: right;
+    
+      > div {
+        display: flex;
+        justify-content: flex-start;
+      }
+
+      > div > div {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        width: 28px;
+      }
+    }
+  }
+
+  .upload-item-file {
+    align-items: center;
+    border-top: 2px solid $color-light-grey;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    position: relative;
+    width: 100%;
+
+    &:last-child {
+      border-bottom: 2px solid $color-light-grey;
+    }
+
+    input[type=text] {
+      max-width: 300px;
+    }
+
+    .upload__actions {
+      background-color: $color-white;
+      line-height: 1;
+      text-align: right;
+    
+      > div {
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      > div > div {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        width: 28px;
+      }
+    }
+  }
+
+  .upload-item-row {
+    align-items: center;
+    border-bottom: 2px solid $color-light-grey;
+    cursor: move;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0 5px 2px;
+
+    figure {
+
+      img {
+        background-color: $color-light-grey;
+        display: inline-block;
+        display: block;
+        height: auto;
+        width: 50px;
+      }
+    }
+  }
+}

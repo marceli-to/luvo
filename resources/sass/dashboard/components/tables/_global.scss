@@ -1,0 +1,42 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/tables/global
+ * -----------------------------------------------------------------------------
+ */
+
+table {
+  width: 100%;
+
+  thead {
+    border-bottom: 2px solid $color-light;
+  }
+
+  th {
+    @include font-bold();
+    @include font-size($fs-sm);
+    padding: 6px 6px 6px 0;
+    text-align: left;
+    vertical-align: middle;
+  }
+}
+
+table.listing {
+  border-top: 2px solid $color-light;
+  width: 100%;
+}
+
+table.listing tr {
+  border-bottom: 2px solid $color-light;
+  transition: background-color .03s ease-in;
+}
+
+table.listing tr:hover {
+  background-color: $color-light;
+}
+
+table.listing td {
+  @include responsive-prop('padding-bottom', $space-xs);
+  @include responsive-prop('padding-top', $space-xs);
+  padding-right: 6px;
+  vertical-align: middle;
+}

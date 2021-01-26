@@ -1,0 +1,35 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: layout/header
+ * -----------------------------------------------------------------------------
+ */
+
+header.page-header {
+  background-color: $color-white;
+  border-bottom: 2px solid $color-light;
+  position: relative;
+  width: 100%;
+
+  > div {
+    @extend %page-block;
+    align-items: center;
+    display: flex;
+    line-height: 1;
+    justify-content: space-between;
+    @include responsive-prop('height', $header-heights);
+  }
+}
+
+header.content-header {
+  display: flex;
+  justify-content: space-between;
+  @include responsive-prop('margin-bottom', $space-sm);
+
+  &.is-narrow {
+    @include responsive-prop('margin-bottom', $space-xs);
+  }
+
+  h1 {
+    margin-bottom: 0;
+  }
+}

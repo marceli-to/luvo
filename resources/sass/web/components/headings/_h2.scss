@@ -1,0 +1,12 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: component/headings/h2
+ * -----------------------------------------------------------------------------
+ */
+
+h2 {
+  color: $color-black;
+  @include font-size($fs-md);
+  @include font-pressura-bold();
+  margin-bottom: $space-md;
+}

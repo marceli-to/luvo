@@ -1,0 +1,28 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: layout/base
+ * -----------------------------------------------------------------------------
+ */
+
+html {
+	overflow-y: scroll;
+
+	&.has-menu {
+		overflow-y: hidden;
+		@include bp-md() {
+			overflow-y: scroll !important;
+		}
+	}
+}
+
+
+body {
+	color: $color-black;
+	@include font-smoothing();
+	@include font-pressura-light();
+	@include font-size($fs-md);
+	position: relative;
+}
+
+// Scrollbars
+@include scrollbar(8px, #999);

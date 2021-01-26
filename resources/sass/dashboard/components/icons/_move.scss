@@ -1,0 +1,13 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/icons/move
+ * -----------------------------------------------------------------------------
+ */
+
+.icon-move {
+  @extend %icon-dashboard;
+  background-image: url($url-icons + 'move.svg');
+  display: block;
+  height: 18px;
+  width: 18px;
+}

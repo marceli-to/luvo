@@ -1,0 +1,81 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: form/global
+ * -----------------------------------------------------------------------------
+ */
+
+ input[type=text],
+ input[type=email],
+ input[type=number],
+ input[type=password],
+ input[type=date],
+ input[type=time],
+ textarea,
+ select,
+ button {
+	 background-color: transparent;
+	 border-radius: 2px;
+	 border: 2px solid $color-light-grey;
+	 color: $color-dark;
+	 display: block;
+	 @include font-regular();
+	 padding: 10px;
+	 position: relative;
+	 outline: none !important;
+	 width: 100%;
+	 z-index: 1;
+	 -webkit-appearance: none;
+	 -webkit-tap-highlight-color: $color-white;
+ }
+ 
+ input[type=text],
+ input[type=email],
+ input[type=number],
+ input[type=password],
+ input[type=date],
+ input[type=time],
+ textarea,
+ select {
+	 transition: background-color .12s ease-out;
+
+	 &:focus {
+		background-color: $color-light;
+	 }
+
+	 &:disabled {
+		background-color: $color-light;
+		color: $color-grey;
+	 }
+ }
+ 
+ textarea {
+	 height: 150px;
+ }
+ 
+ select {
+	 appearance: none;
+	 -moz-appearance: none;
+	 -webkit-appearance: none;
+ }
+ 
+ select::-ms-expand {
+	 display: none;
+ }
+ 
+ input[type=submit],
+ button {
+	 background-color: $color-dark;
+	 border-radius: 2px;
+	 color: $color-white;
+	 display: inline-block;
+	 @include font-size($fs-sm);
+	 @include font-bold();
+	 padding: 15px 35px;
+	 width: auto;
+	 @include transition(background-color .1s ease-out, border-color .1s ease-out);
+ 
+	 &:hover {
+		 background-color: $color-dark-grey;
+		 border-color: $color-dark-grey;
+	 }
+ }

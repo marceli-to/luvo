@@ -1,0 +1,40 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/typo/webfonts
+ * -----------------------------------------------------------------------------
+ *
+ * Typography - Webfonts
+ *
+ */
+
+@font-face {
+  font-family: 'GTPressuraBold';
+  src: url('fonts/GT-Pressura-Bold.eot');
+  src: url('fonts/GT-Pressura-Bold.eot?#iefix') format('embedded-opentype'), url('fonts/GT-Pressura-Bold.woff2') format('woff2'), url('fonts/GT-Pressura-Bold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'GTPressuraLight';
+  src: url('fonts/GT-Pressura-Light.eot');
+  src: url('fonts/GT-Pressura-Light.eot?#iefix') format('embedded-opentype'), url('fonts/GT-Pressura-Light.woff2') format('woff2'), url('fonts/GT-Pressura-Light.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'GTWalsheimBlack';
+  src: url('fonts/GT-Walsheim-Black.eot');
+  src: url('fonts/GT-Walsheim-Black.eot?#iefix') format('embedded-opentype'), url('fonts/GT-Walsheim-Black.woff2') format('woff2'), url('fonts/GT-Walsheim-Black.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'GTWalsheimLight';
+  src: url('fonts/GT-Walsheim-Light.eot');
+  src: url('fonts/GT-Walsheim-Light.eot?#iefix') format('embedded-opentype'), url('fonts/GT-Walsheim-Light.woff2') format('woff2'), url('fonts/GT-Walsheim-Light.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}

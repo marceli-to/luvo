@@ -1,0 +1,40 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/images
+ * -----------------------------------------------------------------------------
+ *
+ * Various classes for image elements
+ */
+
+%is-responsive,
+.is-responsive {
+  display: block;
+  height: auto;
+  max-width: 100%;
+  width: auto;
+}
+
+.responsive-image {
+  @extend %is-responsive;
+
+  figcaption {
+    padding: $space-xxs 0;
+  }
+
+  &.is-illu {
+    border-bottom: 2px solid $color-black;
+    padding-bottom: $space-md;
+    @include bp-md() {
+      margin-top: $space-lg;
+    }
+    figcaption {
+      border-top: 1px solid $color-black;
+      margin-top: $space-md;
+      @include font-size($fs-sm);
+      @include bp-md() {
+        margin-top: $space-lg;
+        padding: $space-md 0 0 0;
+      }
+    }
+  }
+}

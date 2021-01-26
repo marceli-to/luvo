@@ -1,0 +1,38 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: form/label
+ * -----------------------------------------------------------------------------
+ */
+ 
+label {
+  color: $color-medium-grey;
+  display: block;
+  @include font-size($fs-sm);
+  @include letter-spacing();
+  margin-bottom: 10px;
+
+  &.form-control {
+    align-items: center;
+    background-color: transparent;
+    border: 2px solid $color-light-grey;
+    border-radius: 2px;
+    color: $color-grey;
+    cursor: pointer;
+    display: flex !important;
+    margin-bottom: 0;
+    margin-right: 16px;
+    justify-content: center;
+    padding: 8px 0;
+    text-align: center;
+    text-transform: none;
+    width: 54px;
+    @include transition(background-color .1s ease-out);
+  }
+}
+
+input[type="radio"]:checked + .form-control,
+input[type="checkbox"]:checked + .form-control {
+  background-color: $color-black;
+  border: 2px solid $color-black;
+  color: $color-white;
+}

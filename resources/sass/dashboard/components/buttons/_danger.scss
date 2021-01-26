@@ -1,0 +1,14 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/buttons/danger
+ * -----------------------------------------------------------------------------
+ */
+
+.btn-danger {
+  @extend %btn-primary;
+	background-color: $color-danger;
+
+	&:hover {
+		background-color: lighten($color-danger, 10);
+	}
+}

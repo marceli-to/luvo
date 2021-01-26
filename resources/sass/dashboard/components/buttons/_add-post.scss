@@ -1,0 +1,17 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/buttons/add-post
+ * -----------------------------------------------------------------------------
+ */
+
+.btn-add-post {
+
+  span {
+    display: block;
+    padding-left: 10px !important;
+  }
+
+  &:hover {
+    color: $color-dark-grey;
+  }
+}

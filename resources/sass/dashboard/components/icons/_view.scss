@@ -1,0 +1,17 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/icons/view
+ * -----------------------------------------------------------------------------
+ */
+
+.icon-view {
+  @extend %icon-ib;
+  @extend %icon-bg;
+  background-image: url($url-icons + 'layout.svg');
+  background-size: 18px auto;
+  background-position: center left;
+  color: $color-dark;
+  margin-bottom: 20px;
+  padding-left: 24px;
+  text-decoration: none !important;
+}

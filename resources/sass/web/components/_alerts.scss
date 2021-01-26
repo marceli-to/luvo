@@ -1,0 +1,51 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: component/alerts
+ * -----------------------------------------------------------------------------
+ *
+ */
+
+.alert {
+  @include font-pressura-light();
+  @include font-size($fs-sm);
+  margin-bottom: $space-md;
+  margin-top: $space-md;
+  max-width: 480px;
+
+  &.alert--danger {
+    //border-color: $color-danger;
+    color: $color-danger;
+  }
+
+  &.alert--success {
+    border-color: $color-success;
+    color: $color-success;
+  }
+
+  &.alert--narrow {
+    margin-bottom: 0;
+  }
+
+  ul {
+    @include font-pressura-light();
+    margin-top: $space-sm;
+    margin-bottom: 0;
+  }
+}
+
+.alert-warning {
+  border: 2px solid $color-black;
+  color: $color-black;
+  @include font-pressura-light();
+  margin-bottom: $space-lg;
+  margin-top: $space-lg;
+  padding: $space-xs;
+
+  a {
+    color: $color-black;
+    text-decoration: underline;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}

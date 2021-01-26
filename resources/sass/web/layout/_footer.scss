@@ -1,0 +1,37 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: layout/footer
+ * -----------------------------------------------------------------------------
+ */
+
+footer.site-footer {
+  background-color: $color-white;
+  border-top: 2px solid $color-black;
+  @include font-size($fs-xs);
+  @include font-walsheim-light();
+  padding-bottom: $space-sm;
+  padding-top: $space-xxs;
+  text-align: center;
+  width: 100%;
+  z-index: 101;
+
+  > div {
+    @extend %inner-block;
+  }
+
+  svg {
+    display: block;
+    height: auto;
+    margin: $space-xxs auto 0 auto;
+    width: 18px;
+  }
+
+  @include bp-md() {
+    padding-bottom: $space-xl;
+    padding-top: $space-xs;
+
+    svg {
+      margin-top: $space-xs;
+    }
+  }
+}

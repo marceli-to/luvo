@@ -1,0 +1,35 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/animations
+ * -----------------------------------------------------------------------------
+ */
+
+@keyframes loadingBtn {
+  from {
+    width: 0; 
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes loadingIcon {
+  0% {
+    opacity: 1;
+    transform: rotate(0);
+  }
+  50% {
+    opacity: .3;
+    transform: rotate(180deg);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(360deg);
+  }
+}
+
+.fade-out {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s .16s, opacity .16s linear;  
+}

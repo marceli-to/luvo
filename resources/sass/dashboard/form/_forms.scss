@@ -1,0 +1,21 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: form/forms
+ * -----------------------------------------------------------------------------
+ */
+
+form {
+	a {
+		color: $color-dark;
+		display: inline-block;
+		text-decoration: underline;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+}
+
+form.half-width {
+	max-width: 900px;
+}

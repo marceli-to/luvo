@@ -1,0 +1,19 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: component/blocks
+ * -----------------------------------------------------------------------------
+ *
+ */
+
+%inner-block,
+.inner-block {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: $site-max-width;
+  padding: 0 $space-sm;
+  position: relative;
+
+  @include bp-md() {
+    padding: 0 $space-lg;
+  }
+}

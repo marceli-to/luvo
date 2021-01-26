@@ -1,0 +1,70 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/icons/cart
+ * -----------------------------------------------------------------------------
+ */
+
+.icon-cart {
+  color: $color-black;
+  font-size: 18px;
+  position: absolute;
+  right: $space-xs;
+  top: 57px;
+  width: 36px;
+  z-index: 201;
+
+  @include bp-sm() {
+    left: 50%;
+    margin-left: -2px;
+    right: auto;
+    top: 24px;
+  }
+
+  @include bp-md() {
+    margin-left: -5px;
+    width: 39px;
+  }
+
+  @include bp-lg() {
+    left: 60%;
+    top: 36px;
+  }
+
+  svg {
+    display: block;
+    height: auto;
+    width: 29px;
+
+    @include bp-md() {
+      width: 39px;
+    }
+  }
+
+  em {
+    align-items: center;
+    background-color: $color-black;
+    color: $color-white;
+    border-radius: 50%;
+    display: flex;
+    font-size: 11px;
+    @include font-pressura-light();
+    line-height: 1;
+    justify-content: center;
+    height: 16px;
+    right: 20px;
+    position: absolute;
+    top: -6px;
+    width: 16px;
+
+    @include bp-sm() {
+      top: -12px;
+    }
+
+    @include bp-md() {
+      height: 20px;
+      font-size: 14px;
+      top: -16px;
+      width: 20px;
+    }
+  }
+}

@@ -1,0 +1,39 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: form/layout
+ * -----------------------------------------------------------------------------
+ */
+
+.form-row {
+	@include responsive-prop('margin-bottom', $space-md);
+	display: block;
+	position: relative;
+
+	&.is-last {
+		margin-bottom: 0 !important;
+	}
+
+	&.is-small {
+		max-width: 320px;
+	}
+}
+
+.form-row-grid {
+	@include responsive-prop('margin-bottom', $space-md);
+	position: relative;
+	@include bp-md() {
+		margin-bottom: 0 !important;
+	}
+}
+
+.form-radio {
+	display: flex;
+}
+
+.form-info {
+	@include font-size($fs-xs);
+	@include responsive-prop('padding-top', $space-xxs);
+	&.is-danger {
+		color: $color-danger;
+	}
+}

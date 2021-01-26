@@ -1,0 +1,25 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: form/validation
+ * -----------------------------------------------------------------------------
+ */
+
+.is-info,
+.is-required {
+  color: $color-grey;
+  @include font-regular();
+  @include font-size($fs-xs);
+  display: block;
+  margin-top: 5px;
+  position: absolute;
+  right: 0;
+  text-align: right;
+}
+
+.has-error {
+  color: $color-danger;
+  
+  label {
+    color: $color-danger;
+  }
+}

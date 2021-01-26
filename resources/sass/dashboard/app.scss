@@ -1,0 +1,98 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: dashboard
+ * -----------------------------------------------------------------------------
+ */
+
+
+// Settings
+@import 'config/colors';
+@import 'config/global';
+@import 'config/spaces';
+
+// Helpers 
+@import 'helpers/normalize';
+@import 'helpers/flexbox';
+@import 'helpers/functions';
+@import 'helpers/loader';
+@import 'helpers/mixins';
+@import 'helpers/utilities';
+
+// Typo
+@import 'typo/sizes'; 
+@import 'typo/webfonts';
+@import 'typo/mixins';
+@import 'typo/helpers'; 
+
+// Components
+@import 'components/animations';
+@import 'components/blocks';
+@import 'components/boxes/global';
+@import 'components/boxes/ratio';
+@import 'components/bubbles/global';
+@import 'components/buttons/global';
+@import 'components/buttons/primary';
+@import 'components/buttons/add-post';
+@import 'components/buttons/secondary';
+@import 'components/buttons/tertiary';
+@import 'components/buttons/danger';
+@import 'components/cards/global';
+@import 'components/headings/global';
+@import 'components/headings/h1';
+@import 'components/headings/h2';
+@import 'components/headings/h3';
+@import 'components/hr';
+@import 'components/icons/global';
+@import 'components/icons/feather';
+@import 'components/icons/close';
+@import 'components/icons/move';
+@import 'components/icons/view';
+@import 'components/listing/global';
+@import 'components/overlay/global';
+@import 'components/images';
+@import 'components/tables/global';
+@import 'components/pagination/global';
+@import 'components/upload/global';
+@import 'components/upload/listing';
+@import 'components/upload/overlay';
+
+// Forms
+@import 'form/global';
+@import 'form/input';
+@import 'form/forms';
+@import 'form/label';
+@import 'form/layout';
+@import 'form/placeholder';
+@import 'form/select';
+@import 'form/validation';
+
+// Navigation
+@import 'navigation/global';
+@import 'navigation/page';
+@import 'navigation/tabs';
+
+
+// Layout
+@import 'layout/base';
+@import 'layout/content';
+@import 'layout/footer';
+@import 'layout/main';
+@import 'layout/grid';
+@import 'layout/header';
+@import 'layout/sidebar';
+
+// Theme
+@import 'theme/brand';
+
+
+// Modules
+@import 'modules/global';
+@import 'modules/posts';
+
+// Vendor
+@import 'vendor/dropzone';
+@import 'vendor/dropzone-custom';
+@import 'vendor/notifications';
+@import 'vendor/draggable';
+@import 'vendor/cropper';
+@import 'vendor/vdp';

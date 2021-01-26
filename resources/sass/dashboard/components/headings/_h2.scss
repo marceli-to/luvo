@@ -1,0 +1,15 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/headings/h2
+ * -----------------------------------------------------------------------------
+ */
+
+h2 {
+  @include font-bold();
+  @include font-size($fs-sm);
+  @include responsive-prop('margin-bottom', $space-xs);
+
+  &.is-narrow {
+    @include responsive-prop('margin-bottom', $space-xxs);
+  }
+}

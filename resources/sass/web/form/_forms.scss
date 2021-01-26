@@ -1,0 +1,66 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: form/forms
+ * -----------------------------------------------------------------------------
+ */
+
+form.add-product {
+  align-items: center;
+  background-color: $color-white;
+  border-top: 1px solid $color-black;
+  border-bottom: 2px solid $color-black;
+  display: flex;
+  justify-content: space-between;
+  @include font-size($fs-sm);
+  margin-bottom: $space-xl;
+  max-width: 375px;
+  min-height: 60px;
+  left: 0;
+  padding: $space-sm 0;
+
+  @include bp-sm() {
+    margin-top: $space-xl;
+    padding: $space-sm 0;
+    position: relative;
+  }
+
+  > div {
+    align-items: center;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  input[type=number] {
+    border-bottom: 1px solid $color-black;
+    margin-right: $space-xs;
+  }
+}
+
+// Auth - login
+form.auth {
+  max-width: 480px;
+}
+
+// Auth - recover password
+form.auth--recover {
+  max-width: 480px;
+  .form-group {
+    label {
+      @include bp-xl() {
+        flex: 0 0 125px;
+      }
+    }
+  }
+}
+
+// Auth - reset password form
+form.auth--reset {
+  max-width: 480px;
+  .form-group {
+    label {
+      @include bp-xl() {
+        flex: 0 0 215px;
+      }
+    }
+  }
+}

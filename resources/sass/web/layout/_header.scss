@@ -1,0 +1,53 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: layout/header
+ * -----------------------------------------------------------------------------
+ */
+
+header.site-header {
+  border-bottom: 2px solid $color-black;
+  padding-bottom: $space-xxs;
+
+  > div {
+    @extend %inner-block;
+    align-items: flex-end;
+    height: 90px;
+    display: flex;
+  }
+
+  @include bp-md() {
+    padding-bottom: $space-xs;
+    > div {
+      height: 120px;
+    }
+  }
+
+  @include bp-lg() {
+    > div {
+      height: 160px;
+    }
+  }
+}
+
+header.page-header {
+  display: block;
+  margin-bottom: $space-md;
+
+  &.page-header--shop {
+    display: none;
+    &.is-mobile {
+      display: block;
+      @include bp-sm() {
+        display: none;
+      }
+    }
+
+    @include bp-sm() {
+      display: block;
+    }
+  }
+
+  h1, h2 {
+    margin-bottom: 0;
+  }
+}

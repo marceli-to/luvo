@@ -1,0 +1,97 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: layout/navigation/page
+ * -----------------------------------------------------------------------------
+ */
+
+nav.page {
+
+  background-color: $color-white;
+  border-left: 2px solid $color-light;
+  height: 100%;
+  right: 0;
+  position: fixed;
+  top: 0;
+  width: 360px;
+  z-index: 301;
+  transform: translateX(100%);
+  transition: transform .2s  ease-out;
+
+  &.is-visible {
+    transform: translateX(0);
+    transition: transform .2s  ease-out;
+
+    * {
+      opacity: 1;
+    }
+  }
+
+  * {
+    opacity: 1;
+    -webkit-transition: opacity .1s .3s ease-out;
+    transition: opacity .1s .3s ease-out;
+  }
+
+  header {
+    @extend %page-block;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    @include responsive-prop('height', $header-heights);
+
+    span {
+      color: $color-dark;
+      @include font-size($fs-xs);
+
+      .feather-icon {
+        margin-top: 5px;
+      }
+    }
+  }
+
+  ul {
+    border-top: 2px solid $color-light;
+    width: 100%;
+  }
+
+  li {
+    display: block;
+  
+    a {
+      align-items: center;
+      color: $color-dark;
+      border-bottom: 2px solid $color-light;
+      display: flex;
+      @include letter-spacing();
+      @include font-size($fs-sm);
+      @include responsive-prop('padding-bottom', $space-sm);
+      padding-left: 20px;
+      @include responsive-prop('padding-top', $space-sm);
+      width: 100%;
+      text-transform: uppercase;
+      transition: background-color .1s ease-out;
+
+      &.is-active,
+      &:hover {
+        background-color: $color-light;
+      }
+    }
+
+    .is-parent,
+    span {
+      padding-bottom: 0 !important;
+    }
+  }
+
+  ul ul {
+    @include responsive-prop('margin-left', $space-xs);
+
+    li {
+      a {
+        @include font-size($fs-sm);
+        padding-top: 5px !important;
+        padding-bottom: 5px !important;
+      }
+    }
+  }
+}

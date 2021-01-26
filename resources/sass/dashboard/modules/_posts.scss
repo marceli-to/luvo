@@ -1,0 +1,148 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: modules/posts
+ * -----------------------------------------------------------------------------
+ */
+
+.posts {
+  
+  > div {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    @include responsive-prop('grid-gap', $space-sm);
+  }
+
+  &.is-mini {
+    > div {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      @include responsive-prop('grid-gap', $space-xxs);
+
+      img {
+        display: block;
+        height: 40px;
+        margin-left: auto;
+        margin-right: auto;
+        width: auto;
+      }
+
+    }
+
+    .post__item-action {
+      display: none;
+    }
+  }
+
+  .post__item {
+    border: 2px dashed $color-light-grey;
+    background-color: $color-light;
+    padding: 5px;
+
+    &.is-draggable {
+      cursor: move;
+    }
+
+    figure {
+      position: relative;
+      
+      figcaption {
+        background-color: rgba(0,0,0,.6);
+        bottom: 36px;
+        color: $color-white;
+        display: none;
+        left: 0;
+        padding: 4px 6px;
+        position: absolute;
+        width: 100%;
+        z-index: 10;
+      }
+    }
+
+    img {
+      //@extend %is-responsive;
+      display: block;
+      height: 120px;
+      //max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      width: auto;
+    }
+  }
+
+  .post__item-action {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    height: 36px;
+    padding-top: 3px;
+    text-align: right;
+
+    .icons {
+      display: flex;
+      width: 60px;
+
+      > div {
+        @include responsive-prop('margin-right', $space-xxs);
+      }
+    }
+
+  }
+  
+}
+
+.post-selector {
+  @include responsive-prop('margin-bottom', $space-xs);
+
+  .post-selector-listing {
+    border-top: 2px solid $color-light;
+    @include responsive-prop('margin-bottom', $space-md);
+
+    > div {
+      border-bottom: 2px solid $color-light;
+      @include responsive-prop('padding-bottom', $space-xs);
+      @include responsive-prop('padding-bottom', $space-xs);
+      @include responsive-prop('padding-top', $space-xxs);
+    }
+
+    .post-selector-listing__items {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      @include responsive-prop('grid-gap', $space-xs);
+    }
+
+    figure {
+      display: block;
+      height: auto;
+      position: relative;
+      width: 100%;
+
+      figcaption {
+        background-color: rgba(0,0,0,.5);
+        bottom: 4px;
+        color: $color-white;
+        left: 4px;
+        padding: 2px 4px;
+        position: absolute;
+        width: calc(100% - 8px);
+
+      }
+
+      img {
+        @extend %is-responsive;
+        background-color: $color-light;
+        padding: 2px;
+        transition: background-color .06s ease-in;
+      }
+
+      a {
+        border: 2px solid $color-white;
+        display: block;
+        &:hover {
+          border: 2px solid $color-green;
+        }
+      }
+      
+
+    }
+  }
+}

@@ -1,0 +1,47 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: config/spaces
+ * -----------------------------------------------------------------------------
+ */
+
+$space-xxs: (
+  null:  5px,
+  sm:    5px,
+  md:    10px,
+  lg:    10px,
+);
+
+$space-xs: (
+  null:  10px,
+  sm:    10px,
+  md:    15px,
+  lg:    15px,
+);
+
+$space-sm: (
+  null:  15px,
+  sm:    15px,
+  md:    20px,
+  lg:    25px,
+);
+
+$space-md: (
+  null:  15px,
+  sm:    20px,
+  md:    30px,
+  lg:    35px,
+);
+
+$space-lg: (
+  null:  30px,
+  sm:    40px,
+  md:    50px,
+  lg:    60px,
+);
+
+$space-xl: (
+  null:  40px,
+  sm:    60px,
+  md:    80px,
+  lg:    100px,
+);

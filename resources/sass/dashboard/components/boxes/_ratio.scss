@@ -1,0 +1,144 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: component/boxes/ratio
+ * -----------------------------------------------------------------------------
+ */
+
+ .ratio-boxes {
+  position: relative;
+  width: calc(100% + 16px);
+
+  // grids
+  [class^='box-'] {
+    display: grid;
+  }
+
+  .box-1 {
+    grid-template-columns: 1fr
+  }
+
+  .box-1-1,
+  .box-2-1,
+  .box-1-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .box-1-2 {
+    grid-template-columns: 1fr 2fr;
+  }
+
+  .box-2-1 {
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .box-1-1-1 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  // box types
+  [class^='box__'] {
+    height: 0;
+    overflow: hidden;
+    background: white;
+    position: relative;
+
+    > div {
+      border: 2px dashed #999;
+    }
+
+    > div,
+    > div .box-wrapper,
+    > div figure {
+      background-color: $color-white;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width:calc(100% - 16px);
+      height: calc(100% - 16px);
+
+      img {
+        display: block;
+        height: 100%;
+        -o-object-fit: cover;
+        object-fit: cover;
+        width: 100%;        
+      }
+    }
+
+    > div .box-wrapper,
+    > div figure,
+    > div article {
+      height: 100%; 
+      width: 100%;
+    }
+
+    article {
+      background-color: #f9f9f9;
+      align-items: center;
+      display: flex;
+      padding: 10px 30px;
+
+      &.is-colored {
+        background-color: $color-yellow;
+      }
+    }
+
+    article,
+    figure {
+      .btn-trash {
+        margin: 0;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+      }
+    }
+
+    figure {
+      @include background-default();
+      background-size: cover;
+      background-position: center center;
+      padding: 0;
+      position: relative;
+
+      figcaption {
+        background-color: rgba(255,255,255,.6);
+        bottom: 0;
+        display: block;
+        left: 0;
+        padding: 10px;
+        position: absolute;
+        text-align: left;
+        width: 100%;
+      }
+    }
+
+    .box-buttons {
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%,-50%);
+    }
+  }
+
+  // ratios
+
+  .box__a {
+    padding-top: 140%;
+  }
+
+  .box__b {
+    padding-top: 70%;
+  }
+
+  .box__c {
+    padding-top: 70%;
+  }
+
+  .box__d {
+    padding-top: 70%;
+  }
+
+  .box__e {
+    padding-top: 46.25%;
+  }
+}

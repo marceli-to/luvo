@@ -1,0 +1,34 @@
+/**
+ * -----------------------------------------------------------------------------
+ * VueJs Datepicker https://github.com/charliekassel/vuejs-datepicker
+ *
+ * File: vendor/vdp
+ * -----------------------------------------------------------------------------
+ */
+
+.vdp-datepicker {
+
+  .vdp-datepicker__calendar {
+    border: 2px solid $color-light-grey;
+    border-radius: 2px;
+    margin-top: 2px;
+    width: 100%;
+
+    .cell  {
+      border: 2px solid transparent;
+    }
+
+    .cell:not(.blank):not(.disabled).day:hover, 
+    .cell:not(.blank):not(.disabled).month:hover,
+    .cell:not(.blank):not(.disabled).year:hover {
+      border: 2px solid $color-info;
+    }
+
+    .cell.selected,
+    .cell.selected:hover {
+      background-color: $color-info;
+      color: $color-white;
+    }
+  }
+}
+
