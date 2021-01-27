@@ -32,6 +32,6 @@ class AppServiceProvider extends ServiceProvider
     Home::observe(HomeObserver::class);
     HomeImage::observe(HomeImageObserver::class);
     Team::observe(TeamObserver::class);
-    TeamImage::observe(TeamImage::class);
+    TeamImage::observe(TeamImageObserver::class);
   }
 }
