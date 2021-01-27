@@ -24,8 +24,8 @@
         <div :class="[this.errors.category ? 'has-error' : '', 'form-row']">
           <label>Kategorie *</label>
           <div class="select-wrapper is-medium">
-            <select v-model="team.category" name="layout">
-              <option v-for="(category, index) in categories" :key="index" :value="index">{{ category }}</option>
+            <select v-model="team.category_id" name="layout">
+              <option v-for="(category, index) in teamCategories" :key="index" :value="category.id">{{ category.name }}</option>
             </select>
           </div>
         </div>  
@@ -156,10 +156,12 @@ export default {
           fr: null,
           en: null,
         },
-        category: 'luks',
+        category_id: 1,
         images: [],
         publish: 1,
       },
+
+      teamCategories: null,
 
       categories: {
         luks: 'Team Luks',
@@ -190,9 +192,24 @@ export default {
   created() {
     if (this.$props.type == "edit") {
       this.isFetched = false;
+
       let uri = `/api/team/${this.$route.params.id}`;
+      this.axios
+        .get(uri)
+        .then(response => {
+          this.team = response.data;
+          let uri = `/api/team/categories`;
+          this.axios.get(uri).then(response => {
+            this.teamCategories = response.data.data;
+            this.isFetched = true;
+          });
+      });
+    }
+    else {
+      this.isFetched = false;
+      let uri = `/api/team/categories`;
       this.axios.get(uri).then(response => {
-        this.team = response.data;
+        this.teamCategories = response.data.data;
         this.isFetched = true;
       });
     }
@@ -247,8 +264,7 @@ export default {
         coords_x: 0,
         coords_y: 0,
         orientation: upload.orientation,
-        preview: 0,
-        usage: 'desktop',
+        device: 'desktop',
         order: 0,
         publish: 1,
       }

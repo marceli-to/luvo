@@ -14,11 +14,16 @@ class Team extends Base
   ];
 
 	protected $fillable = [
-    'category',
 		'title',
-    'text',
+		'text',
+		'category_id',
 		'publish',
   ];
+
+	public function category()
+	{
+		return $this->hasOne('App\Models\TeamCategory', 'id', 'category_id');
+	}
 
 	public function images()
 	{

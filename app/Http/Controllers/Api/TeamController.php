@@ -22,7 +22,7 @@ class TeamController extends Controller
    */
   public function get()
   {
-    return new DataCollection($this->team->with('images')->get());
+    return new DataCollection($this->team->with('images', 'category')->get());
   }
 
   /**
@@ -57,7 +57,7 @@ class TeamController extends Controller
         'fr' => $request->input('text.fr'),
         'en' => $request->input('text.en'),
       ],
-      'category' => $request->input('category'),
+      'category_id' => $request->input('category_id'),
       'publish' => $request->input('publish'),
     ]);
 
@@ -85,7 +85,7 @@ class TeamController extends Controller
           'coords_x'     => $i['coords_x'] ? round($i['coords_x'], 12) : NULL,
           'coords_y'     => $i['coords_y'] ? round($i['coords_y'], 12) : NULL,
           'publish'      => $i['publish'] ? $i['publish'] : 0,
-          'usage'        => $i['usage'] ? $i['usage'] : NULL,
+          'device'        => $i['device'] ? $i['device'] : NULL,
           'orientation'  => $i['orientation'] ? $i['orientation'] : NULL,
         ]);
         $image->save();
@@ -117,7 +117,7 @@ class TeamController extends Controller
     $team->setTranslation('title', 'en', $request->input('title.en'));
     $team->setTranslation('text', 'en', $request->input('text.en'));
 
-    $team->category = $request->input('category');
+    $team->category_id = $request->input('category_id');
     $team->publish = $request->input('publish');
 
     // Save changes
@@ -147,7 +147,7 @@ class TeamController extends Controller
             'coords_x'     => $i['coords_x'] ? round($i['coords_x'], 12) : NULL,
             'coords_y'     => $i['coords_y'] ? round($i['coords_y'], 12) : NULL,
             'publish'      => $i['publish'] ? $i['publish'] : 0,
-            'usage'        => $i['usage'] ? $i['usage'] : NULL,
+            'device'        => $i['device'] ? $i['device'] : NULL,
             'orientation'  => $i['orientation'] ? $i['orientation'] : NULL,
           ]
         );

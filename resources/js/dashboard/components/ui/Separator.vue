@@ -4,9 +4,9 @@
 <style>
 .separator {
   color: #bbb;
-  font-size: 20px;
+  font-size: 14px;
   display: inline-block;
-  margin-left: 12px;
-  margin-right: 12px;
+  margin-left: 8px;
+  margin-right: 8px;
 }
 </style>

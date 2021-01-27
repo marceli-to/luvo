@@ -20,7 +20,7 @@ class TeamImage extends Model
     'coords_x',
     'coords_y',
     'orientation',
-    'usage',
+    'device',
     'publish',
     'order',
     'team_id',

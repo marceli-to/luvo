@@ -22,7 +22,7 @@ class CreateTeamImagesTable extends Migration
             $table->double('coords_x', 16, 12)->nullable();
             $table->double('coords_y', 16, 12)->nullable();
             $table->string('orientation', 10)->nullable();
-            $table->string('usage', 20);
+            $table->string('device', 20)->nullable();
             $table->tinyInteger('order')->default(-1);
             $table->tinyInteger('publish')->default(0);
             $table->unsignedBigInteger('team_id');

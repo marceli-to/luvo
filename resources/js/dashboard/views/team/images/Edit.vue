@@ -32,8 +32,8 @@
         >
           <a :href="getSource(image, 'cache')" target="_blank" class="upload__preview">
             <img :src="getSource(image, 'thumbnail')" height="300" width="300">
-            <span v-if="image.usage == 'desktop'" class="image-label">Desktop</span>
-            <span v-if="image.usage == 'mobile'" class="image-label">Mobile</span>
+            <span v-if="image.device == 'desktop'" class="image-label">Desktop</span>
+            <span v-if="image.device == 'mobile'" class="image-label">Mobile</span>
           </a>
           <div class="upload__actions">
             <image-actions :image="image" :publish="image.publish" :grid="image.is_grid" :imagePreviewRoute="'cache'"></image-actions>
@@ -76,8 +76,8 @@
           <div class="form-row">
             <label>Anwendung</label>
             <div class="select-wrapper is-medium">
-              <select v-model="overlayItem.usage" name="usages">
-                <option v-for="(usage, index) in usages" :key="index" :value="index">{{ usage }}</option>
+              <select v-model="overlayItem.device" name="device">
+                <option v-for="(device, index) in devices" :key="index" :value="index">{{ device }}</option>
               </select>
             </div>
           </div>  
@@ -204,13 +204,13 @@ export default {
       overlayItem: {
         name: '',
         caption: { de: null, en: null },
-        usage: 'desktop',
+        device: 'desktop',
       },
       ratio: {
         w: null,
         h: null,
       },
-      usages: {
+      devices: {
         'desktop': 'Desktop',
         'mobile':  'Mobile'
       }

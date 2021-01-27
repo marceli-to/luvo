@@ -42,6 +42,17 @@ Route::middleware('auth:sanctum')->group(function() {
   Route::post('home/image/order', 'Api\HomeImageController@order');
   Route::delete('home/image/{homeImage}', 'Api\HomeImageController@destroy');
  
+  // Team categories
+  Route::get('team/categories', 'Api\TeamCategoryController@get');
+  Route::get('team/category/{teamCategory}', 'Api\TeamCategoryController@find');
+
+  // Team images
+  Route::get('team/image/state/{teamImage}', 'Api\TeamImageController@toggle');
+  Route::put('team/image/{teamImage}', 'Api\TeamImageController@coords');
+  Route::post('team/image', 'Api\TeamImageController@store');
+  Route::post('team/image/order', 'Api\TeamImageController@order');
+  Route::delete('team/image/{teamImage}', 'Api\TeamImageController@destroy');
+
   // Team
   Route::get('team', 'Api\TeamController@get');
   Route::get('team/{team}', 'Api\TeamController@find');
@@ -50,12 +61,5 @@ Route::middleware('auth:sanctum')->group(function() {
   Route::post('home/order', 'Api\TeamController@order');
   Route::get('team/state/{team}', 'Api\TeamController@toggle');
   Route::delete('team/{team}', 'Api\TeamController@destroy');
-
-  // Team images
-  Route::get('team/image/state/{teamImage}', 'Api\TeamImageController@toggle');
-  Route::put('team/image/{teamImage}', 'Api\TeamImageController@coords');
-  Route::post('team/image', 'Api\TeamImageController@store');
-  Route::post('team/image/order', 'Api\TeamImageController@order');
-  Route::delete('team/image/{teamImage}', 'Api\TeamImageController@destroy');
 
 });
