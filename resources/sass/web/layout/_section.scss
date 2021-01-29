@@ -10,22 +10,4 @@ section {
     @extend %is-responsive;
   }
 
-  &.content {
-    
-    figure {
-      margin-bottom: $space-md;
-      &:last-of-type {
-        border-bottom: none !important;
-        margin-bottom: 0 !important;
-      }
-      
-      @include bp-md() {
-        margin-bottom: $space-lg;
-      }
-    }
-
-    p {
-      max-width: 720px;
-    }
-  }
 }

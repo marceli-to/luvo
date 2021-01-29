@@ -6,13 +6,6 @@
 
 html {
 	overflow-y: scroll;
-
-	&.has-menu {
-		overflow-y: hidden;
-		@include bp-md() {
-			overflow-y: scroll !important;
-		}
-	}
 }
 
 
