@@ -14,8 +14,8 @@
           <input type="text" v-model="team.title.de">
           <label-required />
         </div>
-        <div class="form-row">
-          <label>Text</label>
+        <div :class="[this.errors.text ? 'has-error' : '', 'form-row']">
+          <label>Text*</label>
           <tinymce-editor
             :api-key="tinyApiKey"
             :init="tinyConfig"
@@ -179,6 +179,7 @@ export default {
       // Validation
       errors: {
         title: false,
+        text: false,
       },
 
       // Loading states
