@@ -247,7 +247,7 @@ export default {
       if (this.debounce) return;
       this.debounce = setTimeout(function(images) {
         this.debounce = false 
-        let uri = `/api/news/image/order`;
+        let uri = `/api/home/image/order`;
         this.axios.post(uri, {images: images}).then((response) => {
           this.$notify({type: 'success', text: 'Reihenfolge angepasst'});
         });

@@ -5,16 +5,16 @@ export default {
     active: true,
     error: false
   },
-  image: {
-    key: 'image',
-    label: 'Bilder',
+  translation_fr: {
+    key: 'translation_fr',
+    label: 'Daten FR',
     active: false,
     error: false
   },
-  settings: {
-    key: 'settings',
-    label: 'Einstellungen',
+  translation_en: {
+    key: 'translation_en',
+    label: 'Daten EN',
     active: false,
     error: false
-  }
+  },
 };

@@ -14,6 +14,18 @@ import TeamIndex from '@/views/team/Index.vue';
 import TeamCreate from '@/views/team/Create.vue';
 import TeamEdit from '@/views/team/Edit.vue';
 
+// Team members
+import TeamMemberIndex from '@/views/team_member/Index.vue';
+import TeamMemberCreate from '@/views/team_member/Create.vue';
+import TeamMemberEdit from '@/views/team_member/Edit.vue';
+
+// Publications
+import PublicationCreate from '@/views/publication/Create.vue';
+import PublicationEdit from '@/views/publication/Edit.vue';
+
+// Dashboard
+import MediaIndex from '@/views/media/Index.vue';
+
 const routes = [
 
   // Dashboard
@@ -55,6 +67,42 @@ const routes = [
     name: 'team-edit',
     path: '/administration/team/edit/:id',
     component: TeamEdit,
+  },
+
+  // Team members
+  {
+    name: 'team-members',
+    path: '/administration/team-members',
+    component: TeamMemberIndex,
+  },
+  {
+    name: 'team-member-create',
+    path: '/administration/team/member/create',
+    component: TeamMemberCreate,
+  },
+  {
+    name: 'team-member-edit',
+    path: '/administration/team/member/edit/:id',
+    component: TeamMemberEdit,
+  },
+
+  // Publications
+  {
+    name: 'publication-create',
+    path: '/administration/team/publication/create/:memberId',
+    component: PublicationCreate,
+  },
+  {
+    name: 'publication-edit',
+    path: '/administration/team/publication/edit/:id',
+    component: PublicationEdit,
+  },
+
+  // Media
+  {
+    name: 'media',
+    path: '/administration/media',
+    component: MediaIndex,
   },
 
   // Authorization

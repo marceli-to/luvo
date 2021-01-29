@@ -1,20 +1,8 @@
 export default {
   data: {
     key: 'data',
-    label: 'Text DE',
+    label: 'Daten',
     active: true,
-    error: false
-  },
-  translation_fr: {
-    key: 'translation_fr',
-    label: 'Text FR',
-    active: false,
-    error: false
-  },
-  translation_en: {
-    key: 'translation_en',
-    label: 'Text EN',
-    active: false,
     error: false
   },
   image: {
@@ -23,4 +11,10 @@ export default {
     active: false,
     error: false
   },
+  settings: {
+    key: 'settings',
+    label: 'Einstellungen',
+    active: false,
+    error: false
+  }
 };

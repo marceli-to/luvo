@@ -59,11 +59,11 @@
 <script>
 
 // Actions
-import FileActions from "@/global/components/files/Actions.vue";
+import FileActions from "@/components/files/Actions.vue";
 
 // Mixins
-import FileEdit from "@/global/components/files/mixins/edit";
-import FileUtils from "@/global/components/files/mixins/utils";
+import FileEdit from "@/components/files/mixins/edit";
+import FileUtils from "@/components/files/mixins/utils";
 
 export default {
   components: {

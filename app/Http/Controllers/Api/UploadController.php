@@ -9,7 +9,9 @@ use App\Http\Controllers\Controller;
 
 class UploadController extends Controller
 {
-  protected $upload_path;
+  protected $image_upload_path;
+
+  protected $file_upload_path;
 
   protected $prefix = 'luksundvogt-';
   
@@ -18,10 +20,16 @@ class UploadController extends Controller
    */
   public function __construct()
   {
-    $this->upload_path = storage_path('app/public/uploads');
-    if (!File::isDirectory($this->upload_path))
+    $this->image_upload_path = storage_path('app/public/uploads');
+    if (!File::isDirectory($this->image_upload_path))
     {
-      File::makeDirectory($this->upload_path, 0775, true, true);
+      File::makeDirectory($this->image_upload_path, 0775, true, true);
+    }
+
+    $this->file_upload_path = storage_path('app/public/uploads/files');
+    if (!File::isDirectory($this->file_upload_path))
+    {
+      File::makeDirectory($this->file_upload_path, 0775, true, true);
     }
   }
 
@@ -36,8 +44,8 @@ class UploadController extends Controller
     $file = $request->file('file');
     $name = $this->sanitize(trim($file->getClientOriginalName()));
     $name = $this->prefix . uniqid()  . '_' . $name;
-    $file->move($this->upload_path, $name);
-    $filetype = \File::extension($this->upload_path . $name);
+    $file->move($this->image_upload_path, $name);
+    $filetype = \File::extension($this->image_upload_path . $name);
 
     $image_types = ['jpg', 'jpeg', 'png'];
     $orientation = '';
@@ -62,9 +70,9 @@ class UploadController extends Controller
     $file = $request->file('file');
     $name = $this->sanitize(trim($file->getClientOriginalName()));
     $name = $this->prefix . uniqid()  . '_' . $name;
-    $file->move($this->upload_path, $name);
-    $filetype = File::extension($this->upload_path . $name);
-    $filesize = File::size($this->upload_path . '/' . $name);
+    $file->move($this->file_upload_path, $name);
+    $filetype = File::extension($this->file_upload_path . $name);
+    $filesize = File::size($this->file_upload_path . '/' . $name);
     return response()->json(['name' => $name, 'type' => $filetype, 'size' => $this->filesize($filesize)], 200);
   }
   
@@ -78,7 +86,7 @@ class UploadController extends Controller
     $file_list = [];
 
     // Get all Files
-    $files = Storage::files('public/uploads');
+    $files = Storage::files('public/uploads/files');
 
     foreach($files as $file)
     {
@@ -89,7 +97,7 @@ class UploadController extends Controller
         $f = basename($file);
         $file_list[] = [
           'title' => $f,
-          'value' => '/storage/uploads/' . $f,
+          'value' => '/storage/uploads/files' . $f,
         ];
       }
     }

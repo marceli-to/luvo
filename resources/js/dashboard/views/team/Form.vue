@@ -7,7 +7,8 @@
     </header>
     <tabs :tabs="tabs" :errors="errors"></tabs>
     <div v-show="tabs.data.active">
-      <div>
+      <language-tabs :languages="languageTabs"></language-tabs>
+      <div v-show="languageTabs.de.active">
         <div :class="[this.errors.title ? 'has-error' : '', 'form-row']">
           <label>Titel*</label>
           <input type="text" v-model="team.title.de">
@@ -21,53 +22,37 @@
             v-model="team.text.de"
           ></tinymce-editor>
         </div>
-        <div :class="[this.errors.category ? 'has-error' : '', 'form-row']">
-          <label>Kategorie *</label>
-          <div class="select-wrapper is-medium">
-            <select v-model="team.category_id" name="layout">
-              <option v-for="(category, index) in teamCategories" :key="index" :value="category.id">{{ category.name }}</option>
-            </select>
+      </div>
+      <div v-show="languageTabs.fr.active">
+        <div>
+          <div class="form-row">
+            <label>Titel</label>
+            <input type="text" v-model="team.title.fr">
           </div>
-        </div>  
-        <div class="form-row is-last">
-          <radio-button 
-            :label="'Publizieren?'"
-            v-bind:publish.sync="team.publish"
-            :model="team.publish"
-            :name="'publish'">
-          </radio-button>
+          <div class="form-row">
+            <label>Text</label>
+            <tinymce-editor
+              :api-key="tinyApiKey"
+              :init="tinyConfig"
+              v-model="team.text.fr"
+            ></tinymce-editor>
+          </div>
         </div>
       </div>
-    </div>
-    <div v-show="tabs.translation_fr.active">
-      <div>
-        <div class="form-row">
-          <label>Titel</label>
-          <input type="text" v-model="team.title.fr">
-        </div>
-        <div class="form-row">
-          <label>Text</label>
-          <tinymce-editor
-            :api-key="tinyApiKey"
-            :init="tinyConfig"
-            v-model="team.text.fr"
-          ></tinymce-editor>
-        </div>
-      </div>
-    </div>
-    <div v-show="tabs.translation_en.active">
-      <div>
-        <div class="form-row">
-          <label>Titel</label>
-          <input type="text" v-model="team.title.en">
-        </div>
-        <div class="form-row">
-          <label>Text</label>
-          <tinymce-editor
-            :api-key="tinyApiKey"
-            :init="tinyConfig"
-            v-model="team.text.en"
-          ></tinymce-editor>
+      <div v-show="languageTabs.en.active">
+        <div>
+          <div class="form-row">
+            <label>Titel</label>
+            <input type="text" v-model="team.title.en">
+          </div>
+          <div class="form-row">
+            <label>Text</label>
+            <tinymce-editor
+              :api-key="tinyApiKey"
+              :init="tinyConfig"
+              v-model="team.text.en"
+            ></tinymce-editor>
+          </div>
         </div>
       </div>
     </div>
@@ -88,6 +73,26 @@
             :aspectRatioW="4"
             :aspectRatioH="3"
           ></image-edit>
+        </div>
+      </div>
+    </div>
+    <div v-show="tabs.settings.active">
+      <div>
+        <div :class="[this.errors.category ? 'has-error' : '', 'form-row']">
+          <label>Kategorie *</label>
+          <div class="select-wrapper is-medium">
+            <select v-model="team.category_id" name="layout">
+              <option v-for="(category, index) in teamCategories" :key="index" :value="category.id">{{ category.name }}</option>
+            </select>
+          </div>
+        </div>  
+        <div class="form-row is-last">
+          <radio-button 
+            :label="'Publizieren?'"
+            v-bind:publish.sync="team.publish"
+            :model="team.publish"
+            :name="'publish'">
+          </radio-button>
         </div>
       </div>
     </div>
@@ -118,11 +123,13 @@ import TinymceEditor from "@tinymce/tinymce-vue";
 import RadioButton from "@/components/ui/RadioButton.vue";
 import LabelRequired from "@/components/ui/LabelRequired.vue";
 import Tabs from "@/components/ui/Tabs.vue";
+import LanguageTabs from "@/components/ui/LanguageTabs.vue";
 import ImageUpload from "@/components/images/Upload.vue";
 import ImageEdit from "@/views/team/images/Edit.vue";
 
 // Tabs config
 import tabsConfig from "@/views/team/config/tabs.js";
+import languageTabsConfig from "@/config/languageTabs.js";
 
 export default {
   components: {
@@ -132,7 +139,8 @@ export default {
     LabelRequired,
     ImageUpload,
     ImageEdit,
-    Tabs
+    Tabs,
+    LanguageTabs
   },
 
   mixins: [ErrorHandling],
@@ -179,13 +187,11 @@ export default {
 
       // Tabs config
       tabs: tabsConfig,
+      languageTabs: languageTabsConfig,
 
       // TinyMCE
       tinyConfig: tinyConfig,
       tinyApiKey: 'vuaywur9klvlt3excnrd9xki1a5lj25v18b2j0d0nu5tbwro',
-
-      // Filelist for Tiny Links
-      fileList: null,
     };
   },
 
@@ -211,6 +217,14 @@ export default {
       this.axios.get(uri).then(response => {
         this.teamCategories = response.data.data;
         this.isFetched = true;
+      });
+    }
+
+    // Get files for tinymce
+    let _this = this;
+    this.tinyConfig.link_list = function(success) {
+      _this.axios.get(`/api/files/get`).then(response => {
+        success(response.data);
       });
     }
   },

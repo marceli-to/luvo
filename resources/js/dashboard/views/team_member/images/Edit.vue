@@ -55,23 +55,15 @@
         <div>
           <figure v-if="hasOverlayEdit">
             <img :src="getSource(overlayItem, 'cache')" height="300" width="300">
-            <figcaption v-if="overlayItem.caption.de">
-              <span v-if="overlayItem.caption.de">{{overlayItem.caption.de}}</span>
+            <figcaption v-if="overlayItem.caption">
+              <span v-if="overlayItem.caption">{{overlayItem.caption}}</span>
             </figcaption>
           </figure>
         </div>
         <div>
           <div class="form-row">
             <label>Bildlegende</label>
-            <input type="text" v-model="overlayItem.caption.de" />
-          </div>
-          <div class="form-row">
-            <label>Bildlegende (FR)</label>
-            <input type="text" v-model="overlayItem.caption.fr" />
-          </div>
-          <div class="form-row">
-            <label>Bildlegende (EN)</label>
-            <input type="text" v-model="overlayItem.caption.en" />
+            <input type="text" v-model="overlayItem.caption" />
           </div>
           <div class="form-row">
             <label>Anwendung</label>
@@ -203,7 +195,7 @@ export default {
       isLoading: false,
       overlayItem: {
         name: '',
-        caption: { de: null, en: null },
+        caption: null,
         device: 'desktop',
       },
       ratio: {
@@ -264,7 +256,7 @@ export default {
       if (this.debounce) return;
       this.debounce = setTimeout(function(images) {
         this.debounce = false 
-        let uri = `/api/team/image/order`;
+        let uri = `/api/team/member/image/order`;
         this.axios.post(uri, {images: images}).then((response) => {
           this.$notify({type: 'success', text: 'Reihenfolge angepasst'});
         });

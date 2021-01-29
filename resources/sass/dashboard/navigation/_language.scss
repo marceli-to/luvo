@@ -1,38 +1,34 @@
 /**
  * -----------------------------------------------------------------------------
- * File: layout/navigation/tabs
+ * File: layout/navigation/language
  * -----------------------------------------------------------------------------
  */
 
-nav.tabs {
-  @include responsive-prop('margin-bottom', $space-lg);
-  @include responsive-prop('margin-top', $space-sm);
+nav.language {
+  display: flex;
+  justify-content: flex-end;
+
+  label {
+    margin-bottom: 3px !important;
+  }
 
   ul {
-    align-items: stretch;
     display: flex;
-    justify-content: flex-start;        
   }
 
   li {
-    flex: 1; 
-    max-width: 300px;
-    padding-right: 20px;
-    text-align: center;
+    margin-right: 10px;
     &:last-of-type {
-      padding-right: 0;
+      margin-right: 0;
     }
   }
 
   a {
-    border-bottom: 2px solid $color-light-grey;
     color: $color-medium-grey;
     display: block;
     @include font-regular();
     @include font-size($fs-sm);
     @include letter-spacing();
-    @include responsive-prop('padding-bottom', $space-xs);
-    @include responsive-prop('padding-top', $space-xs);
     text-decoration: none;
     text-transform: uppercase;
     transition: all .1s ease-out;
@@ -40,13 +36,11 @@ nav.tabs {
 
     &:hover,
     &.is-active {
-      border-bottom: 2px solid $color-dark;
       color: $color-dark;
     }
 
     &.has-error {
       color: $color-danger;
-      border-bottom: 2px solid $color-danger;
     }
   }
 }

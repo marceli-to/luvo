@@ -77,7 +77,7 @@ export default {
     },
 
     unauthorized(data) {
-      //document.location.href = '/login';
+      document.location.href = '/login';
     }
   },
 

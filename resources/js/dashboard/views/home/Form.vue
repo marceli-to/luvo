@@ -1,98 +1,104 @@
 <template>
-<div>
-  <loading-indicator v-if="isLoading"></loading-indicator>
-  <form @submit.prevent="submit" class="half-width" v-if="isFetched">
-    <header class="content-header">
-      <h1>{{title}}</h1>
-    </header>
-    <tabs :tabs="tabs" :errors="errors"></tabs>
-    <div v-show="tabs.data.active">
-      <div>
-        <div :class="[this.errors.title ? 'has-error' : '', 'form-row']">
-          <label>Titel*</label>
-          <input type="text" v-model="home.title.de">
-          <label-required />
+  <div>
+    <loading-indicator v-if="isLoading"></loading-indicator>
+    <form @submit.prevent="submit" class="half-width" v-if="isFetched">
+      <header class="content-header">
+        <h1>{{title}}</h1>
+      </header>
+      <tabs :tabs="tabs" :errors="errors"></tabs>
+      <div v-show="tabs.data.active">
+        <language-tabs :languages="languageTabs"></language-tabs>
+        <div v-show="languageTabs.de.active">
+          <div :class="[this.errors.title ? 'has-error' : '', 'form-row']">
+            <label>Titel*</label>
+            <input type="text" v-model="home.title.de">
+            <label-required />
+          </div>
+          <div class="form-row">
+            <label>Text</label>
+            <tinymce-editor
+              :api-key="tinyApiKey"
+              :init="tinyConfig"
+              v-model="home.text.de"
+            ></tinymce-editor>
+          </div>
         </div>
-        <div class="form-row">
-          <label>Text</label>
-          <tinymce-editor
-            :api-key="tinyApiKey"
-            :init="tinyConfig"
-            v-model="home.text.de"
-          ></tinymce-editor>
+        <div v-show="languageTabs.fr.active">
+          <div>
+            <div class="form-row">
+              <label>Titel</label>
+              <input type="text" v-model="home.title.fr">
+            </div>
+            <div class="form-row">
+              <label>Text</label>
+              <tinymce-editor
+                :api-key="tinyApiKey"
+                :init="tinyConfig"
+                v-model="home.text.fr"
+              ></tinymce-editor>
+            </div>
+          </div>
         </div>
-        <div class="form-row is-last">
-          <radio-button 
-            :label="'Publizieren?'"
-            v-bind:publish.sync="home.publish"
-            :model="home.publish"
-            :name="'publish'">
-          </radio-button>
-        </div>
-      </div>
-    </div>
-    <div v-show="tabs.translation_fr.active">
-      <div>
-        <div class="form-row">
-          <label>Titel</label>
-          <input type="text" v-model="home.title.fr">
-        </div>
-        <div class="form-row">
-          <label>Text</label>
-          <tinymce-editor
-            :api-key="tinyApiKey"
-            :init="tinyConfig"
-            v-model="home.text.fr"
-          ></tinymce-editor>
-        </div>
-      </div>
-    </div>
-    <div v-show="tabs.translation_en.active">
-      <div>
-        <div class="form-row">
-          <label>Titel</label>
-          <input type="text" v-model="home.title.en">
-        </div>
-        <div class="form-row">
-          <label>Text</label>
-          <tinymce-editor
-            :api-key="tinyApiKey"
-            :init="tinyConfig"
-            v-model="home.text.en"
-          ></tinymce-editor>
+        <div v-show="languageTabs.en.active">
+          <div>
+            <div class="form-row">
+              <label>Titel</label>
+              <input type="text" v-model="home.title.en">
+            </div>
+            <div class="form-row">
+              <label>Text</label>
+              <tinymce-editor
+                :api-key="tinyApiKey"
+                :init="tinyConfig"
+                v-model="home.text.en"
+              ></tinymce-editor>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div v-show="tabs.image.active">
-      <div>
-        <div class="form-row">
-          <image-upload
-            :restrictions="'jpg, png | max. 8 MB'"
-            :maxFiles="99"
-            :maxFilesize="8"
-            :acceptedFiles="'.png,.jpg'"
-          ></image-upload>
-        </div>
-        <div class="form-row">
-          <image-edit 
-            :images="home.images"
-            :imagePreviewRoute="'cache'"
-            :aspectRatioW="4"
-            :aspectRatioH="3"
-          ></image-edit>
+      <div v-show="tabs.image.active">
+        <div>
+          <div class="form-row">
+            <image-upload
+              :restrictions="'jpg, png | max. 8 MB'"
+              :maxFiles="99"
+              :maxFilesize="8"
+              :acceptedFiles="'.png,.jpg'"
+            ></image-upload>
+          </div>
+          <div class="form-row">
+            <image-edit 
+              :images="home.images"
+              :imagePreviewRoute="'cache'"
+              :aspectRatioW="4"
+              :aspectRatioH="3"
+            ></image-edit>
+          </div>
         </div>
       </div>
-    </div>
-    <footer class="module-footer">
-      <div>
-        <button type="submit" class="btn-primary">Speichern</button>
-        <router-link :to="{ name: 'home' }" class="btn-secondary">
-          <span>Zurück</span>
-        </router-link>
+
+      <div v-show="tabs.settings.active">
+        <div>
+          <div class="form-row is-last">
+            <radio-button 
+              :label="'Publizieren?'"
+              v-bind:publish.sync="home.publish"
+              :model="home.publish"
+              :name="'publish'">
+            </radio-button>
+          </div>
+        </div>
       </div>
-    </footer>
-  </form>
-</div>
+      <footer class="module-footer">
+        <div>
+          <button type="submit" class="btn-primary">Speichern</button>
+          <router-link :to="{ name: 'home' }" class="btn-secondary">
+            <span>Zurück</span>
+          </router-link>
+        </div>
+      </footer>
+    </form>
+  </div>
 </template>
 <script>
 
@@ -110,11 +116,13 @@ import TinymceEditor from "@tinymce/tinymce-vue";
 import RadioButton from "@/components/ui/RadioButton.vue";
 import LabelRequired from "@/components/ui/LabelRequired.vue";
 import Tabs from "@/components/ui/Tabs.vue";
+import LanguageTabs from "@/components/ui/LanguageTabs.vue";
 import ImageUpload from "@/components/images/Upload.vue";
 import ImageEdit from "@/views/home/images/Edit.vue";
 
 // Tabs config
 import tabsConfig from "@/views/home/config/tabs.js";
+import languageTabsConfig from "@/config/languageTabs.js";
 
 export default {
   components: {
@@ -124,7 +132,8 @@ export default {
     LabelRequired,
     ImageUpload,
     ImageEdit,
-    Tabs
+    Tabs,
+    LanguageTabs
   },
 
   mixins: [ErrorHandling],
@@ -163,6 +172,7 @@ export default {
 
       // Tabs config
       tabs: tabsConfig,
+      languageTabs: languageTabsConfig,
 
       // TinyMCE
       tinyConfig: tinyConfig,
@@ -182,15 +192,6 @@ export default {
         this.isFetched = true;
       });
     }
-    
-    // 
-    //this.fetchFiles();
-    // let _this = this;
-    // this.tinyConfig.link_list = function(success) {
-    //   _this.axios.get(`/api/files/get`).then(response => {
-    //     success(response.data);
-    //   });
-    // }
   },
 
   methods: {

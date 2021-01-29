@@ -34,6 +34,16 @@
           <span>Teams</span>
         </router-link>
       </li>
+      <li>
+        <router-link :to="{name: 'team-members'}">
+          <span>Mitarbeiter</span>
+        </router-link>
+      </li>
+      <li>
+        <router-link :to="{name: 'media'}">
+          <span>Dateien</span>
+        </router-link>
+      </li>
     </ul>
   </nav>
 </div>

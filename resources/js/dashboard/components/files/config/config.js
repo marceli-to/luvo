@@ -1,7 +1,7 @@
 export default {
   url: "/api/file/upload",
   method: 'post',
-  maxFilesize: 8,
+  maxFilesize: 16,
   maxFiles: 1,
   createImageThumbnails: false,
   acceptedFiles: '.pdf',

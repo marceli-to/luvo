@@ -11,7 +11,7 @@
 </template>
 <script>
 import vue2Dropzone from "vue2-dropzone";
-import fileConfig from "@/global/components/files/config/config.js";
+import fileConfig from "@/components/files/config/config.js";
 
 export default {
 
@@ -48,7 +48,7 @@ export default {
       } 
       else {
         let response = JSON.parse(file.xhr.response);
-        this.$parent.storeFile(response);
+        this.$parent.store(response);
       }
       this.$refs.dropzone.removeFile(file);
     },

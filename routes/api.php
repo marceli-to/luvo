@@ -21,6 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('auth:sanctum')->group(function() {
   Route::get('user', 'Api\UserController@find');
 
+  // Files
+  Route::get('files','Api\FileController@get');
+  Route::post('file/store','Api\FileController@store');
+
   // Upload
   Route::post('image/upload','Api\UploadController@image');
   Route::post('file/upload','Api\UploadController@file');
@@ -53,13 +57,38 @@ Route::middleware('auth:sanctum')->group(function() {
   Route::post('team/image/order', 'Api\TeamImageController@order');
   Route::delete('team/image/{teamImage}', 'Api\TeamImageController@destroy');
 
+  // Team members
+  Route::get('team/members/', 'Api\TeamMemberController@get');
+  Route::get('team/member/{teamMember}', 'Api\TeamMemberController@find');
+  Route::post('team/member/', 'Api\TeamMemberController@store');
+  Route::put('team/member/{teamMember}', 'Api\TeamMemberController@update');
+  Route::post('team/member/order', 'Api\TeamMemberController@order');
+  Route::get('team/member/state/{teamMember}', 'Api\TeamMemberController@toggle');
+  Route::delete('team/member/{teamMember}', 'Api\TeamMemberController@destroy');
+
+  // Team member images
+  Route::get('team/member/image/state/{teamMemberImage}', 'Api\TeamMemberImageController@toggle');
+  Route::put('team/member/image/{teamMemberImage}', 'Api\TeamMemberImageController@coords');
+  Route::post('team/member/image', 'Api\TeamMemberImageController@store');
+  Route::post('team/member/image/order', 'Api\TeamMemberImageController@order');
+  Route::delete('team/member/image/{teamMemberImage}', 'Api\TeamMemberImageController@destroy');
+
   // Team
   Route::get('team', 'Api\TeamController@get');
   Route::get('team/{team}', 'Api\TeamController@find');
   Route::post('team', 'Api\TeamController@store');
   Route::put('team/{team}', 'Api\TeamController@update');
-  Route::post('home/order', 'Api\TeamController@order');
+  Route::post('team/order', 'Api\TeamController@order');
   Route::get('team/state/{team}', 'Api\TeamController@toggle');
   Route::delete('team/{team}', 'Api\TeamController@destroy');
+
+  // Publication
+  Route::get('publications', 'Api\PublicationController@get');
+  Route::get('publication/{publication}', 'Api\PublicationController@find');
+  Route::post('publication', 'Api\PublicationController@store');
+  Route::put('publication/{publication}', 'Api\PublicationController@update');
+  Route::post('publication/order', 'Api\PublicationController@order');
+  Route::get('publication/state/{publication}', 'Api\PublicationController@toggle');
+  Route::delete('publication/{publication}', 'Api\PublicationController@destroy');
 
 });
