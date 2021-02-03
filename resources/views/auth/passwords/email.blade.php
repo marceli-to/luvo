@@ -2,11 +2,10 @@
 @section('seo_title', 'Passwort vergessen')
 @section('seo_description', '')
 @section('content')
-<section>
-  <x-header title="Passwort vergessen" />
-  <article>
-    <h2>Passwort vergessen?</h2>
-    <div>
+<section class="content-auth">
+  <div>
+    <article>
+      <h1>Passwort vergessen?</h1>
       <p>{{__('messages.password_recovery')}}</p>
       @if ($errors->any())
         <x-alert type="danger" message="{{__('messages.general_error')}}" />
@@ -14,14 +13,14 @@
       @if (session('status'))
         <x-alert type="success" message="{{ session('status') }}" />
       @endif
-      <form method="POST" class="auth auth--recover" action="{{ route('password.email') }}">
+      <form method="POST" action="{{ route('password.email') }}">
         @csrf
         <x-text-field label="E-Mail" type="email" name="email" />
         <div class="form-buttons align-end">
-          <x-button label="senden" name="register" btnClass="btn-primary js-btn-loader" type="submit" />
+          <x-button label="Absenden" name="register" btnClass="btn-primary js-btn-loader" type="submit" />
         </div>
       </form>
-    </div>
-  </article>
+    </article>
+  </div>
 </section>
 @endsection

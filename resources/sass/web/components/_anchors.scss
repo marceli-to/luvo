@@ -7,10 +7,21 @@
 
 %anchor,
 .anchor {
+
+}
+
+%anchor-underline {
+  display: inline-block !important;
   text-decoration: none;
-  transition: color .1s ease-out;
-  
+
+  &.is-active,
   &:hover {
-    text-decoration: underline;
+    background-image: linear-gradient(90deg,#000000 0,#000000);
+    background-image: linear-gradient(to right,#000000 0,#000000 100%);
+    background-repeat: repeat-x;
+    background-position: bottom .25em left;
+    background-size: auto 1px;
+    text-decoration: none;
   }
+
 }

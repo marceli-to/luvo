@@ -5,5 +5,29 @@
  */
 
 footer.site-footer {
+  background-color: $color-white;
+  border-top: 1px solid $color-black;
+  bottom: 0;
+  display: none;
+  height: $footer-height-md;
+  left: 0;
+  position: fixed;
+  width: 100%;
+  z-index: 301;
 
+  @include bp-md() {
+    display: block;
+  }
+
+  > div {
+    align-items: center;
+    display: flex;
+    height: inherit;
+    justify-content: space-between;
+    padding: 0 $space-3x;
+
+    @include bp-md() {
+      padding: 0 $space-6x;
+    }
+  }
 }

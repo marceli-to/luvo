@@ -2,10 +2,11 @@ var Menu = (function() {
 	
 	// selectors
 	var selectors = {
-    html:     'html',
-    body:     'body',
-    menu:     '.js-menu',
-    menuBtn:  '.js-menu-btn',
+    html:           'html',
+    body:           'body',
+    menu:           '.js-menu',
+    menuBtn:        '.js-menu-btn',
+    menuItemParent: '.js-menu-item-parent'
 	};
 
   // css classes
@@ -27,12 +28,19 @@ var Menu = (function() {
     $(selectors.body).on('click', selectors.menuBtn, function(){
       _toggle($(this));
     });
+
+    $(selectors.body).on('click', selectors.menuItemParent, function(){
+      _toggleChild($(this));
+    })
   };
 
   var _toggle = function() {
     $(selectors.menu).toggleClass(classes.visible);
     $(selectors.menuBtn).toggleClass(classes.active);
-    //$(selectors.html).toggleClass(classes.hasMenu);
+  };
+
+  var _toggleChild = function(el) {
+    el.toggleClass(classes.active);
   };
 
   /* --------------------------------------------------------------

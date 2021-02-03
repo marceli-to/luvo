@@ -27,16 +27,13 @@ strong, b {
 }
 
 p {
-	margin-bottom: $space-md;
-	&:last-child {
-		margin-bottom: 0 !important;
+	text-indent: $space-4x;
+	
+	@include bp-md() {
+		text-indent: $space-8x;
 	}
-}
 
-small {
-	@include font-size($fs-sm);
-}
-
-.fs-sm {
-	@include font-size($fs-xs);
+	&:first-of-type {
+		text-indent: 0;
+	}
 }

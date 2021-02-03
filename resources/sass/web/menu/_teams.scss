@@ -1,0 +1,23 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: layout/menu/teams
+ * -----------------------------------------------------------------------------
+ */
+
+nav.site-menu-teams {
+  display: none;
+  @include bp-md() {
+    display: block;
+  }
+
+  ul {
+    display: flex;
+  }
+  
+  li {
+    margin-right: $space-6x;
+    &:last-of-type {
+      margin-right: 0;
+    }
+  }
+}

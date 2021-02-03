@@ -326,13 +326,14 @@ export default {
       this.isEdit = true;
       this.isFetched = false;
 
-      let uri = `/api/team/member/${this.$route.params.id}`;
-      this.axios
-        .get(uri)
+      // Get team members
+      this.axios.get(`/api/team/member/${this.$route.params.id}`)
         .then(response => {
           this.teamMember = response.data;
-          let uri = `/api/team`;
-          this.axios.get(uri).then(response => {
+
+          // Get teams
+          this.axios.get(`/api/team`)
+          .then(response => {
             this.teams = response.data.data;
             this.isFetched = true;
           });
@@ -372,7 +373,7 @@ export default {
     store() {
       this.isLoading = true;
       this.axios.post('/api/team/member', this.teamMember).then(response => {
-        this.$router.push({ name: "team-members" });
+        this.$router.push({ name: "teams" });
         this.$notify({ type: "success", text: "Daten erfasst!" });
         this.isLoading = false;
       });
@@ -382,7 +383,7 @@ export default {
       let uri = `/api/team/member/${this.$route.params.id}`;
       this.isLoading = true;
       this.axios.put(uri, this.teamMember).then(response => {
-        this.$router.push({ name: "team-members" });
+        this.$router.push({ name: "teams" });
         this.$notify({ type: "success", text: "Änderungen gespeichert!" });
         this.isLoading = false;
       });

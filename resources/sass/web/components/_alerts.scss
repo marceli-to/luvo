@@ -7,13 +7,11 @@
 
 .alert {
   @include font-regular();
-  @include font-size($fs-sm);
-  margin-bottom: $space-md;
-  margin-top: $space-md;
+  @include font-size($fs-body-sm);
+  padding: 0 0 $space-3x 0;
   max-width: 480px;
 
   &.alert--danger {
-    //border-color: $color-danger;
     color: $color-danger;
   }
 
@@ -28,7 +26,6 @@
 
   ul {
     @include font-regular();
-    margin-top: $space-sm;
     margin-bottom: 0;
   }
 }
@@ -37,9 +34,6 @@
   border: 2px solid $color-black;
   color: $color-black;
   @include font-regular();
-  margin-bottom: $space-lg;
-  margin-top: $space-lg;
-  padding: $space-xs;
 
   a {
     color: $color-black;

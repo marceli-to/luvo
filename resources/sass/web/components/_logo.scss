@@ -5,5 +5,34 @@
  */
 
 .logo {
-  
+  display: block;
+  height: 35px;
+  width: 210px;
+
+  @include bp-md() {
+    height: 28px;
+    width: 635px;
+  }
+
+  svg {
+    @extend %is-responsive;
+
+    &.is-desktop {
+      display: none;
+    }
+
+    &.is-mobile {
+      display: block;
+    }
+
+    @include bp-md() {
+      &.is-desktop {
+        display: block;
+      }
+      
+      &.is-mobile {
+        display: none;
+      }
+    }
+  }
 }

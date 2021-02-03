@@ -6,12 +6,35 @@
 
 nav {
 
-  li {
-    display: block;
+  ul {
+  
+    li {
+      display: block;
+    }
+
+    a {
+      @extend %anchor-underline;
+      color: $color-black;
+      display: block;
+      @include font-size($fs-menu-main);
+      padding: $space-1x 0;
+    }
   }
 
-  a {
+  li.languages {
+    align-items: center;
+    color: $color-black;
+    display: flex;
+    @include font-size($fs-menu-main);
 
+    a {
+      background: none !important;
+    }
+    
+    span {
+      display: block;
+      margin: 0 2px;
+    }
   }
 
 }

@@ -4,10 +4,6 @@
  * -----------------------------------------------------------------------------
  */
 
-.is-required {
-
-}
-
 .has-error {
   color: $color-danger;
   
@@ -18,6 +14,5 @@
 
 .error-message {
   color: $color-danger;
-  @include font-size($fs-sm);
-  margin: $space-sm 0;
+  margin: $space-3x 0;
 }

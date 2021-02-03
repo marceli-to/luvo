@@ -11,3 +11,41 @@ section {
   }
 
 }
+
+section.content-wide {
+  padding-bottom: $space-10x;
+  padding-top: $space-3x;
+
+  @include bp-md() {
+    padding-bottom: $space-15x;
+    padding-top: $space-8x;
+  }
+
+  > div {
+    @extend %inner-block;
+  }
+
+  p {
+    @include font-size($fs-body-md);
+  }
+}
+
+section.content-auth {
+  padding-bottom: $space-10x;
+  padding-left: $space-3x;
+  padding-top: $space-3x;
+
+  @include bp-md() {
+    padding-bottom: $space-15x;
+    padding-left: $space-6x;
+    padding-top: $space-8x;
+  }
+
+  > div {
+    max-width: 640px;
+  }
+
+  p {
+    margin-bottom: $space-4x;
+  }
+}

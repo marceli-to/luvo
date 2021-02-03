@@ -4,20 +4,39 @@
  * -----------------------------------------------------------------------------
  */
 
-.btn-menu,
-.btn-menu-close {
-  @extend %btn;
-  height: 24px;
-  right: $space-sm;
-  position: absolute;
-  top: $space-sm;
-  width: 24px;
+.btn-menu {
+  display: block;
+  height: 16px;
+  width: 32px;
+
+  &.is-active {
+    height: 28px;
+    width: 30px;
+
+    svg {
+      &.btn-menu__burger {
+        display: none;
+      }
+  
+      &.btn-menu__cross {
+        display: block;
+      }
+    }
+  }
 
   svg {
     @extend %is-responsive;
+
+    &.btn-menu__burger {
+      display: block;
+    }
+
+    &.btn-menu__cross {
+      display: none;
+    }
   }
 
-  @include bp-sm() {
+  @include bp-md() {
     display: none !important;
   }
 }

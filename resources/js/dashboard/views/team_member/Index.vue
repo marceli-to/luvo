@@ -9,9 +9,7 @@
         <span>Hinzufügen</span>
       </router-link>
     </header>
-
     <div v-for="(team, index) in groupedTeams" :key="index" class="sa-md">
-
       <div class="listing" v-if="team.length">
         <draggable 
           :disabled="false"
@@ -36,7 +34,6 @@
           </div>
         </draggable>
       </div>
-
       <div v-else>
         <p class="no-records">Es sind noch keine Inhalte vorhanden...</p>
       </div>

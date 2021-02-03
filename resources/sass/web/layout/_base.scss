@@ -13,9 +13,8 @@ body {
 	color: $color-black;
 	@include font-smoothing();
 	@include font-regular();
-	@include font-size($fs-md);
 	position: relative;
 }
 
 // Scrollbars
-@include scrollbar(8px, #999);
+@include scrollbar(4px, #999);

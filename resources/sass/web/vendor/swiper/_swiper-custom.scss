@@ -5,7 +5,6 @@
  */
 
 .swiper-wrapper {
-  margin-bottom: $space-md;
 }
 
 .swiper-slide {
@@ -13,26 +12,4 @@
     @extend %is-responsive;
   }
 }
-
-.swiper-container-horizontal > .swiper-pagination-bullets {
-  bottom: 25px;
-
-
-  .swiper-pagination-bullet {
-    background-color: $color-grey;
-    opacity: 1;
-
-    @include bp-sm() {
-      height: 7px;
-      margin: 0 4px;
-      width: 7px;
-    }
-  }
-
-  .swiper-pagination-bullet-active {
-    background-color: $color-white;
-    opacity: 1;
-  }
-}
-
 

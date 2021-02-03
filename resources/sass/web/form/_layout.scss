@@ -4,36 +4,29 @@
  * -----------------------------------------------------------------------------
  */
 
-fieldset {
-	margin-bottom: $space-md;
-	@include bp-lg() {
-		margin-bottom: $space-lg;
-	}
-}
-
 // Input
 .form-group {
 	align-items: center;
 	display: block;
-	margin-bottom: $space-md;
+	margin-bottom: $space-3x;
 	position: relative;
 
 	@include bp-lg() {
-		margin-bottom: $space-lg;
+		margin-bottom: $space-6x;
 	}
 }
 
 .form-grid {
-	margin-bottom: $space-md;
+	margin-bottom: $space-3x;
 
 	@include bp-sm() {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
-		grid-column-gap: $space-md;
+		grid-column-gap: $space-3x;
 	}
 
 	.form-group {
-		margin-bottom: $space-md;
+		margin-bottom: $space-3x;
 		@include bp-sm() {
 			margin-bottom: 0;
 		}
@@ -44,7 +37,7 @@ fieldset {
 .form-group-radio,
 .form-group-checkbox {
 	display: flex;
-	margin-bottom: $space-sm;
+	margin-bottom: $space-2x;
 	position: relative;
 
 	> div {
@@ -101,7 +94,7 @@ fieldset {
 	align-items: center;
 	display: flex;
 	justify-content: flex-end;
-	margin-top: $space-md;
+	margin-top: $space-3x;
 
 	&.align-justify {
 		justify-content: space-between;
@@ -114,9 +107,12 @@ fieldset {
 	&.align-end {
 		justify-content: flex-end;
 	}
+
+	a {
+		color: $color-black;
+	}
 }
 
 // Helpers
 .form-helper {
-	@include font-size($fs-xs);
 }

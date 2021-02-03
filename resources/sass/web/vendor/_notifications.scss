@@ -28,10 +28,8 @@
 .notification {
   color: $color-white;
   border-radius: 0;
-  @include font-size($fs-xs);
   @include font-regular();
   margin: 0;
-  padding: $space-sm;
   text-align: center;
   width: 100%;
 
@@ -48,7 +46,6 @@
   }
 
   @include bp-md() {
-    @include font-size($fs-sm);
     margin-top: 10px;
     margin-left: 10px;
   }

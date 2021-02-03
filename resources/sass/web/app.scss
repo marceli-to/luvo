@@ -34,11 +34,8 @@
 @import 'components/buttons/global';
 @import 'components/buttons/primary';
 @import 'components/buttons/menu';
-@import 'components/buttons/toggle';
 @import 'components/cards';
 @import 'components/icons/global';
-@import 'components/icons/cart';
-@import 'components/icons/shop';
 @import 'components/headings/global';
 @import 'components/headings/h1';
 @import 'components/headings/h2';
@@ -70,7 +67,9 @@
 
 // Menu
 @import 'menu/global';
-@import 'menu/site';
+@import 'menu/mobile';
+@import 'menu/teams';
+@import 'menu/footer';
 
 // Views
 

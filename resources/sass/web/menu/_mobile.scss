@@ -1,0 +1,52 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: layout/menu/mobile
+ * -----------------------------------------------------------------------------
+ */
+
+nav.site-menu-mobile {
+  background-color: $color-white;
+  height: calc(100% - #{$header-height-sm});
+  left: 0;
+  opacity: 0;
+  padding: $space-10x $space-3x;
+  pointer-events: none;
+  position: fixed;
+  transition: opacity .12s ease-in;
+  transform: translateY(-10px);
+  transition: opacity .12s ease-in, transform .12s .12s ease-in;
+  top: $header-height-sm;
+  width: 100%;
+  z-index: 201;
+  -webkit-overflow-scrolling: touch;
+
+  &.is-visible {
+    opacity: 1;
+    pointer-events: all;
+    transition: opacity .12s ease-in, transform .24s ease-in;
+    transform: translateY(0);
+  }
+
+  ul {
+    a {
+      padding: $space-1x 0;
+      &.is-active {
+        + ul {
+          display: block;
+        }
+      }
+    }
+  }
+
+  ul ul {
+    display: none;
+    padding: $space-2x 0 $space-3x $space-4x;
+    a {
+      @include font-size($fs-menu-sub);
+    }
+  }
+
+  @include bp-md() {
+    display: none !important;
+  }
+}

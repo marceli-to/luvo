@@ -34,7 +34,7 @@
 	select {
     background-color: transparent !important;
     display: block;
-    @include font-size($fs-sm);
+    @include font-size($fs-body-sm);
     padding: 11px 50px 9px 1px;
     width: 100%;
 

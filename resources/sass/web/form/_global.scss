@@ -20,7 +20,7 @@ button {
 	color: $color-black;
 	display: block;
 	@include font-regular();
-	@include font-size($fs-sm);
+	@include font-size($fs-body-sm);
 	padding: 8px 4px;
 	position: relative;
 	outline: none !important;
@@ -28,13 +28,6 @@ button {
 	z-index: 1;
 	-webkit-appearance: none;
 	-webkit-tap-highlight-color: $color-white;
-}
-
-input[type="number"] {
-	display: inline-block;
-	padding: $space-xxs 0;
-	text-align: center;
-	width: 50px;
 }
 
 input[type=text],

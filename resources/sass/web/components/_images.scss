@@ -16,25 +16,31 @@
 
 .responsive-image {
   @extend %is-responsive;
+}
 
-  figcaption {
-    padding: $space-xxs 0;
+.visual-wide {
+
+  img {
+    @extend %is-responsive;
   }
 
-  &.is-illu {
-    border-bottom: 2px solid $color-black;
-    padding-bottom: $space-md;
-    @include bp-md() {
-      margin-top: $space-lg;
-    }
-    figcaption {
-      border-top: 1px solid $color-black;
-      margin-top: $space-md;
-      @include font-size($fs-sm);
-      @include bp-md() {
-        margin-top: $space-lg;
-        padding: $space-md 0 0 0;
-      }
+
+  @include bp-md() {
+    height: 100%;
+    min-height: calc(100vh - (#{$header-height-md + $footer-height-md}));
+    position: relative;
+    width: 100%;
+  
+    img {
+      display: block;
+      height: inherit;
+      max-width: none !important;
+      -o-object-fit: cover;
+      object-fit: cover;
+      position: absolute;
+      top: inherit;
+      width: 100%;
     }
   }
+
 }

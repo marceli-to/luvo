@@ -1,14 +1,21 @@
 /**
  * -----------------------------------------------------------------------------
- * File: component/headings/h1
+ * File: layout/menu/teams
  * -----------------------------------------------------------------------------
  */
 
-h1 {
-  @include font-size($fs-heading);
-  margin-bottom: $space-3x;
+ nav.site-menu-footer {
+  display: none;
+  width: 100%;
   
   @include bp-md() {
-    margin-bottom: $space-5x;
+    display: block;
   }
+
+  ul {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
 }

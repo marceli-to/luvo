@@ -41,13 +41,21 @@ $breakpoints: (
 /* Header
  * -------------------- */
 
+$header-height-sm: 70px;
+$header-height-md: 80px;
 
-/* Site
+/* Footer
+ * -------------------- */
+
+$footer-height-md: 80px;
+
+
+
+/* Site / Content
  * -------------------- */
 
 $site-max-width: 1440px;
-// $content-max-width: 1400px;
-// $teaser-max-width:  1600px;
+$content-max-width: 1080px;
 
 
 /* Grids

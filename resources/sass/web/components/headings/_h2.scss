@@ -5,8 +5,5 @@
  */
 
 h2 {
-  color: $color-black;
-  @include font-size($fs-md);
-  @include font-regular();
-  margin-bottom: $space-md;
+
 }
