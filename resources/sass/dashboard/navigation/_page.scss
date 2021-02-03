@@ -31,6 +31,14 @@ nav.page {
     transition: opacity .1s .3s ease-out;
   }
 
+  @include bp-lg() {
+    transform: translateX(0);
+    * {
+      opacity: 1;
+    }
+  }
+
+
   header {
     @extend %page-block;
     align-items: center;

@@ -18,6 +18,7 @@ header.page-header {
     justify-content: space-between;
     @include responsive-prop('height', $header-heights);
   }
+
 }
 
 header.content-header {

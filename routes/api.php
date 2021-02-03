@@ -91,4 +91,21 @@ Route::middleware('auth:sanctum')->group(function() {
   Route::get('publication/state/{publication}', 'Api\PublicationController@toggle');
   Route::delete('publication/{publication}', 'Api\PublicationController@destroy');
 
+  // Contact
+  Route::get('contact', 'Api\ContactController@get');
+  Route::get('contact/{contact}', 'Api\ContactController@find');
+  Route::post('contact', 'Api\ContactController@store');
+  Route::put('contact/{contact}', 'Api\ContactController@update');
+  Route::post('contact/order', 'Api\ContactController@order');
+  Route::get('contact/state/{contact}', 'Api\ContactController@toggle');
+  Route::delete('contact/{contact}', 'Api\ContactController@destroy');
+
+  // Contact images
+  Route::get('contact/image/state/{contactImage}', 'Api\ContactImageController@toggle');
+  Route::put('contact/image/{contactImage}', 'Api\ContactImageController@coords');
+  Route::post('contact/image', 'Api\ContactImageController@store');
+  Route::post('contact/image/order', 'Api\ContactImageController@order');
+  Route::delete('contact/image/{contactImage}', 'Api\ContactImageController@destroy');
+
+
 });

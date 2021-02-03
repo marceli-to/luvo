@@ -23,6 +23,11 @@ import TeamMemberEdit from '@/views/team_member/Edit.vue';
 import PublicationCreate from '@/views/publication/Create.vue';
 import PublicationEdit from '@/views/publication/Edit.vue';
 
+// Contact
+import ContactIndex from '@/views/contact/Index.vue';
+import ContactCreate from '@/views/contact/Create.vue';
+import ContactEdit from '@/views/contact/Edit.vue';
+
 // Dashboard
 import MediaIndex from '@/views/media/Index.vue';
 
@@ -50,6 +55,23 @@ const routes = [
     name: 'home-edit',
     path: '/administration/home/edit/:id',
     component: HomeEdit,
+  },
+
+  // Contact
+  {
+    name: 'contact',
+    path: '/administration/contact',
+    component: ContactIndex,
+  },
+  {
+    name: 'contact-create',
+    path: '/administration/contact/create',
+    component: ContactCreate,
+  },
+  {
+    name: 'contact-edit',
+    path: '/administration/contact/edit/:id',
+    component: ContactEdit,
   },
 
   // Teams

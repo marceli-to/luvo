@@ -35,6 +35,11 @@
         </router-link>
       </li>
       <li>
+        <router-link :to="{name: 'contact'}">
+          <span>Kontakt</span>
+        </router-link>
+      </li>
+      <li>
         <router-link :to="{name: 'media'}">
           <span>Dateien</span>
         </router-link>

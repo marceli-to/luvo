@@ -55,6 +55,13 @@
   display: flex;
   @include responsive-prop('padding-right', $space-sm);
 
+  .listing__item-body__html {
+    line-height: 1.3 !important;
+    p {
+      margin-bottom: 0 !important;
+    }
+  }
+
   .item-tag {
     background-color: $color-light-grey;
     border-radius: 2px;
