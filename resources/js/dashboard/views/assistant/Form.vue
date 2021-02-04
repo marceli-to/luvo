@@ -9,50 +9,57 @@
     <div v-show="tabs.data.active">
       <language-tabs :languages="languageTabs"></language-tabs>
       <div v-show="languageTabs.de.active">
-        <div :class="[this.errors.title ? 'has-error' : '', 'form-row']">
-          <label>Titel*</label>
-          <input type="text" v-model="team.title.de">
-          <label-required />
-        </div>
-        <div :class="[this.errors.text ? 'has-error' : '', 'form-row']">
-          <label>Text*</label>
+        <div :class="[this.errors.description ? 'has-error' : '', 'form-row']">
+          <label>Beschreibung</label>
           <tinymce-editor
             :api-key="tinyApiKey"
             :init="tinyConfig"
-            v-model="team.text.de"
+            v-model="assistant.description.de"
+          ></tinymce-editor>
+        </div>
+        <div class="form-row">
+          <label>Assistenten</label>
+          <tinymce-editor
+            :api-key="tinyApiKey"
+            :init="tinyConfig"
+            v-model="assistant.assistants.de"
           ></tinymce-editor>
         </div>
       </div>
       <div v-show="languageTabs.fr.active">
-        <div>
-          <div class="form-row">
-            <label>Titel</label>
-            <input type="text" v-model="team.title.fr">
-          </div>
-          <div class="form-row">
-            <label>Text</label>
-            <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
-              v-model="team.text.fr"
-            ></tinymce-editor>
-          </div>
+        <div class="form-row">
+          <label>Beschreibung</label>
+          <tinymce-editor
+            :api-key="tinyApiKey"
+            :init="tinyConfig"
+            v-model="assistant.description.fr"
+          ></tinymce-editor>
+        </div>
+        <div class="form-row">
+          <label>Assistenten</label>
+          <tinymce-editor
+            :api-key="tinyApiKey"
+            :init="tinyConfig"
+            v-model="assistant.assistants.fr"
+          ></tinymce-editor>
         </div>
       </div>
       <div v-show="languageTabs.en.active">
-        <div>
-          <div class="form-row">
-            <label>Titel</label>
-            <input type="text" v-model="team.title.en">
-          </div>
-          <div class="form-row">
-            <label>Text</label>
-            <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
-              v-model="team.text.en"
-            ></tinymce-editor>
-          </div>
+        <div class="form-row">
+          <label>Beschreibung</label>
+          <tinymce-editor
+            :api-key="tinyApiKey"
+            :init="tinyConfig"
+            v-model="assistant.description.en"
+          ></tinymce-editor>
+        </div>
+        <div class="form-row">
+          <label>Assistenten</label>
+          <tinymce-editor
+            :api-key="tinyApiKey"
+            :init="tinyConfig"
+            v-model="assistant.assistants.en"
+          ></tinymce-editor>
         </div>
       </div>
     </div>
@@ -68,7 +75,7 @@
         </div>
         <div class="form-row">
           <image-edit 
-            :images="team.images"
+            :images="assistant.images"
             :imagePreviewRoute="'cache'"
             :aspectRatioW="4"
             :aspectRatioH="3"
@@ -78,19 +85,19 @@
     </div>
     <div v-show="tabs.settings.active">
       <div>
-        <div :class="[this.errors.category ? 'has-error' : '', 'form-row']">
-          <label>Kategorie *</label>
+        <div :class="[this.errors.team_id ? 'has-error' : '', 'form-row']">
+          <label>Team*</label>
           <div class="select-wrapper is-medium">
-            <select v-model="team.category_id" name="layout">
-              <option v-for="(category, index) in teamCategories" :key="index" :value="category.id">{{ category.name }}</option>
+            <select v-model="assistant.team_id" name="layout">
+              <option v-for="(team, index) in teams" :key="index" :value="team.id">{{ team.category.name }}</option>
             </select>
           </div>
         </div>  
         <div class="form-row is-last">
           <radio-button 
             :label="'Publizieren?'"
-            v-bind:publish.sync="team.publish"
-            :model="team.publish"
+            v-bind:publish.sync="assistant.publish"
+            :model="assistant.publish"
             :name="'publish'">
           </radio-button>
         </div>
@@ -110,7 +117,7 @@
 <script>
 
 // Icons
-import { ArrowLeftIcon } from 'vue-feather-icons';
+import { ArrowLeftIcon, PlusIcon } from 'vue-feather-icons';
 
 // Mixins
 import ErrorHandling from "@/mixins/ErrorHandling";
@@ -124,23 +131,29 @@ import RadioButton from "@/components/ui/RadioButton.vue";
 import LabelRequired from "@/components/ui/LabelRequired.vue";
 import Tabs from "@/components/ui/Tabs.vue";
 import LanguageTabs from "@/components/ui/LanguageTabs.vue";
+
 import ImageUpload from "@/components/images/Upload.vue";
-import ImageEdit from "@/views/team/images/Edit.vue";
+import ImageEdit from "@/views/assistant/images/Edit.vue";
+import ListActions from "@/components/ui/ListActions.vue";
+import draggable from "vuedraggable";
 
 // Tabs config
-import tabsConfig from "@/views/team/config/tabs.js";
+import tabsConfig from "@/views/assistant/config/tabs.js";
 import languageTabsConfig from "@/config/languageTabs.js";
 
 export default {
   components: {
     ArrowLeftIcon,
+    PlusIcon,
     TinymceEditor,
     RadioButton,
     LabelRequired,
     ImageUpload,
     ImageEdit,
     Tabs,
-    LanguageTabs
+    LanguageTabs,
+    ListActions,
+    draggable
   },
 
   mixins: [ErrorHandling],
@@ -153,38 +166,34 @@ export default {
     return {
       
       // Model
-      team: {
-        title: {
+      assistant: {
+        description: {
           de: null,
           fr: null,
           en: null,
         },
-        text: {
+        assistants: {
           de: null,
           fr: null,
           en: null,
         },
-        category_id: 1,
+        team_id: 1,
         images: [],
         publish: 1,
       },
 
-      teamCategories: null,
-
-      categories: {
-        luks: 'Team Luks',
-        vogt: 'Team Vogt'
-      },
+      teams: null,
 
       // Validation
       errors: {
-        title: false,
-        text: false,
+        description: false,
+        team_id: false
       },
 
       // Loading states
       isFetched: true,
       isLoading: false,
+      isEdit: false,
 
       // Tabs config
       tabs: tabsConfig,
@@ -198,27 +207,32 @@ export default {
 
   created() {
     if (this.$props.type == "edit") {
+      this.isEdit = true;
       this.isFetched = false;
       this.isLoading = true;
-      let uri = `/api/team/${this.$route.params.id}`;
-      this.axios
-        .get(uri)
+
+      // Get assistants
+      this.axios.get(`/api/assistant/${this.$route.params.id}`)
         .then(response => {
-          this.team = response.data;
-          let uri = `/api/team/categories`;
-          this.axios.get(uri).then(response => {
-            this.teamCategories = response.data.data;
+          this.assistant = response.data;
+
+          // Get teams
+          this.axios.get(`/api/team`)
+          .then(response => {
+            this.teams = response.data.data;
             this.isFetched = true;
             this.isLoading = false;
           });
       });
     }
     else {
+      this.isLoading = true;
       this.isFetched = false;
-      let uri = `/api/team/categories`;
+      let uri = `/api/team`;
       this.axios.get(uri).then(response => {
-        this.teamCategories = response.data.data;
+        this.teams = response.data.data;
         this.isFetched = true;
+        this.isLoading = false;
       });
     }
 
@@ -244,15 +258,9 @@ export default {
       }
     },
 
-    fetchFiles() {
-      this.axios.get(`/api/files`).then(response => {
-        this.fileList = response.data;
-      });
-    },
-
     store() {
       this.isLoading = true;
-      this.axios.post('/api/team', this.team).then(response => {
+      this.axios.post('/api/assistant', this.assistant).then(response => {
         this.$router.push({ name: "teams" });
         this.$notify({ type: "success", text: "Daten erfasst!" });
         this.isLoading = false;
@@ -260,9 +268,9 @@ export default {
     },
 
     update() {
-      let uri = `/api/team/${this.$route.params.id}`;
+      let uri = `/api/assistant/${this.$route.params.id}`;
       this.isLoading = true;
-      this.axios.put(uri, this.team).then(response => {
+      this.axios.put(uri, this.assistant).then(response => {
         this.$router.push({ name: "teams" });
         this.$notify({ type: "success", text: "Änderungen gespeichert!" });
         this.isLoading = false;
@@ -274,7 +282,7 @@ export default {
       let image = {
         id: null,
         name: upload.name,
-        caption: { de: null, en: null },
+        caption: null,
         coords_w: 0,
         coords_h: 0,
         coords_x: 0,
@@ -286,26 +294,26 @@ export default {
       }
 
       if (this.$props.type == "edit") {
-        image.team_id = this.$route.params.id;
-        this.axios.post('/api/team/image', image).then(response => {
+        image.assistant_id = this.$route.params.id;
+        this.axios.post('/api/assistant/image', image).then(response => {
           this.$notify({ type: "success", text: "Bild gespeichert!" });
-          image.id = response.data.teamImageId;
-          this.team.images.push(image);
+          image.id = response.data.assistantImageId;
+          this.assistant.images.push(image);
         });
       }
       else {
-        this.team.images.push(image);
+        this.assistant.images.push(image);
       }
     },
 
     // Delete by name
     destroyImage(image, event) {
       if (confirm("Bitte löschen bestätigen!")) {
-        let uri = `/api/team/image/${image}`;
+        let uri = `/api/assistant/image/${image}`;
         this.isLoading = true;
         this.axios.delete(uri).then(response => {
-          const index = this.team.images.findIndex(x => x.name === image);
-          this.team.images.splice(index, 1);
+          const index = this.assistant.images.findIndex(x => x.name === image);
+          this.assistant.images.splice(index, 1);
           this.isLoading = false;
         });
       }
@@ -314,14 +322,14 @@ export default {
     // Toggle image status
     toggleImage(image, event) {
       if (image.id === null) {
-        const index = this.team.images.findIndex(x => x.name === image.name);
-        this.team.images[index].publish = image.publish == 1 ? 0 : 1;
+        const index = this.assistant.images.findIndex(x => x.name === image.name);
+        this.assistant.images[index].publish = image.publish == 1 ? 0 : 1;
       } else {
-        let uri = `/api/team/image/state/${image.id}`;
+        let uri = `/api/assistant/image/state/${image.id}`;
         this.isLoading = true;
         this.axios.get(uri).then(response => {
-          const index = this.team.images.findIndex(x => x.id === image.id);
-          this.team.images[index].publish = response.data;
+          const index = this.assistant.images.findIndex(x => x.id === image.id);
+          this.assistant.images[index].publish = response.data;
           this.isLoading = false;
         });
       }
@@ -330,11 +338,11 @@ export default {
     // Save coords
     saveImageCoords(image) {
       if (image.id === null) {
-        const index = this.team.images.findIndex(x => x.name === image.name);
-        this.team.images[index].coords = image.coords;
+        const index = this.assistant.images.findIndex(x => x.name === image.name);
+        this.assistant.images[index].coords = image.coords;
       } 
       else {
-        let uri = `/api/team/image/${image.id}`;
+        let uri = `/api/assistant/image/${image.id}`;
         this.isLoading = true;
         this.axios.put(uri, image).then(response => {
           this.$notify({ type: "success", text: "Änderungen gespeichert!" });
@@ -347,8 +355,8 @@ export default {
   computed: {
     title: function() {
       return this.$props.type == "edit" 
-        ? "Team bearbeiten" 
-        : "Team hinzufügen";
+        ? "Assistenten bearbeiten" 
+        : "Assistenten hinzufügen";
     }
   }
 };

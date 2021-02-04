@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTeamImagesTable extends Migration
+class CreateAssistantImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateTeamImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('team_images', function (Blueprint $table) {
+        Schema::create('assistant_images', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('caption')->nullable();
+            $table->string('caption')->nullable();
             $table->double('coords_w', 16, 12)->nullable();
             $table->double('coords_h', 16, 12)->nullable();
             $table->double('coords_x', 16, 12)->nullable();
@@ -25,8 +25,8 @@ class CreateTeamImagesTable extends Migration
             $table->string('device', 20)->nullable();
             $table->tinyInteger('order')->default(-1);
             $table->tinyInteger('publish')->default(0);
-            $table->unsignedBigInteger('team_id');
-            $table->foreign('team_id')->references('id')->on('teams');
+            $table->unsignedBigInteger('assistant_id');
+            $table->foreign('assistant_id')->references('id')->on('assistants');
             $table->timestamps();
         });
     }
@@ -38,6 +38,6 @@ class CreateTeamImagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('team_images');
+        Schema::dropIfExists('assistant_images');
     }
 }

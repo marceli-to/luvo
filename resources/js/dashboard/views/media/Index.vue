@@ -75,9 +75,11 @@ export default {
 
     fetch() {
       this.isFetched = true;
+      this.isLoading = true;
       this.axios.get(`/api/files`).then(response => {
         this.files = response.data.data;
         this.isFetched = true;
+        this.isLoading = false;
       });
     },
 
@@ -97,8 +99,15 @@ export default {
       });
     },
 
-    destroy() {
-      alert('not yet implemented...');
+    destroy(id,$event) {
+      if (confirm("Bitte löschen bestätigen!")) {
+        let uri = `/api/file/${id}`;
+        this.isLoading = true;
+        this.axios.delete(uri).then(response => {
+          this.fetch();
+          this.isLoading = false;
+        });
+      }
     }
   }
 }

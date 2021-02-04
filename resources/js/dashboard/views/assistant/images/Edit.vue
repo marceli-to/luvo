@@ -32,7 +32,8 @@
         >
           <a :href="getSource(image, 'cache')" target="_blank" class="upload__preview">
             <img :src="getSource(image, 'thumbnail')" height="300" width="300">
-            <span v-if="image.preview == 1" class="image-label">Vorschau</span>
+            <span v-if="image.device == 'desktop'" class="image-label">Desktop</span>
+            <span v-if="image.device == 'mobile'" class="image-label">Mobile</span>
           </a>
           <div class="upload__actions">
             <image-actions :image="image" :publish="image.publish" :grid="image.is_grid" :imagePreviewRoute="'cache'"></image-actions>
@@ -54,8 +55,8 @@
         <div>
           <figure v-if="hasOverlayEdit">
             <img :src="getSource(overlayItem, 'cache')" height="300" width="300">
-            <figcaption v-if="overlayItem.caption.de">
-              <span v-if="overlayItem.caption.de">{{overlayItem.caption.de}}</span>
+            <figcaption v-if="overlayItem.caption">
+              <span v-if="overlayItem.caption">{{overlayItem.caption}}</span>
             </figcaption>
           </figure>
         </div>
@@ -64,6 +65,14 @@
             <label>Bildlegende</label>
             <input type="text" v-model="overlayItem.caption" />
           </div>
+          <div class="form-row">
+            <label>Anwendung</label>
+            <div class="select-wrapper is-medium">
+              <select v-model="overlayItem.device" name="device">
+                <option v-for="(device, index) in devices" :key="index" :value="index">{{ device }}</option>
+              </select>
+            </div>
+          </div>  
           <div class="form-row-button">
             <a
               href="javascript:;"
@@ -187,11 +196,16 @@ export default {
       overlayItem: {
         name: '',
         caption: null,
+        device: 'desktop',
       },
       ratio: {
         w: null,
         h: null,
       },
+      devices: {
+        'desktop': 'Desktop',
+        'mobile':  'Mobile'
+      }
     };
   },
 
@@ -205,7 +219,7 @@ export default {
 
   methods: {
 
-    changeRatio(w,h,device) {
+    changeRatio(w, h, device) {
       this.ratio.w = w;
       this.ratio.h = h;
       this.overlayItem.device = device;
@@ -243,7 +257,7 @@ export default {
       if (this.debounce) return;
       this.debounce = setTimeout(function(images) {
         this.debounce = false 
-        let uri = `/api/contact/image/order`;
+        let uri = `/api/assistant/image/order`;
         this.axios.post(uri, {images: images}).then((response) => {
           this.$notify({type: 'success', text: 'Reihenfolge angepasst'});
         });

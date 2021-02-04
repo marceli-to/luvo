@@ -186,10 +186,12 @@ export default {
   created() {
     if (this.$props.type == "edit") {
       this.isFetched = false;
+      this.isLoading = true;
       let uri = `/api/home/${this.$route.params.id}`;
       this.axios.get(uri).then(response => {
         this.home = response.data;
         this.isFetched = true;
+        this.isLoading = false;
       });
     }
   },
@@ -208,7 +210,7 @@ export default {
     },
 
     fetchFiles() {
-      this.axios.get(`/api/files/get`).then(response => {
+      this.axios.get(`/api/files`).then(response => {
         this.fileList = response.data;
       });
     },

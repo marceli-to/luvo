@@ -181,10 +181,12 @@ export default {
 
     if (this.$props.type == "edit") {
       this.isFetched = false;
+      this.isLoading = true;
       let uri = `/api/publication/${this.$route.params.id}`;
       this.axios.get(uri).then(response => {
         this.publication = response.data;
         this.isFetched = true;
+        this.isLoading = false;
       });
     }
 
@@ -195,7 +197,7 @@ export default {
     // Get files for tinymce
     let _this = this;
     this.tinyConfig.link_list = function(success) {
-      _this.axios.get(`/api/files/get`).then(response => {
+      _this.axios.get(`/api/files`).then(response => {
         success(response.data);
       });
     }

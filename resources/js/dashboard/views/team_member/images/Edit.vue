@@ -98,10 +98,10 @@
         <div :class="'is-' + overlayItem.orientation">
           <div class="cropper-formats">
             <div>
-              <a href="javascript:;" @click.prevent="changeRatio(16,10)" class="btn-cropper-format">Desktop</a>
+              <a href="javascript:;" @click.prevent="changeRatio(10, 12, 'desktop')" class="btn-cropper-format">Desktop</a>
             </div>
             <div>
-              <a href="javascript:;" @click.prevent="changeRatio(10,12)" class="btn-cropper-format">Mobile</a>
+              <a href="javascript:;" @click.prevent="changeRatio(16, 10, 'mobile')" class="btn-cropper-format">Mobile</a>
             </div>
           </div>
           <div class="cropper-info">{{ cropW }} x {{ cropH }}px</div>
@@ -219,9 +219,10 @@ export default {
 
   methods: {
 
-    changeRatio(w,h) {
+    changeRatio(w, h, device) {
       this.ratio.w = w;
       this.ratio.h = h;
+      this.overlayItem.device = device;
       this.resetCropper();
     },
 

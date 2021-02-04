@@ -133,18 +133,23 @@ export default {
 
     routes: Object,
     record: Object,
+
+    model: {
+      type: String,
+      default: null,
+    }
   },
 
   methods: {
 
     toggle(id,$event) {
       let parent = this.$props.isDraggable ? this.$parent.$parent : this.$parent;
-      parent.toggle(id,$event);
+      parent.toggle(id, $event, this.$props.model);
     },
 
     destroy(id,$event) {
       let parent = this.$props.isDraggable ? this.$parent.$parent : this.$parent;
-      parent.destroy(id,$event);
+      parent.destroy(id, $event, this.$props.model);
     },
 
     copy(id,$event) {

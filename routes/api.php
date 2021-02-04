@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->group(function() {
   // Files
   Route::get('files','Api\FileController@get');
   Route::post('file/store','Api\FileController@store');
+  Route::delete('file/{file}', 'Api\FileController@destroy');
 
   // Upload
   Route::post('image/upload','Api\UploadController@image');
@@ -107,5 +108,20 @@ Route::middleware('auth:sanctum')->group(function() {
   Route::post('contact/image/order', 'Api\ContactImageController@order');
   Route::delete('contact/image/{contactImage}', 'Api\ContactImageController@destroy');
 
+  // Assistant
+  Route::get('assistants', 'Api\AssistantController@get');
+  Route::get('assistant/{assistant}', 'Api\AssistantController@find');
+  Route::post('assistant', 'Api\AssistantController@store');
+  Route::put('assistant/{assistant}', 'Api\AssistantController@update');
+  Route::post('assistant/order', 'Api\AssistantController@order');
+  Route::get('assistant/state/{assistant}', 'Api\AssistantController@toggle');
+  Route::delete('assistant/{assistant}', 'Api\AssistantController@destroy');
+
+  // Assistant images
+  Route::get('assistant/image/state/{assistantImage}', 'Api\AssistantImageController@toggle');
+  Route::put('assistant/image/{assistantImage}', 'Api\AssistantImageController@coords');
+  Route::post('assistant/image', 'Api\AssistantImageController@store');
+  Route::post('assistant/image/order', 'Api\AssistantImageController@order');
+  Route::delete('assistant/image/{assistantImage}', 'Api\AssistantImageController@destroy');
 
 });

@@ -26,7 +26,7 @@ class CreateHomeImagesTable extends Migration
             $table->tinyInteger('order')->default(-1);
             $table->tinyInteger('publish')->default(0);
             $table->unsignedBigInteger('home_id');
-            $table->foreign('home_id')->references('id')->on('home')->onDelete('cascade');
+            $table->foreign('home_id')->references('id')->on('home');
             $table->timestamps();
         });
     }

@@ -19,6 +19,10 @@ import TeamMemberIndex from '@/views/team_member/Index.vue';
 import TeamMemberCreate from '@/views/team_member/Create.vue';
 import TeamMemberEdit from '@/views/team_member/Edit.vue';
 
+// Assistants
+import AssistantCreate from '@/views/assistant/Create.vue';
+import AssistantEdit from '@/views/assistant/Edit.vue';
+
 // Publications
 import PublicationCreate from '@/views/publication/Create.vue';
 import PublicationEdit from '@/views/publication/Edit.vue';
@@ -106,6 +110,18 @@ const routes = [
     name: 'team-member-edit',
     path: '/administration/team/member/edit/:id',
     component: TeamMemberEdit,
+  },
+
+  // Assistant
+  {
+    name: 'assistant-create',
+    path: '/administration/assistant/create',
+    component: AssistantCreate,
+  },
+  {
+    name: 'assistant-edit',
+    path: '/administration/assistant/edit/:id',
+    component: AssistantEdit,
   },
 
   // Publications

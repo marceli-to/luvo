@@ -15,7 +15,7 @@ class AlterTeamsTableAddCategoryId extends Migration
     {
         Schema::table('teams', function (Blueprint $table) {
             $table->unsignedBigInteger('category_id')->after('publish');
-            $table->foreign('category_id')->references('id')->on('team_categories')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('team_categories');
         });
     }
 

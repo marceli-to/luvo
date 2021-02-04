@@ -22,6 +22,7 @@
           :id="t.id" 
           :record="t"
           :isDraggable="false"
+          :model="'team'"
           :routes="{edit: 'team-edit'}">
         </list-actions>
       </div>
@@ -37,35 +38,65 @@
         <span>Hinzufügen</span>
       </router-link>
     </header>
-
-    <div v-for="(team, index) in teamMembersGrouped" :key="index" class="sa-md">
-      <div class="listing" v-if="team.length">
-        <draggable 
-          :disabled="false"
-          v-model="teamMembersGrouped[index]" 
-          @end="order(index)"
-          ghost-class="draggable-ghost"
-          draggable=".listing__item">
-          <div
-            :class="[t.publish == 0 ? 'is-disabled' : '', 'listing__item is-draggable']"
-            v-for="t in team"
-            :key="t.id"
-          >
-            <div class="listing__item-body">
-              {{ t.firstname }} {{ t.name}} <separator /> {{ t.team.category.name}}
+    <div v-if="teamMembers.length">
+      <div v-for="(team, index) in teamMembersGrouped" :key="index" class="sa-sm">
+        <div class="listing">
+          <draggable 
+            :disabled="false"
+            v-model="teamMembersGrouped[index]" 
+            @end="order(index)"
+            ghost-class="draggable-ghost"
+            draggable=".listing__item">
+            <div
+              :class="[tm.publish == 0 ? 'is-disabled' : '', 'listing__item is-draggable']"
+              v-for="tm in team"
+              :key="tm.id"
+            >
+              <div class="listing__item-body">
+                {{ tm.firstname }} {{ tm.name}} <separator /> {{ tm.team.category.name}}
+              </div>
+              <list-actions 
+                :id="tm.id" 
+                :record="tm"
+                :isDraggable="true"
+                :model="'team_member'"
+                :routes="{edit: 'team-member-edit'}">
+              </list-actions>
             </div>
-            <list-actions 
-              :id="t.id" 
-              :record="t"
-              :isDraggable="false"
-              :routes="{edit: 'team-member-edit'}">
-            </list-actions>
-          </div>
-        </draggable>
+          </draggable>
+        </div>
       </div>
-      <div v-else>
-        <p class="no-records">Es sind noch keine Inhalte vorhanden...</p>
+    </div>
+    <div v-else>
+      <p class="no-records">Es sind noch keine Inhalte vorhanden...</p>
+    </div>
+    <header class="content-header sb-lg">
+      <h1>Assistenz</h1>
+      <router-link :to="{ name: 'assistant-create' }" class="feather-icon feather-icon--prepend">
+        <plus-icon size="16"></plus-icon>
+        <span>Hinzufügen</span>
+      </router-link>
+    </header>
+    <div class="listing" v-if="assistants.length">
+      <div
+        :class="[a.publish == 0 ? 'is-disabled' : '', 'listing__item']"
+        v-for="a in assistants"
+        :key="a.id"
+      >
+        <div class="listing__item-body">
+          {{ a.team.category.name}}
+        </div>
+        <list-actions 
+          :id="a.id" 
+          :record="a"
+          :isDraggable="false"
+          :model="'assistant'"
+          :routes="{edit: 'assistant-edit'}">
+        </list-actions>
       </div>
+    </div>
+    <div v-else>
+      <p class="no-records">Es sind noch keine Inhalte vorhanden...</p>
     </div>
   </div>
 </div>
@@ -100,6 +131,7 @@ export default {
       teams: [],
       teamMembers: [],
       teamMembersGrouped: [],
+      assistants: [],
     };
   },
 
@@ -112,6 +144,7 @@ export default {
     fetch() {
 
       // Get teams
+      this.isLoading = true;
       this.axios.get(`/api/team`)
         .then(response => {
           this.teams = response.data.data;
@@ -120,33 +153,74 @@ export default {
           this.axios.get(`/api/team/members`)
           .then(response => {
             this.teamMembers = response.data.data;
-            this.isFetched = true;
             this.teamMembersGrouped = _.groupBy(this.teamMembers, "team_id");
           });
-      });
 
-
-    },
-
-    toggle(id,event) {
-      let uri = `/api/team/state/${id}`;
-      this.isLoading = true;
-      this.axios.get(uri).then(response => {
-        const index = this.team.findIndex(x => x.id === id);
-        this.team[index].publish = response.data;
-        this.$notify({ type: "success", text: "Status geändert" });
-        this.isLoading = false;
+          // Get assistants
+          this.axios.get(`/api/assistants`)
+          .then(response => {
+            this.assistants = response.data.data;
+            this.isFetched = true;
+            this.isLoading = false;
+          });
       });
     },
 
-    destroy(id, event) {
+    toggle(id,event,model) {
+
+      if (model) {
+        if (model == 'team') {
+          let uri = `/api/team/state/${id}`;
+          this.isLoading = true;
+          this.axios.get(uri).then(response => {
+            const index = this.teams.findIndex(x => x.id === id);
+            this.teams[index].publish = response.data;
+            this.$notify({ type: "success", text: "Status geändert" });
+            this.isLoading = false;
+          });
+        }
+        if (model == 'team_member') {
+          let uri = `/api/team/member/state/${id}`;
+          this.isLoading = true;
+          this.axios.get(uri).then(response => {
+            const index = this.teamMembers.findIndex(x => x.id === id);
+            this.teamMembers[index].publish = response.data;
+            this.$notify({ type: "success", text: "Status geändert" });
+            this.isLoading = false;
+          });
+        }
+      }
+    },
+
+    destroy(id, event, model) {
       if (confirm("Bitte löschen bestätigen!")) {
-        let uri = `/api/team/${id}`;
-        this.isLoading = true;
-        this.axios.delete(uri).then(response => {
-          this.fetch();
-          this.isLoading = false;
-        });
+
+        if (model) {
+          if (model == 'team') {
+            let uri = `/api/team/${id}`;
+            this.isLoading = true;
+            this.axios.delete(uri).then(response => {
+              this.fetch();
+              this.isLoading = false;
+            });
+          }
+          if (model == 'team_member') {
+            let uri = `/api/team/member/${id}`;
+            this.isLoading = true;
+            this.axios.delete(uri).then(response => {
+              this.fetch();
+              this.isLoading = false;
+            });
+          }
+          if (model == 'assistant') {
+            let uri = `/api/assistant/${id}`;
+            this.isLoading = true;
+            this.axios.delete(uri).then(response => {
+              this.fetch();
+              this.isLoading = false;
+            });
+          }
+        }
       }
     },
 

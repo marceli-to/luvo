@@ -3,10 +3,9 @@ namespace App\Models;
 use App\Models\Base;
 use Illuminate\Database\Eloquent\Model;
 
-class ContactImage extends Base
+class AssistantImage extends Base
 {
- 
-	protected $fillable = [
+ 	protected $fillable = [
 		'name',
     'caption',
 		'coords_w',
@@ -17,11 +16,11 @@ class ContactImage extends Base
     'device',
     'publish',
     'order',
-    'contact_id',
+    'assistant_id',
 	];
 
   public function contact()
   {
-    return $this->belongsTo('App\Models\Contact');
+    return $this->belongsTo('App\Models\Assistant');
   }
 }

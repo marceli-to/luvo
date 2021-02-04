@@ -26,7 +26,7 @@ class CreateContactImagesTable extends Migration
             $table->tinyInteger('order')->default(-1);
             $table->tinyInteger('publish')->default(0);
             $table->unsignedBigInteger('contact_id');
-            $table->foreign('contact_id')->references('id')->on('teams')->onDelete('cascade');
+            $table->foreign('contact_id')->references('id')->on('contacts');
             $table->timestamps();
         });
     }

@@ -16,6 +16,10 @@ use App\Observers\ContactObserver;
 use App\Observers\ContactImageObserver;
 use App\Models\Contact;
 use App\Models\ContactImage;
+use App\Observers\AssistantObserver;
+use App\Observers\AssistantImageObserver;
+use App\Models\Assistant;
+use App\Models\AssistantImage;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -45,5 +49,7 @@ class AppServiceProvider extends ServiceProvider
     TeamMemberImage::observe(TeamMemberImageObserver::class);
     Contact::observe(ContactObserver::class);
     ContactImage::observe(ContactImageObserver::class);
+    Assistant::observe(AssistantObserver::class);
+    AssistantImage::observe(AssistantImageObserver::class);
   }
 }

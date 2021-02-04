@@ -70,9 +70,11 @@ export default {
   methods: {
 
     fetch() {
+      this.isLoading = true;
       this.axios.get(`/api/home`).then(response => {
         this.home = response.data.data;
         this.isFetched = true;
+        this.isLoading = false;
       });
     },
 

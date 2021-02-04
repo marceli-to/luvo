@@ -208,7 +208,7 @@
     <footer class="module-footer">
       <div>
         <button type="submit" class="btn-primary">Speichern</button>
-        <router-link :to="{ name: 'team-members' }" class="btn-secondary">
+        <router-link :to="{ name: 'teams' }" class="btn-secondary">
           <span>Zurück</span>
         </router-link>
       </div>
@@ -325,6 +325,7 @@ export default {
     if (this.$props.type == "edit") {
       this.isEdit = true;
       this.isFetched = false;
+      this.isLoading = true;
 
       // Get team members
       this.axios.get(`/api/team/member/${this.$route.params.id}`)
@@ -336,6 +337,7 @@ export default {
           .then(response => {
             this.teams = response.data.data;
             this.isFetched = true;
+            this.isLoading = false;
           });
       });
     }
@@ -351,7 +353,7 @@ export default {
     // Get files for tinymce
     let _this = this;
     this.tinyConfig.link_list = function(success) {
-      _this.axios.get(`/api/files/get`).then(response => {
+      _this.axios.get(`/api/files`).then(response => {
         success(response.data);
       });
     }

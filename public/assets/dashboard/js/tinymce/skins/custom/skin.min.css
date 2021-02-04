@@ -101,3 +101,7 @@
     border-top: none;
     padding: 20px 16px;
 }
+
+.tox .tox-toolbar {
+    border-top: none !important;
+}
