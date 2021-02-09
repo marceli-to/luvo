@@ -1,15 +1,17 @@
 <?php
 namespace App\Http\Controllers;
+use App\Models\Home;
 use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
 
 class HomeController extends BaseController
 {
-  protected $viewPath = 'web.pages.';
+  protected $viewPath = 'web.pages.home.';
 
-  public function __construct()
+  public function __construct(Home $home)
   {
     parent::__construct();
+    $this->home = $home;
   }
 
   /**
@@ -20,6 +22,7 @@ class HomeController extends BaseController
 
   public function index()
   { 
-    return view($this->viewPath . 'home');
+    $data = $this->home->with('publishedImages')->get()->first();
+    return view($this->viewPath . 'index', ['data' => $data]);
   }
 }

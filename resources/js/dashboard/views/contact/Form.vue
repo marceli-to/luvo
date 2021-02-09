@@ -251,7 +251,7 @@ export default {
       let image = {
         id: null,
         name: upload.name,
-        caption: { de: null, en: null },
+        caption: null,
         coords_w: 0,
         coords_h: 0,
         coords_x: 0,

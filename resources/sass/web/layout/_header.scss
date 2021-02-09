@@ -30,4 +30,14 @@ header.site-header {
       padding: 0 $space-6x;
     }
   }
+
+  h1 {
+    @include font-size($fs-menu-main);
+    margin-bottom: 0 !important;
+    line-height: 1 !important;
+
+    @include bp-md() {
+      display: none;
+    }
+  }
 }

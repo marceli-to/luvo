@@ -3,7 +3,7 @@
     <nav class="site-menu-footer">
       <ul>
         <li>
-          <a href="/">Kontakt</a>
+        <a href="{{ localized_route('page.contact') }}">{{__('Kontakt')}}</a>
         </li>
         @include('web.partials.menu.languages')
       </ul>

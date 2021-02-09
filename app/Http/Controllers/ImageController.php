@@ -26,7 +26,7 @@ class ImageController extends ImageCacheController
     $this->maxWidth  = \Request::get('w');
     $this->maxHeight = \Request::get('h');
     $this->coords    = \Request::get('c');
-
+    
     switch (strtolower($template)) {
       case 'original':
         return $this->getOriginal($filename);

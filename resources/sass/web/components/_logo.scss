@@ -5,11 +5,12 @@
  */
 
 .logo {
-  display: block;
+  display: none;
   height: 35px;
   width: 210px;
 
   @include bp-md() {
+    display: block;
     height: 28px;
     width: 635px;
   }
@@ -34,5 +35,11 @@
         display: none;
       }
     }
+  }
+}
+
+.is-home {
+  .logo {
+    display: block !important;
   }
 }

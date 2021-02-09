@@ -14,18 +14,9 @@
   width: auto;
 }
 
-.responsive-image {
-  @extend %is-responsive;
-}
-
-.visual-wide {
-
-  img {
-    @extend %is-responsive;
-  }
-
-
+%is-fullheight {
   @include bp-md() {
+    display: block !important;
     height: 100%;
     min-height: calc(100vh - (#{$header-height-md + $footer-height-md}));
     position: relative;
@@ -33,7 +24,7 @@
   
     img {
       display: block;
-      height: inherit;
+      height: 100%;
       max-width: none !important;
       -o-object-fit: cover;
       object-fit: cover;
@@ -42,5 +33,29 @@
       width: 100%;
     }
   }
+}
 
+%visual,
+.visual {
+  img {
+    @extend %is-responsive;
+  }
+}
+
+.visual-mobile {
+  @extend %visual;
+  @include bp-md() {
+    display: none;
+  }
+}
+
+.visual-desktop {
+  @extend %visual;
+  @extend %is-fullheight;
+  display: none;
+}
+
+.visual-wide {
+  @extend %visual;
+  @extend %is-fullheight;
 }

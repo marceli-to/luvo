@@ -1,7 +1,17 @@
+@if (request()->routeIs('*page.home'))
 <li class="languages">
-  <a href="">D</a>
+  <a href="/de/home">D</a>
   <span>/</span>
-  <a href="">E</a>
+  <a href="/en/home">E</a>
   <span>/</span>
-  <a href="">F</a>
+  <a href="/fr/home">F</a>
 </li>
+@else
+<li class="languages">
+  <a href="{{ current_route('de') }}">D</a>
+  <span>/</span>
+  <a href="{{ current_route('en') }}">E</a>
+  <span>/</span>
+  <a href="{{ current_route('fr') }}">F</a>
+</li>
+@endif

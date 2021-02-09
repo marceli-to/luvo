@@ -5,8 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ContactImage extends Base
 {
- 
-	protected $fillable = [
+ 	protected $fillable = [
 		'name',
     'caption',
 		'coords_w',

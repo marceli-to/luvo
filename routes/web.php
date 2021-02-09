@@ -15,12 +15,14 @@ Route::get('/logout', 'Auth\LoginController@logout');
 
 // Home
 Route::get('/', 'HomeController@index')->name('page.home');
-Route::get('/en', 'HomeController@index')->name('page.home');
 Route::get('/de', 'HomeController@index')->name('page.home');
+Route::get('/en', 'HomeController@index')->name('page.home');
+Route::get('/fr', 'HomeController@index')->name('page.home');
+Route::multilingual('/home', 'HomeController@index')->name('page.home');
 
-// News
-Route::multilingual('/news', 'NewsController@index')->name('page.news.listing');
-Route::multilingual('/news/{slug?}/{news}', 'NewsController@show')->name('page.news.show');
+// Contact
+Route::multilingual('/contact', 'ContactController@index')->name('page.contact');
+
 
 // Url based images
 Route::get('/img/{template}/{filename}', 'ImageController@getResponse');
