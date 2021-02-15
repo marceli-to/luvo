@@ -22,9 +22,9 @@ class TeamStoreRequest extends FormRequest
   public function rules()
   {
     return [
-      'category_id' => 'required',
-      'title.de'    => 'required',
-      'text.de'     => 'required'
+      'slug'      => 'required',
+      'title.de'  => 'required',
+      'text.de'   => 'required'
     ];
   }
 
@@ -37,8 +37,8 @@ class TeamStoreRequest extends FormRequest
   {
     return [
 
-      'category_id.required' => [
-        'field' => 'category_id',
+      'slug.required' => [
+        'field' => 'slug',
         'error' => 'Kategorie wird benötigt!'
       ],
 

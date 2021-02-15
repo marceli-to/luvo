@@ -6,6 +6,7 @@ require('./vendor/lazysizes.js');
 
 // Modules
 require('./modules/menu.js');
+require('./modules/utils.js');
 // require('./modules/swiper.js');
 
 

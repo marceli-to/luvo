@@ -1,0 +1,64 @@
+var Utils = (function() {
+	
+	// selectors
+	var selectors = {
+    html:      'html',
+    body:      'body',
+    btnToggle: '[data-toggle]',
+  };
+  
+  var attr = {
+    toggle: 'toggle',
+    show: 'show',
+    hide: 'hide'
+  };
+
+  // Init
+  var _initialize = function() {
+    _bind();
+  };
+
+  // Bind events
+  var _bind = function() {
+    $(selectors.body).on('click', selectors.btnToggle, function(){
+      _toggle($(this));
+    });
+  };
+
+  var _toggle = function(el) {
+    var data = el.data(attr.toggle).split(":");
+    if (data.length == 2) {
+      el[data[0]](data[1]).toggle(); // i.e. el.next('div').toggle();
+    }
+  };
+
+  var _show = function(el) {
+    var data = el.data(attr.show).split(":");
+    if (data.length == 2) {
+      el[data[0]](data[1]).show(); // i.e. el.next('div').show();
+    }
+  };
+
+  var _hide = function(el) {
+    var data = el.data(attr.hide).split(":");
+    if (data.length == 2) {
+      el[data[0]](data[1]).hide(); // i.e. el.next('div').hide();
+    }
+  };
+
+
+  /* --------------------------------------------------------------
+    * RETURN PUBLIC METHODS
+    * ------------------------------------------------------------ */
+
+  return {
+    init:  _initialize,
+  };
+	
+})();
+
+// Initialize
+$(function() {
+  Utils.init();
+});
+

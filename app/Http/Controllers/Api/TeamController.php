@@ -22,7 +22,7 @@ class TeamController extends Controller
    */
   public function get()
   {
-    return new DataCollection($this->team->with('images', 'category')->get());
+    return new DataCollection($this->team->with('images')->get());
   }
 
   /**
@@ -57,7 +57,7 @@ class TeamController extends Controller
         'fr' => $request->input('text.fr'),
         'en' => $request->input('text.en'),
       ],
-      'category_id' => $request->input('category_id'),
+      'slug' => $request->input('slug'),
       'publish' => $request->input('publish'),
     ]);
 
@@ -117,7 +117,7 @@ class TeamController extends Controller
     $team->setTranslation('title', 'en', $request->input('title.en'));
     $team->setTranslation('text', 'en', $request->input('text.en'));
 
-    $team->category_id = $request->input('category_id');
+    $team->slug = $request->input('slug');
     $team->publish = $request->input('publish');
 
     // Save changes

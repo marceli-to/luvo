@@ -1,5 +1,9 @@
 <?php
 
+use App\Models\Assistant;
+use App\Models\Team;
+use App\Models\TeamMember;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,13 +24,19 @@ Route::get('/en', 'HomeController@index')->name('page.home');
 Route::get('/fr', 'HomeController@index')->name('page.home');
 Route::multilingual('/home', 'HomeController@index')->name('page.home');
 
+// Teams
+Route::multilingual('/team-luks', 'TeamController@luks')->name('page.team.luks');
+Route::multilingual('/team-vogt', 'TeamController@vogt')->name('page.team.vogt');
+
+// Team members
+Route::multilingual('/team-{slugTeamAssistant}/{slug}/{assistant}', 'AssistantController@index')->name('page.team.assistant');
+Route::multilingual('/team-{slugTeam}/{slugMember}/{teamMember}', 'TeamMemberController@index')->name('page.team.member');
+
 // Contact
 Route::multilingual('/contact', 'ContactController@index')->name('page.contact');
 
-
 // Url based images
 Route::get('/img/{template}/{filename}', 'ImageController@getResponse');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -36,10 +46,7 @@ Route::get('/img/{template}/{filename}', 'ImageController@getResponse');
 */
 
 Route::middleware('auth:sanctum', 'verified')->group(function() {
-
-  // CatchAll: Dashboard Administration
   Route::get('administration/{any?}', function () {
     return view('dashboards.administration.app');
   })->where('any', '.*')->middleware('role:admin')->name('dashboard_admin');
-
 });

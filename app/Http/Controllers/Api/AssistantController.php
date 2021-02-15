@@ -22,7 +22,7 @@ class AssistantController extends Controller
    */
   public function get()
   {
-    return new DataCollection($this->assistant->with('images', 'team.category')->get());
+    return new DataCollection($this->assistant->with('images', 'team')->get());
   }
 
   /**
@@ -33,7 +33,7 @@ class AssistantController extends Controller
    */
   public function find(Assistant $assistant)
   {
-    $assistant = $this->assistant->with('images', 'team.category')->findOrFail($assistant->id);
+    $assistant = $this->assistant->with('images', 'team')->findOrFail($assistant->id);
     return response()->json($assistant);
   }
 

@@ -16,7 +16,7 @@
         :key="t.id"
       >
         <div class="listing__item-body">
-          {{ t.title.de }} <separator /> {{ t.category.name}}
+          {{ t.title.de }} <separator /> <span v-if="t.slug">Team {{ t.slug | capitalizeFirst() }}</span>
         </div>
         <list-actions 
           :id="t.id" 
@@ -53,7 +53,7 @@
               :key="tm.id"
             >
               <div class="listing__item-body">
-                {{ tm.firstname }} {{ tm.name}} <separator /> {{ tm.team.category.name}}
+                {{ tm.firstname }} {{ tm.name}} <separator /> <span v-if="tm.team.slug">Team {{ tm.team.slug | capitalizeFirst() }}</span>
               </div>
               <list-actions 
                 :id="tm.id" 
@@ -84,7 +84,7 @@
         :key="a.id"
       >
         <div class="listing__item-body">
-          {{ a.team.category.name}}
+          <span v-if="a.team.slug">Team {{ a.team.slug | capitalizeFirst()}}</span>
         </div>
         <list-actions 
           :id="a.id" 

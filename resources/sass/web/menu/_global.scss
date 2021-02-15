@@ -6,19 +6,16 @@
 
 nav {
 
-  ul {
-  
-    li {
-      display: block;
-    }
+  li {
+    display: block;
+  }
 
-    a {
-      @extend %anchor-underline;
-      color: $color-black;
-      display: block;
-      @include font-size($fs-menu-main);
-      padding: $space-1x 0;
-    }
+  a {
+    @extend %anchor-underline;
+    color: $color-black;
+    display: block;
+    @include font-size($fs-menu-main);
+    padding: $space-1x 0;
   }
 
   li.languages {

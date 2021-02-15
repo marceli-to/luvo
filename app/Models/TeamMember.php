@@ -46,4 +46,22 @@ class TeamMember extends Base
 	{
 		return $this->hasMany('App\Models\Publication', 'team_member_id', 'id')->orderBy('order');
 	}
+
+  /**
+   * Get fullname
+   */
+
+  public function getFullnameAttribute()
+  {
+    return $this->firstname . ' ' . $this->name;
+	}
+	
+  /**
+   * Get slug
+   */
+
+  public function getSlugAttribute()
+  {
+    return \Str::slug($this->firstname . ' ' . $this->name, '-');
+  }
 }

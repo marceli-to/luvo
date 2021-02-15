@@ -191,7 +191,7 @@
           <label>Team*</label>
           <div class="select-wrapper is-medium">
             <select v-model="teamMember.team_id" name="layout">
-              <option v-for="(team, index) in teams" :key="index" :value="team.id">{{ team.category.name }}</option>
+              <option v-for="(team, index) in teams" :key="index" :value="team.id">{{ team.slug }}</option>
             </select>
           </div>
         </div>  

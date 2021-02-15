@@ -7,3 +7,7 @@ Vue.filter('truncate', function (text, length, suffix) {
     return t;
   }
 });
+
+Vue.filter('capitalizeFirst', function (str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+});

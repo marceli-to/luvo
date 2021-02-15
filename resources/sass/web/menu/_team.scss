@@ -1,0 +1,56 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: layout/menu/page
+ * -----------------------------------------------------------------------------
+ */
+
+nav.menu-team {
+  border-bottom: 1px solid $color-black;
+  padding: $space-3x;
+
+  @include bp-md() {
+    align-items: flex-end;
+    border-bottom: none;
+    display: flex;
+    left: $space-6x;
+    padding: 0;
+    position: fixed;
+    top: $space-4x;
+    width: 100%;
+    z-index: 401;
+  }
+
+  h1 {
+    display: none;
+    margin: 0 !important;
+    @include font-size($fs-menu-main);
+    @include bp-md() {
+      display: block;
+    }
+  }
+
+  ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: $space-3x;
+
+    @include bp-md() {
+      display: flex;
+      margin-left: $space-9x;
+      grid-template-columns: none;
+      grid-gap: 0;
+    }
+  }
+
+  li {
+    
+    @include bp-md() {
+      margin-right: $space-8x;
+      padding-bottom: 3px;
+    }
+
+    a {
+      @include font-size($fs-menu-sub);
+    }
+  }
+}

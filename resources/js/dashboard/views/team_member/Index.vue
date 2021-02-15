@@ -23,7 +23,7 @@
             :key="t.id"
           >
             <div class="listing__item-body">
-              {{ t.firstname }} {{ t.name}} <separator /> {{ t.team.category.name}}
+              {{ t.firstname }} {{ t.name}} <separator /> {{ t.team.slug}}
             </div>
             <list-actions 
               :id="t.id" 

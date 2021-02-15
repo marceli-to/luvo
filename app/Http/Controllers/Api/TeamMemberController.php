@@ -22,7 +22,7 @@ class TeamMemberController extends Controller
    */
   public function get()
   {
-    return new DataCollection($this->teamMember->with('images', 'team.category')->orderBy('order')->get());
+    return new DataCollection($this->teamMember->with('images', 'team')->orderBy('order')->get());
   }
 
   /**

@@ -1,0 +1,19 @@
+<nav class="site-menu-mobile js-menu">
+  <ul>
+    @if ($data)
+      @foreach($data as $d)
+        <li>
+          <a href="javascript:;" class="js-menu-item-parent">{{__('Team')}} {{ $d->capitalizedSlug }}</a>
+          <ul>
+            <li>
+              <a href="{{ localized_route('page.team.' . $d->slug) }}" title="{{ __('Team') }} {{ $d->capitalizedSlug }}">{{__('Über uns')}}</a>
+            </li>
+            <x-menu-team-members teamId="{{$d->id}}" isMobileMenu="1" />
+          </ul>
+        </li>
+      @endforeach
+    @endif
+    <x-menu-contact />
+    <x-menu-language />
+  </ul>
+</nav>

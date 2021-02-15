@@ -81,8 +81,8 @@
         <div :class="[this.errors.category ? 'has-error' : '', 'form-row']">
           <label>Kategorie *</label>
           <div class="select-wrapper is-medium">
-            <select v-model="team.category_id" name="layout">
-              <option v-for="(category, index) in teamCategories" :key="index" :value="category.id">{{ category.name }}</option>
+            <select v-model="team.slug" name="slug">
+              <option v-for="(slug, index) in slugs" :key="index" :value="index">{{ slug }}</option>
             </select>
           </div>
         </div>  
@@ -165,13 +165,12 @@ export default {
           en: null,
         },
         category_id: 1,
+        slug: 'luks',
         images: [],
         publish: 1,
       },
 
-      teamCategories: null,
-
-      categories: {
+      slugs: {
         luks: 'Team Luks',
         vogt: 'Team Vogt'
       },
@@ -198,26 +197,11 @@ export default {
 
   created() {
     if (this.$props.type == "edit") {
-      this.isFetched = false;
       this.isLoading = true;
       let uri = `/api/team/${this.$route.params.id}`;
-      this.axios
-        .get(uri)
-        .then(response => {
-          this.team = response.data;
-          let uri = `/api/team/categories`;
-          this.axios.get(uri).then(response => {
-            this.teamCategories = response.data.data;
-            this.isFetched = true;
-            this.isLoading = false;
-          });
-      });
-    }
-    else {
-      this.isFetched = false;
-      let uri = `/api/team/categories`;
       this.axios.get(uri).then(response => {
-        this.teamCategories = response.data.data;
+        this.team = response.data;
+        this.isLoading = false;
         this.isFetched = true;
       });
     }

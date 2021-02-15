@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App\Models\Contact;
-use App\Models\TeamMember;
+use App\Models\Team;
 use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
 
@@ -9,11 +9,11 @@ class ContactController extends BaseController
 {
   protected $viewPath = 'web.pages.contact.';
 
-  public function __construct(Contact $contact, TeamMember $teamMember)
+  public function __construct(Contact $contact, Team $team)
   {
     parent::__construct();
     $this->contact = $contact;
-    $this->teamMember = $teamMember;
+    $this->team = $team;
   }
 
   /**
@@ -24,10 +24,12 @@ class ContactController extends BaseController
 
   public function index()
   { 
-    
-    $data['team_members'] = $this->teamMember->with('images', 'team.category')->orderBy('order')->get();
+    $data['teams'] = [
+      'luks' => $this->team->bySlug('luks')->with('members')->get()->first(),
+      'vogt' => $this->team->bySlug('vogt')->with('members')->get()->first()
+    ];
+
     $data['contact'] = $this->contact->with('publishedImages')->get()->first();
-    
     return view($this->viewPath . 'index', ['data' => $data]);
   }
 }

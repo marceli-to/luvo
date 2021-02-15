@@ -14,15 +14,16 @@ class Team extends Base
   ];
 
 	protected $fillable = [
+		'slug',
 		'title',
 		'text',
-		'category_id',
+		'order',
 		'publish',
   ];
 
-	public function category()
+	public function members()
 	{
-		return $this->hasOne('App\Models\TeamCategory', 'id', 'category_id');
+		return $this->hasMany('App\Models\TeamMember', 'team_id', 'id')->orderBy('order');
 	}
 
 	public function images()
@@ -34,4 +35,25 @@ class Team extends Base
 	{
 		return $this->hasMany('App\Models\TeamImage', 'team_id', 'id')->where('publish', '=', 1)->orderBy('order');
 	}
+
+	/**
+	 * Scope a query to only include a team by a given slug.
+	 *
+	 * @param  mixed  $slug
+	 * @return \Illuminate\Database\Eloquent\Builder
+	 */
+	public function bySlug($slug)
+	{
+		return $this->where('slug', '=', $slug);
+	}
+
+  /**
+   * Get capitalized
+   */
+
+  public function getCapitalizedSlugAttribute()
+  {
+    return ucfirst($this->slug);
+  }
+
 }

@@ -46,10 +46,6 @@ Route::middleware('auth:sanctum')->group(function() {
   Route::post('home/image', 'Api\HomeImageController@store');
   Route::post('home/image/order', 'Api\HomeImageController@order');
   Route::delete('home/image/{homeImage}', 'Api\HomeImageController@destroy');
- 
-  // Team categories
-  Route::get('team/categories', 'Api\TeamCategoryController@get');
-  Route::get('team/category/{teamCategory}', 'Api\TeamCategoryController@find');
 
   // Team images
   Route::get('team/image/state/{teamImage}', 'Api\TeamImageController@toggle');
