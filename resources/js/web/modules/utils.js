@@ -5,12 +5,17 @@ var Utils = (function() {
     html:      'html',
     body:      'body',
     btnToggle: '[data-toggle]',
+    btnMember: '.js-btn-member-list',
   };
   
   var attr = {
     toggle: 'toggle',
     show: 'show',
     hide: 'hide'
+  };
+
+  var classes = {
+    active: 'is-active'
   };
 
   // Init
@@ -22,6 +27,10 @@ var Utils = (function() {
   var _bind = function() {
     $(selectors.body).on('click', selectors.btnToggle, function(){
       _toggle($(this));
+    });
+
+    $(selectors.body).on('click', selectors.btnMember, function(){
+      _toggleList($(this));
     });
   };
 
@@ -44,6 +53,12 @@ var Utils = (function() {
     if (data.length == 2) {
       el[data[0]](data[1]).hide(); // i.e. el.next('div').hide();
     }
+  };
+
+  var _toggleList = function(el) {
+    el.toggleClass(classes.active);
+    el.find('span').toggleClass(classes.active);
+    el.next('div').toggle();
   };
 
 

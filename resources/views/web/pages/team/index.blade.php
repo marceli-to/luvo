@@ -23,8 +23,10 @@
         @endif
       </div>
       <div class="span order-md-1">
-        {{ $data->title }}
-        {!! $data->text !!}
+        <article>
+          <h1>{{ $data->title }}</h1>
+          {!! $data->text !!}
+        </article>
       </div>
     </div>
   </div>

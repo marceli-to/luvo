@@ -3,6 +3,6 @@
 return [
   'home' => 'home',
   'contact' => 'contacter',
-  'team-luks/assistance' => 'team-luks/assistenz',
-  'team-vogt/assistance' => 'team-vogt/assistenz',
+  'team-luks/assistant' => 'team-luks/assistence',
+  'team-vogt/assistant' => 'team-vogt/assistence',
 ];

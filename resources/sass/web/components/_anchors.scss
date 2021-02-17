@@ -5,13 +5,9 @@
  *
  */
 
-%anchor,
-.anchor {
-
-}
-
 %anchor-underline {
   display: inline-block !important;
+  padding-bottom: 7px;
   text-decoration: none;
 
   &.is-active,
@@ -23,5 +19,38 @@
     background-size: auto 1px;
     text-decoration: none;
   }
+}
 
+%anchor-chevron {
+  @include background-default();
+  background-image: url($url-icons + 'chevron-sm.svg');
+  background-size: 24px auto;
+  background-position: bottom 12px right;
+  display: block;
+  width: 100%;
+
+  @include bp-md() {
+    background-position: bottom 10px right;
+    background-size: 20px auto;
+    display: inline-block;
+    padding-right: 28px;
+    width: auto;
+  }
+
+  &.is-active {
+    background-image: url($url-icons + 'chevron-sm-active.svg') !important;
+  }
+
+  &.is-nested {
+    background-image: url($url-icons + 'chevron-sm.svg');
+    background-size: 14px auto;
+    background-position: bottom 12px right;
+    display: inline-block;
+    padding-right: 22px;
+    width: auto;
+
+    @include bp-md() {
+      background-position: bottom 14px right;
+    }
+  }
 }

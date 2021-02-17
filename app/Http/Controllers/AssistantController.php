@@ -15,15 +15,36 @@ class AssistantController extends BaseController
   }
 
   /**
-   * Page: 'Assistant'
+   * Page: 'Assistant Vogt'
    *  
-   * @param Assistant $assistant
    * @return \Illuminate\Http\Response
    */
 
-  public function index($slugTeam = NULL, $slug = NULL, Assistant $assistant)
+  public function vogt()
   { 
-    $assistant = $this->assistant->with('publishedImages', 'team')->findOrFail($assistant->id);
+    $assistant = $this->_get('vogt');
     return view($this->viewPath . 'assistant', ['data' => $assistant]);
   }
+
+  /**
+   * Page: 'Assistant Luks'
+   *  
+   * @return \Illuminate\Http\Response
+   */
+
+  public function luks()
+  { 
+    $assistant = $this->_get('luks');
+    return view($this->viewPath . 'assistant', ['data' => $assistant]);
+  }
+
+  public function _get($slug)
+  {
+    return $this->assistant
+      ->with('publishedImages', 'team')
+      ->whereHas('team', function($query) use ($slug) {
+        $query->where('slug', $slug);
+      })->get()->first();
+  }
+
 }

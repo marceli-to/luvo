@@ -5,10 +5,9 @@
  */
 
 h1 {
-  @include font-size($fs-heading);
-  margin-bottom: $space-3x;
-  
+  @include font-size($fs-heading-md);
+  margin-bottom: $space-2x;
   @include bp-md() {
-    margin-bottom: $space-5x;
+    margin-bottom: $space-4x;
   }
 }

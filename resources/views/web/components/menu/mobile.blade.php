@@ -3,10 +3,18 @@
     @if ($data)
       @foreach($data as $d)
         <li>
-          <a href="javascript:;" class="js-menu-item-parent">{{__('Team')}} {{ $d->capitalizedSlug }}</a>
+          <a href="javascript:;" 
+            class="js-menu-item-parent {{ request()->routeIs('*page.team.' . $d->slug) || request()->route()->parameter('slugTeam') == $d->slug || request()->routeIs('*.page.team.' . $d->slug . '.assistant') ? 'is-active' : '' }}">
+            {{__('Team')}} {{ $d->capitalizedSlug }}
+          </a>
           <ul>
             <li>
-              <a href="{{ localized_route('page.team.' . $d->slug) }}" title="{{ __('Team') }} {{ $d->capitalizedSlug }}">{{__('Über uns')}}</a>
+              <a 
+              href="{{ localized_route('page.team.' . $d->slug) }}" 
+              title="{{ __('Team') }} {{ $d->capitalizedSlug }}"
+              class="{{ request()->routeIs('*page.team.' . $d->slug) ? 'is-active' : '' }}">
+              {{__('Über uns')}}
+            </a>
             </li>
             <x-menu-team-members teamId="{{$d->id}}" isMobileMenu="1" />
           </ul>

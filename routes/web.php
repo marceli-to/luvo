@@ -29,8 +29,13 @@ Route::multilingual('/team-luks', 'TeamController@luks')->name('page.team.luks')
 Route::multilingual('/team-vogt', 'TeamController@vogt')->name('page.team.vogt');
 
 // Team members
-Route::multilingual('/team-{slugTeamAssistant}/{slug}/{assistant}', 'AssistantController@index')->name('page.team.assistant');
 Route::multilingual('/team-{slugTeam}/{slugMember}/{teamMember}', 'TeamMemberController@index')->name('page.team.member');
+
+// Team assistant
+Route::multilingual('/team-vogt/assistant', 'AssistantController@vogt')->name('page.team.vogt.assistant');
+Route::multilingual('/team-luks/assistant', 'AssistantController@luks')->name('page.team.luks.assistant');
+
+
 
 // Contact
 Route::multilingual('/contact', 'ContactController@index')->name('page.contact');

@@ -3,6 +3,7 @@ require('./bootstrap');
 
 // Vendor
 require('./vendor/lazysizes.js');
+require('./vendor/simplebar.js');
 
 // Modules
 require('./modules/menu.js');

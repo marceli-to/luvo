@@ -20,6 +20,14 @@
           <label-required />
         </div>
         <div class="form-row">
+          <label>Info</label>
+          <tinymce-editor
+            :api-key="tinyApiKey"
+            :init="tinyConfig"
+            v-model="teamMember.credits"
+          ></tinymce-editor>
+        </div>
+        <div class="form-row">
           <label>Beschreibung</label>
           <tinymce-editor
             :api-key="tinyApiKey"
@@ -271,6 +279,7 @@ export default {
       teamMember: {
         firstname: null,
         name: null,
+        credits: null,
         description: {
           de: null,
           fr: null,

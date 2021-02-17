@@ -6,7 +6,7 @@
 
 nav.menu-team {
   border-bottom: 1px solid $color-black;
-  padding: $space-3x;
+  padding: $space-2x $space-3x;
 
   @include bp-md() {
     align-items: flex-end;
@@ -16,7 +16,7 @@ nav.menu-team {
     padding: 0;
     position: fixed;
     top: $space-4x;
-    width: 100%;
+    width: calc(100% - #{$space-6x});
     z-index: 401;
   }
 
@@ -32,7 +32,8 @@ nav.menu-team {
   ul {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-gap: $space-3x;
+    grid-column-gap: $space-3x;
+    grid-row-gap: 0;
 
     @include bp-md() {
       display: flex;
@@ -50,7 +51,7 @@ nav.menu-team {
     }
 
     a {
-      @include font-size($fs-menu-sub);
+      @include font-size($fs-menu-team);
     }
   }
 }

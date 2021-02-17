@@ -40,9 +40,10 @@ nav.site-menu-mobile {
 
   ul ul {
     display: none;
-    padding: $space-2x 0 $space-3x $space-4x;
+    padding: $space-2x 0 $space-2x $space-7x;
     a {
       @include font-size($fs-menu-sub);
+      padding: 4px 0;
     }
   }
 

@@ -9,8 +9,8 @@
 
 @font-face {
   font-family: 'AvenirNextRegular';
-  src: url('fonts/AvenirNext.eot');
-  src: url('fonts/AvenirNext.eot?#iefix') format('embedded-opentype'), url('fonts/AvenirNext.woff2') format('woff2'), url('fonts/AvenirNext.woff') format('woff'), url('fonts/AvenirNext.svg#AvenirNext-Medium') format('svg');
+  src: url('fonts/AvenirNextRegular.woff2') format('woff2'), url('fonts/AvenirNextRegular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }

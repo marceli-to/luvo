@@ -15,7 +15,7 @@
 <link href="{{ mix('assets/css/app.css') }}" type="text/css" rel="stylesheet" />
 <script src="{{ asset('assets/js/modernizr.min.js') }}"></script>
 </head>
-<body>
+<body class="{{ request()->routeIs('*page.contact') ? 'is-contact' : ''}}">
 <header class="site-header">
   <div>
     @if (request()->routeIs('*page.home') || request()->routeIs('*page.contact'))

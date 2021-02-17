@@ -5,9 +5,30 @@
  *
  */
 
+.content-wide {
+  p {
+    @include font-size($fs-body-md);
+  }
+}
+
 .content {
+
+  a {
+    color: $color-black;
+  }
+
+  p {
+    @include font-size($fs-body-md);
+  }
   
   address {
     @include font-size($fs-body-md);
+  }
+}
+
+.content-scrollable {
+  @include bp-md() {
+    height: calc(100vh - (#{$header-height-md} + #{$footer-height-md}));
+    -webkit-overflow-scrolling: touch;
   }
 }

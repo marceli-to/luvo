@@ -49,6 +49,7 @@ class TeamMemberController extends Controller
     $teamMember = new TeamMember([
       'firstname' => $request->input('firstname'),
       'name' => $request->input('name'),
+      'credits' => $request->input('credits'),
       'description' => [
         'de' => $request->input('description.de'),
         'fr' => $request->input('description.fr'),
@@ -110,7 +111,8 @@ class TeamMemberController extends Controller
     $teamMember = $this->teamMember->findOrFail($teamMember->id);
     $teamMember->firstname = $request->input('firstname');
     $teamMember->name = $request->input('name');
-
+    $teamMember->credits = $request->input('credits');
+    
     // German
     $teamMember->setTranslation('description', 'de', $request->input('description.de'));
     $teamMember->setTranslation('area', 'de', $request->input('area.de'));

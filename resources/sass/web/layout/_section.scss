@@ -24,10 +24,6 @@ section.content-wide {
   > div {
     @extend %inner-block;
   }
-
-  p {
-    @include font-size($fs-body-md);
-  }
 }
 
 section.content-auth {

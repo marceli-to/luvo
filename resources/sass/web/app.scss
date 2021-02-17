@@ -33,6 +33,7 @@
 @import 'components/boxes/global';
 @import 'components/buttons/global';
 @import 'components/buttons/primary';
+@import 'components/buttons/back';
 @import 'components/buttons/menu';
 @import 'components/cards';
 @import 'components/icons/global';
@@ -77,5 +78,6 @@
 
 // Vendor
 @import 'vendor/notifications';
+@import 'vendor/simplebar';
 @import 'vendor/swiper/swiper';
 @import 'vendor/swiper/swiper-custom';

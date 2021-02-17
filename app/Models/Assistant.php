@@ -16,7 +16,7 @@ class Assistant extends Base
 	protected $fillable = [
 		'description',
 		'assistants',
-    'publish',
+		'publish',
     'team_id',
   ];
 

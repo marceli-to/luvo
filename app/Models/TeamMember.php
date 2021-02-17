@@ -17,7 +17,8 @@ class TeamMember extends Base
 
 	protected $fillable = [
     'firstname',
-		'name',
+    'name',
+    'credits',
 		'description',
     'area',
     'biography',

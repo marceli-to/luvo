@@ -37,8 +37,12 @@
   }
 }
 
-.is-home {
+body.is-contact {
   .logo {
-    display: block !important;
+    display: none;
+    @include bp-md() {
+      display: block;
+    }
   }
 }
+

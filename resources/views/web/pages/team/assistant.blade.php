@@ -1,5 +1,5 @@
 @extends('web.layout.app')
-@section('seo_title', __('Team'))
+@section('seo_title', __('Assistenz'))
 @section('page_title', __('Team'))
 @section('content')
 <x-menu-team-members teamId="{{$data->team->id}}" isMobileMenu="0" />
