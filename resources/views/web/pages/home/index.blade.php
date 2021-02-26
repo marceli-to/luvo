@@ -18,8 +18,10 @@
 @endif
 <section class="content-wide">
   <div>
-    <h1>{{$data->title}}</h1>
-    {!! $data->text !!}
+    <article>
+      <h1>{{$data->title}}</h1>
+      {!! $data->text !!}
+    </article>
   </div>
 </section>
 @endsection

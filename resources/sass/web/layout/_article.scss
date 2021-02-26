@@ -17,7 +17,7 @@ article.member {
 
   h1 {
     @include font-size($fs-heading-sm);
-    margin-bottom: $space-1x;
+    margin-bottom: 0;
   }
 
   .member__credits {
@@ -134,5 +134,49 @@ article.member {
         @include font-size($fs-member-publications);
       }
     } 
+  }
+}
+
+// Article for assistants
+article.assistant {
+
+  .assistant__description {
+    margin-bottom: $space-7x;
+
+    @include bp-md() {
+      margin-bottom: $space-14x;
+    }
+  }
+
+  p {
+    @include font-size($fs-body-sm);
+    margin-bottom: $space-4x;
+    text-indent: 0 !important;
+
+    @include bp-md() {
+      margin-bottom: $space-6x;
+    }
+
+    &:last-of-type {
+      margin-bottom: 0 !important;
+    }
+  }
+
+  a {
+    @extend %anchor-underline;
+    padding-bottom: $space-1x;
+  }
+
+  h1 {
+    @include font-size($fs-heading-md);
+    margin-bottom: 0;
+
+    + p {
+      @include font-size($fs-body-md);
+    }
+  }
+
+  h2 {
+    @include font-size($fs-heading-sm);
   }
 }

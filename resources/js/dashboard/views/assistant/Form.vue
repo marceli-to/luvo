@@ -89,7 +89,7 @@
           <label>Team*</label>
           <div class="select-wrapper is-medium">
             <select v-model="assistant.team_id" name="layout">
-              <option v-for="(team, index) in teams" :key="index" :value="team.id">{{ team.slug }}</option>
+              <option v-for="(team, index) in teams" :key="index" :value="team.id">{{ team.capitalizedSlug }}</option>
             </select>
           </div>
         </div>  

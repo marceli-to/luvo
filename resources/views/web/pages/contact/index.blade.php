@@ -21,44 +21,45 @@
           @endforeach
         @endif
       </div>
-      <div class="span order-md-1">
-        @if ($data['contact']->address)
-          <address>
-            {!! $data['contact']->address !!}
-          </address>
-        @endif
-        @if ($data['contact']->map_uri)
-          <div>
-            <a href="{{$data['contact']->map_uri}}" target="_blank" rel="noopener" class="icon-external">{{__('Google Maps')}}</a>
-          </div>
-        @endif
-        @if ($data['contact']->imprint)
-          <div>
-            <a href="javascript:;" class="icon-chevron-down" data-toggle="next:div">{{__('Impressum')}}</a>
-            <div style="display:none">
-              {!! $data['contact']->imprint !!}
-            </div>
-          </div>
-        @endif
-
-        @if ($data['teams'])
-          <div class="contact__team-members">
+      <div class="span order-md-1 content-scrollable" data-simplebar>
+        <article class="contact">
+          @if ($data['contact']->address)
+            <address>
+              {!! $data['contact']->address !!}
+            </address>
+          @endif
+          @if ($data['contact']->map_uri)
             <div>
-              @if ($data['teams']['luks'])
-                @foreach($data['teams']['luks']->members as $member)
+              <a href="{{$data['contact']->map_uri}}" target="_blank" rel="noopener" class="icon-external">{{__('Google Maps')}}</a>
+            </div>
+          @endif
+          @if ($data['contact']->imprint)
+            <div>
+              <a href="javascript:;" class="icon-chevron-down" data-toggle="next:div">{{__('Impressum')}}</a>
+              <div style="display:none">
+                {!! $data['contact']->imprint !!}
+              </div>
+            </div>
+          @endif
+          @if ($data['teams'])
+            <div class="contact__team-members">
+              <div>
+                @if ($data['teams']['luks'])
+                  @foreach($data['teams']['luks']->members as $member)
+                    {{ $member->firstname}} {{$member->name}}<br>{!! $member->description !!}
+                  @endforeach
+                @endif
+              </div>
+              <div>
+                @if ($data['teams']['vogt'])
+                  @foreach($data['teams']['vogt']->members as $member)
                   {{ $member->firstname}} {{$member->name}}<br>{!! $member->description !!}
-                @endforeach
-              @endif
+                  @endforeach
+                @endif
+              </div>
             </div>
-            <div>
-              @if ($data['teams']['vogt'])
-                @foreach($data['teams']['vogt']->members as $member)
-                {{ $member->firstname}} {{$member->name}}<br>{!! $member->description !!}
-                @endforeach
-              @endif
-            </div>
-          </div>
-        @endif
+          @endif
+        </article>
       </div>
     </div>
   </div>

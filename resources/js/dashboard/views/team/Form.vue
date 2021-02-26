@@ -79,7 +79,7 @@
     <div v-show="tabs.settings.active">
       <div>
         <div :class="[this.errors.category ? 'has-error' : '', 'form-row']">
-          <label>Kategorie *</label>
+          <label>Team *</label>
           <div class="select-wrapper is-medium">
             <select v-model="team.slug" name="slug">
               <option v-for="(slug, index) in slugs" :key="index" :value="index">{{ slug }}</option>
@@ -171,8 +171,8 @@ export default {
       },
 
       slugs: {
-        luks: 'Team Luks',
-        vogt: 'Team Vogt'
+        luks: 'Luks',
+        vogt: 'Vogt'
       },
 
       // Validation

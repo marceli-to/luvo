@@ -1,6 +1,6 @@
 @extends('web.layout.app')
 @section('seo_title', __('Team'))
-@section('page_title', __('Team'))
+@section('page_title', __('Team') .' '. $data->team->capitalizedSlug)
 @section('content')
 <x-menu-team-members teamId="{{$data->team->id}}" isMobileMenu="0" />
 <section class="content">

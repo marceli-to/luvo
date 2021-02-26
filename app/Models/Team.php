@@ -19,7 +19,9 @@ class Team extends Base
 		'text',
 		'order',
 		'publish',
-  ];
+	];
+	
+	protected $appends = ['capitalizedSlug'];
 
 	public function members()
 	{
