@@ -8,6 +8,6 @@ require('./vendor/simplebar.js');
 // Modules
 require('./modules/menu.js');
 require('./modules/utils.js');
-// require('./modules/swiper.js');
+require('./modules/swiper.js');
 
 

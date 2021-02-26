@@ -41,6 +41,10 @@ section.content-auth {
     max-width: 640px;
   }
 
+  article {
+    padding: 0 !important;
+  }
+
   p {
     margin-bottom: $space-4x;
   }

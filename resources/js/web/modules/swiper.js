@@ -8,34 +8,44 @@ var SwiperUi = (function() {
   var selectors = {
     html:   'html',
     body:   'body',
-    swiper: '.js-swiper',
+    swiperHorizontal: '.js-swiper-horizontal',
+    swiperVertical: '.js-swiper-vertical',
     swiperThumb: '.js-swiper-thumb'
   };
 
-  var mySwiper;
+  var swiperVertical;
+  var swiperHorizontal;
      
   var _initialize = function() {
     _bind();
   };
 
   var _bind = function() {
-    // Initialize swiper
-    mySwiper = new Swiper(selectors.swiper, {
+    swiperVertical = new Swiper(selectors.swiperVertical, {
       slidesPerView: 'auto',
-      centeredSlides: true,
+      direction: 'vertical',
+      speed: 400,
+      autoplay: {
+        delay: 3000,
+      },
+      navigation: {
+        nextEl: '.swiper-btn-next',
+        prevEl: '.swiper-btn-prev',
+      },
+      spaceBetween: 0,
+    });
+
+    swiperHorizontal = new Swiper(selectors.swiperHorizontal, {
+      slidesPerView: 'auto',
       speed: 400,
       autoplay: {
         delay: 3000,
       },
       pagination: {
         el: '.swiper-pagination',
+        clickable: true,
       },
-      spaceBetween: 15,
-    });
-
-    // Listener for thumbnails
-    $(selectors.body).on('click', selectors.swiperThumb, function(){
-      mySwiper.slideTo($(this).data('idx'));
+      spaceBetween: 0,
     });
   };
   

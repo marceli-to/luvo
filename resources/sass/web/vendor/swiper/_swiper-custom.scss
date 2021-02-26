@@ -4,12 +4,73 @@
  * -----------------------------------------------------------------------------
  */
 
-.swiper-wrapper {
-}
+.swiper-container {
 
-.swiper-slide {
-  img {
-    @extend %is-responsive;
+  &.swiper-container-horizontal {
+    display: block;
+    @include bp-md() {
+      display: none;
+    }
+
+    .swiper-pagination {
+      display: flex;
+      justify-content: flex-end;
+      left: auto;
+      right: 10px;
+      
+      .swiper-pagination-bullet {
+        background-color: transparent;
+        border: 2px solid $color-white;
+        height: 12px;
+        opacity: 1 !important;
+        width: 12px;
+
+        &.swiper-pagination-bullet-active {
+          background-color: $color-white;
+        }
+      }
+    }
+  }
+
+  &.swiper-container-vertical {
+    display: none;
+    height: calc(100vh - (#{$header-height-md} + #{$footer-height-md}));
+    width: 100%;
+    @include bp-md() {
+      display: block;
+    }
+
+    .swiper-btn-next,
+    .swiper-btn-prev {
+      @include background-default();
+      background-size: 90px auto;
+      cursor: pointer;
+      display: block;
+      height: 50px;
+      left: calc(50% - 45px);
+      pointer-events: all;
+      position: absolute;
+      width: 90px;
+      z-index: 20000;
+
+      &:focus {
+        outline: none !important;
+      }
+    }
+
+    .swiper-btn-next {
+      background-image: url($url-icons + 'chevron-down-xl.svg');
+      bottom: $space-4x;
+    }
+
+    .swiper-btn-prev {
+      background-image: url($url-icons + 'chevron-up-xl.svg');
+      top: $space-4x;
+    }
+
+    .swiper-button-disabled {
+      cursor: default;
+      opacity: 0;
+    }
   }
 }
-

@@ -34,7 +34,7 @@ article.member {
   }
 
   .member__description {
-    margin-bottom: $space-3x;
+    margin-bottom: $space-4x;
     p {
       @extend %word-break;
       @include font-size($fs-body-sm);
@@ -70,7 +70,6 @@ article.member {
 
     li {
       display: list-item;
-      // list-style-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'><circle cx='2' cy='2' r='4.5'/><path d='M5 1c2.2 0 4 1.8 4 4S7.2 9 5 9 1 7.2 1 5s1.8-4 4-4m0-1C2.2 0 0 2.2 0 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5z'/></svg>");
       margin-bottom: 3px;
       max-width: calc(100% - #{$space-5x});
 
@@ -98,8 +97,8 @@ article.member {
     ul ul li {
       &:before {
         background-size: 4px auto;
-        margin-left: -1.4em;
-        width: 1.4em;
+        margin-left: -1.6em;
+        width: 1.6em;
         @include bp-md() {
           background-size: 6px auto;
         }

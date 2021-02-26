@@ -8,21 +8,38 @@
     <div class="grid-2x1">
       <div class="span order-md-2">
         @if ($data->publishedImages)
-          @foreach($data->publishedImages as $image)
-            @if ($image->device == 'mobile')
-              <figure class="visual-mobile">
-                <x-picture :image="$image" :queries="['min-width: 900px', null]" :width="[1200,900]" :height="[750,560]" />
-              </figure>
-            @endif
-            @if ($image->device == 'desktop')
-              <figure class="visual-desktop">
-                <x-picture :image="$image" :queries="['min-width: 1200px', 'min-width: 900px', null]" :width="[1600,1200,540]" :height="[1920,1440,648]" />
-              </figure>
-            @endif
-          @endforeach
+          <div class="swiper-container js-swiper-horizontal">
+            <div class="swiper-wrapper">
+              @foreach($data->publishedImages as $image)
+                @if ($image->device == 'mobile')
+                  <div class="swiper-slide">
+                    <figure class="visual-mobile">
+                      <x-picture :image="$image" :queries="['min-width: 900px', null]" :width="[1200,900]" :height="[750,560]" />
+                    </figure>
+                  </div>
+                @endif
+              @endforeach
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+          <div class="swiper-container js-swiper-vertical">
+            <div class="swiper-wrapper">
+              @foreach($data->publishedImages as $image)
+                @if ($image->device == 'desktop')  
+                  <div class="swiper-slide">
+                    <figure class="visual-desktop">
+                      <x-picture :image="$image" :queries="[null]" :width="[1600]" :height="[1920]" />
+                    </figure>
+                  </div>
+                @endif
+              @endforeach
+            </div>
+            <div class="swiper-btn-next"></div>
+            <div class="swiper-btn-prev"></div>
+          </div>
         @endif
       </div>
-      <div class="span order-md-1">
+      <div class="span order-md-1 content-scrollable" data-simplebar>
         <article>
           <h1>{{ $data->title }}</h1>
           {!! $data->text !!}

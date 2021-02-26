@@ -19,9 +19,7 @@
 <section class="content-wide">
   <div>
     <h1>{{$data->title}}</h1>
-    <article>
-      {!! $data->text !!}
-    </article>
+    {!! $data->text !!}
   </div>
 </section>
 @endsection
