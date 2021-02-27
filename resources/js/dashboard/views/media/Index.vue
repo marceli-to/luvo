@@ -15,7 +15,7 @@
           ></file-upload>
         </div>
       </div>
-      <div class="listing" v-if="files.length">
+      <div class="listing" v-if="files">
         <div
           class="listing__item"
           v-for="f in files"
@@ -76,7 +76,7 @@ export default {
     fetch() {
       this.isFetched = true;
       this.isLoading = true;
-      this.axios.get(`/api/files`).then(response => {
+      this.axios.get(`/api/files/fetch`).then(response => {
         this.files = response.data.data;
         this.isFetched = true;
         this.isLoading = false;

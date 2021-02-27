@@ -4,10 +4,12 @@
   <div :class="isFetched ? 'is-loaded' : 'is-loading'">
     <header class="content-header">
       <h1>Teams</h1>
-      <router-link :to="{ name: 'team-create' }" class="feather-icon feather-icon--prepend">
-        <plus-icon size="16"></plus-icon>
-        <span>Hinzufügen</span>
-      </router-link>
+      <div v-if="teams.length < 2">
+        <router-link :to="{ name: 'team-create' }" class="feather-icon feather-icon--prepend">
+          <plus-icon size="16"></plus-icon>
+          <span>Hinzufügen</span>
+        </router-link>
+      </div>
     </header>
     <div class="listing" v-if="teams.length">
       <div
@@ -30,7 +32,6 @@
     <div v-else>
       <p class="no-records">Es sind noch keine Inhalte vorhanden...</p>
     </div>
-
     <header class="content-header sb-lg">
       <h1>Mitarbeiter</h1>
       <router-link :to="{ name: 'team-member-create' }" class="feather-icon feather-icon--prepend">
@@ -39,8 +40,8 @@
       </router-link>
     </header>
     <div v-if="teamMembers.length">
-      <div v-for="(team, index) in teamMembersGrouped" :key="index" class="sa-sm">
-        <div class="listing">
+      <div v-for="(team, index) in teamMembersGrouped" :key="index">
+        <div class="listing is-grouped">
           <draggable 
             :disabled="false"
             v-model="teamMembersGrouped[index]" 
@@ -72,10 +73,12 @@
     </div>
     <header class="content-header sb-lg">
       <h1>Assistenz</h1>
-      <router-link :to="{ name: 'assistant-create' }" class="feather-icon feather-icon--prepend">
-        <plus-icon size="16"></plus-icon>
-        <span>Hinzufügen</span>
-      </router-link>
+      <div v-if="assistants.length < 2">
+        <router-link :to="{ name: 'assistant-create' }" class="feather-icon feather-icon--prepend">
+          <plus-icon size="16"></plus-icon>
+          <span>Hinzufügen</span>
+        </router-link>
+      </div>
     </header>
     <div class="listing" v-if="assistants.length">
       <div

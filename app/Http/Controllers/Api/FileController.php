@@ -23,7 +23,18 @@ class FileController extends Controller
   }
 
   /**
-   * Get a list of files
+   * Get a list of files for listing
+   * 
+   * @return \Illuminate\Http\Response
+   */
+  public function fetch()
+  {
+    return new DataCollection($this->file->get());
+  }
+
+
+  /**
+   * Get a list of files (for dropdown use)
    * 
    * @return \Illuminate\Http\Response
    */

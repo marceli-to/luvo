@@ -23,13 +23,14 @@ Route::middleware('auth:sanctum')->group(function() {
 
   // Files
   Route::get('files','Api\FileController@get');
+  Route::get('files/fetch','Api\FileController@fetch');
   Route::post('file/store','Api\FileController@store');
   Route::delete('file/{file}', 'Api\FileController@destroy');
 
   // Upload
   Route::post('image/upload','Api\UploadController@image');
   Route::post('file/upload','Api\UploadController@file');
-  Route::get('files/get','Api\UploadController@getFiles');
+  //Route::get('files/get','Api\UploadController@getFiles');
 
   // Home
   Route::get('home', 'Api\HomeController@get');

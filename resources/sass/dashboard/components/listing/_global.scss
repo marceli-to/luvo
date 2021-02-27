@@ -11,8 +11,10 @@
 
   &.is-grouped {
     border-bottom: none;
+    margin-bottom: 0 !important;
   }
 }
+
 
 .listing-group {
   border-bottom: 2px solid $color-light;
