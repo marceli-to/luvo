@@ -10,6 +10,11 @@
   width: 210px;
 
   @include bp-md() {
+    height: 22px;
+    width: 500px;
+  }
+
+  @include bp-lg() {
     height: 28px;
     width: 635px;
   }

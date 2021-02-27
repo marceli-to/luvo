@@ -18,7 +18,7 @@
 @endif
 <section class="content-wide">
   <div>
-    <article>
+    <article class="home">
       <h1>{{$data->title}}</h1>
       {!! $data->text !!}
     </article>

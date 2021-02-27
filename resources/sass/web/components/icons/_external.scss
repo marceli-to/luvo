@@ -1,0 +1,33 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/icons/external
+ * -----------------------------------------------------------------------------
+ */
+
+.icon-external {
+  @extend %icon;
+  position: relative;
+
+  &:after {
+    @include background-default();
+    background-image: url($url-icons + 'arrow-sm.svg');
+    background-size: 8px;
+    background-position: center right;
+    content: '';
+    display: block;
+    height: 8px;
+    position: absolute;
+    right: -14px;
+    top: 6px;
+    width: 8px;
+
+    @include bp-md() {
+      background-image: url($url-icons + 'arrow-lg.svg');
+      background-size: 10px;
+      height: 10px;
+      right: -20px;
+      top: 8px;
+      width: 10px;
+    }
+  }
+}

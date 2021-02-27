@@ -30,30 +30,34 @@
           @endif
           @if ($data['contact']->map_uri)
             <div>
-              <a href="{{$data['contact']->map_uri}}" target="_blank" rel="noopener" class="icon-external">{{__('Google Maps')}}</a>
+              <a href="{{$data['contact']->map_uri}}" target="_blank" rel="noopener" class="icon-external anchor-maps">{{__('Google Maps')}}</a>
             </div>
           @endif
           @if ($data['contact']->imprint)
             <div>
-              <a href="javascript:;" class="icon-chevron-down" data-toggle="next:div">{{__('Impressum')}}</a>
-              <div style="display:none">
+              <a href="javascript:;" class="icon-chevron-down anchor-imprint" data-toggle="next:div">{{__('Impressum')}}</a>
+              <div style="display:none" class="contact__imprint">
                 {!! $data['contact']->imprint !!}
               </div>
             </div>
           @endif
           @if ($data['teams'])
-            <div class="contact__team-members">
+            <div class="contact__members">
               <div>
                 @if ($data['teams']['luks'])
                   @foreach($data['teams']['luks']->members as $member)
-                    {{ $member->firstname}} {{$member->name}}<br>{!! $member->description !!}
+                    <div class="contact-member">
+                      <h2>{{ $member->firstname}} {{$member->name}}</h2>{!! $member->credits !!}
+                    </div>
                   @endforeach
                 @endif
               </div>
               <div>
                 @if ($data['teams']['vogt'])
                   @foreach($data['teams']['vogt']->members as $member)
-                  {{ $member->firstname}} {{$member->name}}<br>{!! $member->description !!}
+                    <div class="contact-member">
+                      <h2>{{ $member->firstname}} {{$member->name}}</h2>{!! $member->credits !!}
+                    </div>
                   @endforeach
                 @endif
               </div>

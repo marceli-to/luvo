@@ -33,6 +33,9 @@ var SwiperUi = (function() {
         prevEl: '.swiper-btn-prev',
       },
       spaceBetween: 0,
+      mousewheel: {
+        invert: false,
+      },
     });
 
     swiperHorizontal = new Swiper(selectors.swiperHorizontal, {

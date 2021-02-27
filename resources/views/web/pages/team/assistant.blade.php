@@ -16,7 +16,7 @@
             @endif
             @if ($image->device == 'desktop')
               <figure class="visual-desktop">
-                <x-picture :image="$image" :queries="['min-width: 1200px', 'min-width: 900px', null]" :width="[1600,1200,540]" :height="[1920,1440,648]" />
+                <x-picture :image="$image" :queries="[null]" :width="[1600]" :height="[1920]" />
               </figure>
             @endif
           @endforeach

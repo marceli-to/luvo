@@ -48,8 +48,10 @@
       display: block;
       height: 50px;
       left: calc(50% - 45px);
+      opacity: 1;
       pointer-events: all;
       position: absolute;
+      transition: opacity .1s .2s ease-in;
       width: 90px;
       z-index: 20000;
 
@@ -71,6 +73,7 @@
     .swiper-button-disabled {
       cursor: default;
       opacity: 0;
+      transition: opacity .1s .2s ease-in;
     }
   }
 }
