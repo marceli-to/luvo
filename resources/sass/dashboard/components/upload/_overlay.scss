@@ -41,6 +41,11 @@
 
   > div {
     @extend %page-block;
+
+    @include bp-lg() {
+      padding-left: 20px;
+      max-width: 1100px;
+    }
   }
 
   .upload-overlay__grid {
@@ -86,6 +91,10 @@
 
   > div {
     @extend %page-block;
+    @include bp-lg() {
+      padding-left: 20px;
+      max-width: 1200px;
+    }
   }
 
   .upload-overlay__loader {
@@ -121,6 +130,9 @@
 
   > div {
     @extend %page-block;
+    @include bp-lg() {
+      padding-left: 20px;
+    }
   }
 
   .listing {

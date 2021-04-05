@@ -14,4 +14,10 @@
   padding-right: 20px;
   position: relative;
   @include responsive-prop('max-width', $page-max-width);
+
+  @include bp-lg() {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 280px;
+  }
 }

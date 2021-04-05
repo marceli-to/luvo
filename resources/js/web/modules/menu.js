@@ -37,6 +37,7 @@ var Menu = (function() {
   var _toggle = function() {
     $(selectors.menu).toggleClass(classes.visible);
     $(selectors.menuBtn).toggleClass(classes.active);
+    $(selectors.html).toggleClass(classes.hasMenu);
   };
 
   var _toggleChild = function(el) {

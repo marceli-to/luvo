@@ -10,11 +10,12 @@ var SwiperUi = (function() {
     body:   'body',
     swiperHorizontal: '.js-swiper-horizontal',
     swiperVertical: '.js-swiper-vertical',
+    swiperTeamHorizontal: '.js-swiper-team-horizontal',
+    swiperTeamVertical: '.js-swiper-team-vertical',
     swiperThumb: '.js-swiper-thumb'
   };
 
-  var swiperVertical;
-  var swiperHorizontal;
+  var swiperVertical, swiperHorizontal, swiperTeamHorizontal, swiperTeamVertical;
      
   var _initialize = function() {
     _bind();
@@ -44,6 +45,30 @@ var SwiperUi = (function() {
       autoplay: {
         delay: 3000,
       },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      spaceBetween: 0,
+    });
+
+    swiperTeamVertical = new Swiper(selectors.swiperTeamVertical, {
+      slidesPerView: 'auto',
+      direction: 'vertical',
+      speed: 400,
+      navigation: {
+        nextEl: '.swiper-btn-next',
+        prevEl: '.swiper-btn-prev',
+      },
+      spaceBetween: 0,
+      mousewheel: {
+        invert: false,
+      },
+    });
+
+    swiperTeamHorizontal = new Swiper(selectors.swiperTeamHorizontal, {
+      slidesPerView: 'auto',
+      speed: 400,
       pagination: {
         el: '.swiper-pagination',
         clickable: true,

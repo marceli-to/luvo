@@ -51,3 +51,18 @@ nav.site-menu-mobile {
     display: none !important;
   }
 }
+
+html.has-menu {
+
+  header {
+
+    .logo {
+      display: block !important;
+    }
+    
+    .page-title {
+      display: none;
+    }
+    
+  }
+}

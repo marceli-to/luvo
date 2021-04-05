@@ -59,3 +59,20 @@
   @extend %visual;
   @extend %is-fullheight;
 }
+
+.visual-scroller {
+  @include background-default();
+  background-size: 90px auto;
+  background-image: url($url-icons + 'chevron-down-xl.svg');
+  bottom: $space-4x;
+  cursor: pointer;
+  display: block;
+  height: 50px;
+  left: calc(50% - 45px);
+  opacity: 1;
+  pointer-events: all;
+  position: absolute;
+  transition: opacity .1s .2s ease-in;
+  width: 90px;
+  z-index: 20000;
+}

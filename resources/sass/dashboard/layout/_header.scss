@@ -10,6 +10,10 @@ header.page-header {
   position: relative;
   width: 100%;
 
+  @include bp-lg() {
+    border-bottom: none;
+  }
+
   > div {
     @extend %page-block;
     align-items: center;
@@ -17,6 +21,12 @@ header.page-header {
     line-height: 1;
     justify-content: space-between;
     @include responsive-prop('height', $header-heights);
+  }
+
+  a.menu-open {
+    @include bp-lg() {
+      display: none;
+    }
   }
 
 }

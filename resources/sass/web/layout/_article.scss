@@ -143,6 +143,10 @@ article.assistant {
   .assistant__description {
     margin-bottom: $space-7x;
 
+    a {
+      padding-bottom: $space-1x !important;
+    }
+
     @include bp-md() {
       margin-bottom: $space-14x;
     }
@@ -150,6 +154,7 @@ article.assistant {
 
   p {
     @include font-size($fs-body-sm);
+    @include font-size($fs-member-credits);
     margin-bottom: $space-4x;
     text-indent: 0 !important;
 
@@ -164,7 +169,7 @@ article.assistant {
 
   a {
     @extend %anchor-underline;
-    padding-bottom: $space-1x;
+    padding-bottom: 3px;  // fix0504: $space-1x
   }
 
   h1 {

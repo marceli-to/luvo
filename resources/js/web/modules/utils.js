@@ -6,6 +6,7 @@ var Utils = (function() {
     body:      'body',
     btnToggle: '[data-toggle]',
     btnMember: '.js-btn-member-list',
+    btnScroll: '.js-btn-scroll',
   };
   
   var attr = {
@@ -31,6 +32,12 @@ var Utils = (function() {
 
     $(selectors.body).on('click', selectors.btnMember, function(){
       _toggleList($(this));
+    });
+
+    $(selectors.body).on('click', selectors.btnScroll, function(){
+      $.scrollTo('100%', 400, function(){
+        $(selectors.btnScroll).hide();
+      });
     });
   };
 

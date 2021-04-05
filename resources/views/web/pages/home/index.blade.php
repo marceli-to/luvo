@@ -12,6 +12,7 @@
           <source srcset="/img/cache/{{$image->name}}?w=900&h=560">
           <img src="/img/cache/{{$image->name}}?w=900&h=560" width="900" height="560" alt="{{$image->caption}}">
         </picture>
+        <a href="javascript:;" class="visual-scroller js-btn-scroll"></a>
       </figure>
     @endif
   @endforeach

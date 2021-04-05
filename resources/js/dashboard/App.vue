@@ -3,16 +3,67 @@
   <notifications classes="notification" />
   <page-header :user="$store.state.user"></page-header>
   <main class="site">
+    <nav :class="[!menuVisible ? '' : 'is-visible', 'page']">
+      <header>
+        <span>
+          {{user}}<br>
+          <a href="/logout" class="feather-icon feather-icon--prepend">
+            <log-out-icon size="12"></log-out-icon>
+            <span>Logout</span>
+          </a>
+        </span>
+        <a href="javascript:;" @click="hideMenu()" class="feather-icon menu-close">
+          <arrow-right-icon size="24"></arrow-right-icon>
+        </a>
+      </header>
+      <ul>
+        <li>
+          <router-link :to="{name: 'home'}">
+            <span>Home</span>
+          </router-link>
+        </li>
+        <li>
+          <router-link :to="{name: 'teams'}">
+            <span>Teams</span>
+          </router-link>
+        </li>
+        <li>
+          <router-link :to="{name: 'contact'}">
+            <span>Kontakt</span>
+          </router-link>
+        </li>
+        <li>
+          <router-link :to="{name: 'media'}">
+            <span>Dateien</span>
+          </router-link>
+        </li>
+      </ul>
+    </nav>
     <router-view></router-view>
   </main>
 </div>
 </template>
 <script>
+import { ArrowRightIcon, MenuIcon, LogOutIcon } from 'vue-feather-icons';
 import PageHeader from '@/views/layout/PageHeader.vue';
+
 export default {
+
   components: {
-    PageHeader
+    PageHeader,
+    ArrowRightIcon,
+    MenuIcon,
+    LogOutIcon,
   },
+
+	data() {
+		return {
+      menuVisible: false,
+      user: null,
+		}
+  },
+  
+
   mounted() {
     this.fetchUser();
   },
@@ -22,9 +73,14 @@ export default {
       if (!this.$store.state.user) {
         this.axios.get(`/api/user`).then(response => {
           this.$store.commit('user', `${response.data.firstname} ${response.data.name}`);
+          this.user = `${response.data.firstname} ${response.data.name}`;
         });
       }
     },
+
+    hideMenu() {
+      this.menuVisible = false;
+    }
   }
 }
 </script>

@@ -32,6 +32,10 @@ nav.page {
   }
 
   @include bp-lg() {
+    background-color: $color-light-grey;
+    border-left: 0;
+    left: 0;
+    right: auto;
     transform: translateX(0);
     * {
       opacity: 1;
@@ -40,10 +44,12 @@ nav.page {
 
 
   header {
-    @extend %page-block;
+    //@extend %page-block;
     align-items: center;
     display: flex;
     justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 20px;
     @include responsive-prop('height', $header-heights);
 
     span {
@@ -54,11 +60,21 @@ nav.page {
         margin-top: 5px;
       }
     }
+
+    a.menu-close {
+      @include bp-lg() {
+        display: none;
+      }
+    }
   }
 
   ul {
     border-top: 2px solid $color-light-grey;
     width: 100%;
+
+    @include bp-lg() {
+      border-top: none;
+    }
   }
 
   li {
@@ -80,8 +96,13 @@ nav.page {
 
       &.is-active,
       &:hover {
-        background-color: $color-light;
+        background-color: $color-white;
       }
+
+      @include bp-lg() {
+        border-bottom: none;
+      }
+
     }
 
     .is-parent,

@@ -29,7 +29,7 @@ $url-svg:    '../img/svg/';
 
 $bp-sm:  768px;
 $bp-md:  900px;
-$bp-lg: 1100px;
+$bp-lg: 1360px; // fix0504: 1200
 $bp-xl: 1920px;
 
 $breakpoints: (
@@ -41,7 +41,7 @@ $breakpoints: (
 /* Header
  * -------------------- */
 
-$header-height-sm: 70px;
+$header-height-sm: 85px;
 $header-height-md: 80px;
 
 /* Footer

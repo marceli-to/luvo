@@ -8,7 +8,7 @@
     <div class="grid-2x1">
       <div class="span order-md-2">
         @if ($data->publishedImages)
-          <div class="swiper-container js-swiper-horizontal">
+          <div class="swiper-container js-swiper-team-horizontal">
             <div class="swiper-wrapper">
               @foreach($data->publishedImages as $image)
                 @if ($image->device == 'mobile')
@@ -22,7 +22,7 @@
             </div>
             <div class="swiper-pagination"></div>
           </div>
-          <div class="swiper-container js-swiper-vertical">
+          <div class="swiper-container js-swiper-team-vertical">
             <div class="swiper-wrapper">
               @foreach($data->publishedImages as $image)
                 @if ($image->device == 'desktop')  

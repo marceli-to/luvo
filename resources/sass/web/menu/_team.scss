@@ -6,6 +6,7 @@
 
 nav.menu-team {
   border-bottom: 1px solid $color-black;
+  min-height: $header-height-sm;
   padding: $space-2x $space-3x;
 
   @include bp-md() {
@@ -13,6 +14,7 @@ nav.menu-team {
     border-bottom: none;
     display: flex;
     left: $space-6x;
+    min-height: auto;
     padding: 0;
     position: fixed;
     top: $space-4x;
@@ -30,20 +32,58 @@ nav.menu-team {
   }
 
   ul {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-column-gap: $space-3x;
-    grid-row-gap: 0;
+
+    &.is-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-column-gap: $space-3x;
+      grid-row-gap: 0;
+
+      li {
+
+        &:nth-child(1) {
+          order: 1;
+        }
+
+        &:nth-child(2) {
+          order: 3;
+        }
+        
+        &:nth-child(3) {
+          order: 2;
+        }
+
+        &:last-of-type {
+          order: 99;
+        }
+      }
+
+      @include bp-md() {
+        display: flex;
+        grid-template-columns: none;
+        grid-gap: 0;
+
+        li {
+          &:nth-child(2) {
+            order: 2;
+          }
+          
+          &:nth-child(3) {
+            order: 3;
+          }
+        }
+      }
+    }
 
     @include bp-md() {
       display: flex;
       margin-left: $space-9x;
-      grid-template-columns: none;
-      grid-gap: 0;
     }
   }
 
   li {
+
+
     
     @include bp-md() {
       margin-right: $space-8x;

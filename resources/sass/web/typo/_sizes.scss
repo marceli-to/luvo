@@ -10,14 +10,14 @@
 $fs-menu-main: (
   null: (32px,1.2),
   sm:   (32px,1.2),
-  md:   (30px,1.2),
+  md:   (26px,1.2), // fix0504: 30
   lg:   (30px,1.2)  
 );
 
 $fs-menu-sub: (
   null: (22px,1.2),
   sm:   (22px,1.2),
-  md:   (20px,1.2),
+  md:   (18px,1.2), // fix0504: 20
   lg:   (20px,1.2)  
 );
 
@@ -31,51 +31,49 @@ $fs-menu-team: (
 $fs-heading-md: (
   null: (22px,1.2),
   sm:   (22px,1.2),
-  md:   (40px,1.2),
+  md:   (33px,1.2), // fix0504: 40
   lg:   (40px,1.2)  
 );
 
 $fs-heading-sm: (
   null: (22px,1.2),
   sm:   (22px,1.2),
-  md:   (30px,1.2),
+  md:   (26px,1.2), // fix0504: 30
   lg:   (30px,1.2)  
 );
 
-// + zeilenabstand
 $fs-body-md: (
   null: (17px,1.3),
   sm:   (17px,1.3),
-  md:   (30px,1.15),
-  lg:   (30px,1.15)  
+  md:   (25px,1.2), // fix0504: 30
+  lg:   (30px,1.2)  
 );
 
 $fs-body-sm: (
   null: (17px,1.35),
   sm:   (17px,1.35),
-  md:   (25px,1.2),
+  md:   (20px,1.2), // fix0504: 25
   lg:   (25px,1.2)  
 );
 
-// + zeilenabstand
 $fs-body-xs: (
   null: (14px,1.35),
   sm:   (14px,1.35),
-  md:   (20px,1.2),
+  md:   (17px,1.2), // fix0504: 20
   lg:   (20px,1.2)  
 );
 
 $fs-dropdown-title: (
   null: (22px,1.2),
   sm:   (22px,1.2),
-  md:   (20px,1.2),
+  md:   (18px,1.2), // fix0504: 20
   lg:   (20px,1.2)  
 );
 
 $fs-dropdown-text: (
   null: (17px,1.2),
   sm:   (17px,1.2),
-  md:   (25px,1.2),
+  md:   (20px,1.2), // fix0504: 25
   lg:   (25px,1.2)  
 );
 
@@ -89,7 +87,7 @@ $fs-member-publications: (
 $fs-member-credits: (
   null: (14px,1.35),
   sm:   (14px,1.35),
-  md:   (20px,1.2),
+  md:   (17px,1.35), // fix0504: 20
   lg:   (20px,1.2)  
 );
 
