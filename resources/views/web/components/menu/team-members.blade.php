@@ -30,7 +30,7 @@
           {{ __('Team') }} {{ $team->capitalizedSlug }}
         </a>
       </h1>
-      <ul @if ($members->count() > 2) class="is-grid"  @endif>
+      <ul @if ($members->count() > 2) class="is-grid" @endif>
         @if ($members)
           @foreach($members as $member)
             <li>
