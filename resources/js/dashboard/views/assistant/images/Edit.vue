@@ -101,7 +101,7 @@
               <a href="javascript:;" @click.prevent="changeRatio(10, 12, 'desktop')" class="btn-cropper-format">Desktop</a>
             </div>
             <div>
-              <a href="javascript:;" @click.prevent="changeRatio(16, 10, 'mobile')" class="btn-cropper-format">Mobile</a>
+              <a href="javascript:;" @click.prevent="changeRatio(3, 2, 'mobile')" class="btn-cropper-format">Mobile</a>
             </div>
           </div>
           <div class="cropper-info">{{ cropW }} x {{ cropH }}px</div>

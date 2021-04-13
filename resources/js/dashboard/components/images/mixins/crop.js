@@ -11,8 +11,8 @@ export default {
       defaults: {
         w: 425,
         h: 510,
-        x: 100,
-        y: 100
+        x: 0,
+        y: 0
       },
 
       isLoading: false,

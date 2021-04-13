@@ -10,7 +10,7 @@
           @foreach($data['contact']->publishedImages as $image)
             @if ($image->device == 'mobile')
               <figure class="visual-mobile">
-                <x-picture :image="$image" :queries="['min-width: 900px', null]" :width="[1200,900]" :height="[750,560]" />
+                <x-picture :image="$image" :queries="['min-width: 900px', null]" :width="[1200,900]" :height="[800,600]" />
               </figure>
             @endif
             @if ($image->device == 'desktop')

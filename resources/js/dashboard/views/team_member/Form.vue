@@ -9,6 +9,14 @@
     <div v-show="tabs.data.active">
       <language-tabs :languages="languageTabs"></language-tabs>
       <div v-show="languageTabs.de.active">
+        <div :class="[this.errors.team_id ? 'has-error' : '', 'form-row']">
+          <label>Team*</label>
+          <div class="select-wrapper is-medium">
+            <select v-model="teamMember.team_id" name="layout">
+              <option v-for="(team, index) in teams" :key="index" :value="team.id">{{ team.capitalizedSlug }}</option>
+            </select>
+          </div>
+        </div>  
         <div :class="[this.errors.firstname ? 'has-error' : '', 'form-row']">
           <label>Vorname*</label>
           <input type="text" v-model="teamMember.firstname">
@@ -187,22 +195,14 @@
           <image-edit 
             :images="teamMember.images"
             :imagePreviewRoute="'cache'"
-            :aspectRatioW="4"
-            :aspectRatioH="3"
+            :aspectRatioW="3"
+            :aspectRatioH="2"
           ></image-edit>
         </div>
       </div>
     </div>
     <div v-show="tabs.settings.active">
       <div>
-        <div :class="[this.errors.team_id ? 'has-error' : '', 'form-row']">
-          <label>Team*</label>
-          <div class="select-wrapper is-medium">
-            <select v-model="teamMember.team_id" name="layout">
-              <option v-for="(team, index) in teams" :key="index" :value="team.id">{{ team.capitalizedSlug }}</option>
-            </select>
-          </div>
-        </div>  
         <div class="form-row is-last">
           <radio-button 
             :label="'Publizieren?'"

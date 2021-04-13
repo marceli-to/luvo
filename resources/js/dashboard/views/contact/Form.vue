@@ -81,8 +81,8 @@
             <image-edit 
               :images="contact.images"
               :imagePreviewRoute="'cache'"
-              :aspectRatioW="4"
-              :aspectRatioH="3"
+              :aspectRatioW="3"
+              :aspectRatioH="2"
             ></image-edit>
           </div>
         </div>
