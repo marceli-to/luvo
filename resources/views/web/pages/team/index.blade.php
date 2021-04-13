@@ -20,7 +20,9 @@
                 @endif
               @endforeach
             </div>
-            <div class="swiper-pagination"></div>
+            @if ($data->publishedImages->count()/2 > 1)
+              <div class="swiper-pagination"></div>
+            @endif
           </div>
           <div class="swiper-container js-swiper-team-vertical">
             <div class="swiper-wrapper">

@@ -6,6 +6,7 @@ var Utils = (function() {
     body:      'body',
     btnToggle: '[data-toggle]',
     btnMember: '.js-btn-member-list',
+    btnMemberSub: '.js-btn-member-sublist',
     btnScroll: '.js-btn-scroll',
   };
   
@@ -32,6 +33,10 @@ var Utils = (function() {
 
     $(selectors.body).on('click', selectors.btnMember, function(){
       _toggleList($(this));
+    });
+
+    $(selectors.body).on('click', selectors.btnMemberSub, function(){
+      _toggleSubList($(this));
     });
 
     $(selectors.body).on('click', selectors.btnScroll, function(){
@@ -61,9 +66,45 @@ var Utils = (function() {
   };
 
   var _toggleList = function(el) {
-    el.toggleClass(classes.active);
-    el.find('span').toggleClass(classes.active);
-    el.next('div').toggle();
+
+    // toggle
+    if (el.hasClass(classes.active)) {
+      el.removeClass(classes.active);
+      el.find('span').removeClass(classes.active);
+      el.next('div').hide();
+    }
+    else {
+      // hide all
+      el.parents('article').find('.member__list > div').hide();
+      el.parents('article').find('.member__list > a').removeClass(classes.active);
+      el.parents('article').find('.member__list > a span').removeClass(classes.active);
+
+      el.addClass(classes.active);
+      el.find('span').addClass(classes.active);
+      el.next('div').show();
+    }
+
+  };
+
+  var _toggleSubList = function(el) {
+
+    // toggle
+    if (el.hasClass(classes.active)) {
+      el.removeClass(classes.active);
+      el.find('span').removeClass(classes.active);
+      el.next('div').hide();
+    }
+    else {
+      // hide all
+      el.parents('ul').find('li > div').hide();
+      el.parents('ul').find('li > a').removeClass(classes.active);
+      el.parents('ul').find('li > a span').removeClass(classes.active);
+
+      el.addClass(classes.active);
+      el.find('span').addClass(classes.active);
+      el.next('div').show();
+    }
+
   };
 
 

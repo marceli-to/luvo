@@ -74,7 +74,7 @@
                 <ul>
                 @foreach($data->publications as $publication)
                   <li>
-                    <a href="javascript:;" class="btn-accordeon is-nested js-btn-member-list">
+                    <a href="javascript:;" class="btn-accordeon is-nested js-btn-member-sublist">
                       <span>{{ $publication->title }}</span>
                     </a>
                     <div style="display:none">

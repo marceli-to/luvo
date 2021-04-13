@@ -44,7 +44,7 @@
           @endforeach
         @endif
         @if ($assistant)
-          <li>
+          <li class="is-assistance">
             <a 
               href="{{ localized_route('page.team.' . $team->slug . '.assistant') }}" 
               title="{{ __('Assistenz') }}"
