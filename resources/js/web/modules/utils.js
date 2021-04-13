@@ -35,9 +35,7 @@ var Utils = (function() {
     });
 
     $(selectors.body).on('click', selectors.btnScroll, function(){
-      $.scrollTo('100%', 400, function(){
-        $(selectors.btnScroll).hide();
-      });
+      $.scrollTo('100%', 400);
     });
   };
 
