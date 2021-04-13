@@ -66,3 +66,9 @@ html.has-menu {
     
   }
 }
+
+html.has-menu body.is-contact {
+  .logo--menu {
+    display: none !important;
+  }
+}
