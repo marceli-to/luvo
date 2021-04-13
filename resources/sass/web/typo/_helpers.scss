@@ -23,7 +23,8 @@
  */
 
 strong, b {
-	@include font-regular();
+	@include font-medium();
+	font-weight: normal;
 }
 
 p {

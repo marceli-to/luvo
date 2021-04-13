@@ -36,9 +36,6 @@ nav.menu-team {
     &.is-grid {
       display: flex;
       flex-wrap: wrap;
-      // grid-template-columns: repeat(2, 1fr);
-      // grid-column-gap: $space-3x;
-      // grid-row-gap: 0;
 
       li {
         flex: 0 0 50%;
@@ -108,8 +105,6 @@ nav.menu-team {
   }
 
   li {
-
-
     
     @include bp-md() {
       margin-right: $space-8x;
