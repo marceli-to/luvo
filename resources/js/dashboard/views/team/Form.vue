@@ -9,6 +9,14 @@
     <div v-show="tabs.data.active">
       <language-tabs :languages="languageTabs"></language-tabs>
       <div v-show="languageTabs.de.active">
+        <div :class="[this.errors.category ? 'has-error' : '', 'form-row']">
+          <label>Team *</label>
+          <div class="select-wrapper is-medium">
+            <select v-model="team.slug" name="slug">
+              <option v-for="(slug, index) in slugs" :key="index" :value="index">{{ slug }}</option>
+            </select>
+          </div>
+        </div>  
         <div :class="[this.errors.title ? 'has-error' : '', 'form-row']">
           <label>Titel*</label>
           <input type="text" v-model="team.title.de">
@@ -78,14 +86,6 @@
     </div>
     <div v-show="tabs.settings.active">
       <div>
-        <div :class="[this.errors.category ? 'has-error' : '', 'form-row']">
-          <label>Team *</label>
-          <div class="select-wrapper is-medium">
-            <select v-model="team.slug" name="slug">
-              <option v-for="(slug, index) in slugs" :key="index" :value="index">{{ slug }}</option>
-            </select>
-          </div>
-        </div>  
         <div class="form-row is-last">
           <radio-button 
             :label="'Publizieren?'"

@@ -234,12 +234,33 @@ export default {
 
     showCropper(image, reset = false) {
       if (!reset) {
-        if (image.preview == 1) {
-          this.ratio.w = 1;
-          this.ratio.h = 1;
+
+        if (image.device == 'mobile') {
+          if (image.coords_w > 0 && image.coords_h > 0) {
+            let ratioW = 3;
+            let ratioH = (3/image.coords_w) * image.coords_h;
+            this.ratio.w = ratioW;
+            this.ratio.h = ratioH;
+          }
+          else {
+            this.ratio.w = 3;
+            this.ratio.h = 2;
+          }
+        }
+        else if (image.device == 'desktop') {
+          if (image.coords_w > 0 && image.coords_h > 0) {
+            let ratioW = 10;
+            let ratioH = (10/image.coords_w) * image.coords_h;
+            this.ratio.w = ratioW;
+            this.ratio.h = ratioH;
+          }
+          else {
+            this.ratio.w = 10;
+            this.ratio.h = 12;
+          }
         }
       }
-
+      
       this.isLoading = true;
       this.hasOverlayCropper = true;
       this.overlayItem = image;

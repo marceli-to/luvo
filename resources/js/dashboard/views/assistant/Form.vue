@@ -9,6 +9,14 @@
     <div v-show="tabs.data.active">
       <language-tabs :languages="languageTabs"></language-tabs>
       <div v-show="languageTabs.de.active">
+        <div :class="[this.errors.team_id ? 'has-error' : '', 'form-row']">
+          <label>Team*</label>
+          <div class="select-wrapper is-medium">
+            <select v-model="assistant.team_id" name="layout">
+              <option v-for="(team, index) in teams" :key="index" :value="team.id">{{ team.capitalizedSlug }}</option>
+            </select>
+          </div>
+        </div> 
         <div :class="[this.errors.description ? 'has-error' : '', 'form-row']">
           <label>Beschreibung</label>
           <tinymce-editor
@@ -85,14 +93,6 @@
     </div>
     <div v-show="tabs.settings.active">
       <div>
-        <div :class="[this.errors.team_id ? 'has-error' : '', 'form-row']">
-          <label>Team*</label>
-          <div class="select-wrapper is-medium">
-            <select v-model="assistant.team_id" name="layout">
-              <option v-for="(team, index) in teams" :key="index" :value="team.id">{{ team.capitalizedSlug }}</option>
-            </select>
-          </div>
-        </div>  
         <div class="form-row is-last">
           <radio-button 
             :label="'Publizieren?'"

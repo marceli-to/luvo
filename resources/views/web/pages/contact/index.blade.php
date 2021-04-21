@@ -44,8 +44,8 @@
           @if ($data['teams'])
             <div class="contact__members">
               <div>
-                @if ($data['teams']['luks'])
-                  @foreach($data['teams']['luks']->members as $member)
+                @if ($data['teams']['vogt'])
+                  @foreach($data['teams']['vogt']->members as $member)
                     <div class="contact-member">
                       <h2>{{ $member->firstname}} {{$member->name}}</h2>{!! $member->credits !!}
                     </div>
@@ -53,8 +53,8 @@
                 @endif
               </div>
               <div>
-                @if ($data['teams']['vogt'])
-                  @foreach($data['teams']['vogt']->members as $member)
+                @if ($data['teams']['luks'])
+                  @foreach($data['teams']['luks']->members as $member)
                     <div class="contact-member">
                       <h2>{{ $member->firstname}} {{$member->name}}</h2>{!! $member->credits !!}
                     </div>

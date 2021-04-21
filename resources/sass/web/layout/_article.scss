@@ -244,7 +244,7 @@ article.contact {
   .contact__members {
     margin-top: $space-6x;
 
-    @include bp-md() {
+    @include bp-xs() {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       grid-column-gap: $space-3x;
