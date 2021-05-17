@@ -25,6 +25,7 @@ article.member {
 
     p {
       @include font-size($fs-member-credits);
+      text-indent: 0 !important;
 
       a {
         @extend %anchor-underline;
@@ -132,6 +133,10 @@ article.member {
       
       li, p {
         @include font-size($fs-member-publications);
+      }
+
+      p {
+        text-indent: 0 !important;
       }
     } 
   }
@@ -256,6 +261,7 @@ article.contact {
 
     p {
       @include font-size($fs-body-xs);
+      text-indent: 0 !important;
     }
 
     .contact-member {
