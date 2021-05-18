@@ -7,6 +7,7 @@ var Utils = (function() {
     btnToggle: '[data-toggle]',
     btnMember: '.js-btn-member-list',
     btnMemberSub: '.js-btn-member-sublist',
+    btnTeam: '.js-btn-team',
     btnScroll: '.js-btn-scroll',
   };
   
@@ -33,6 +34,10 @@ var Utils = (function() {
 
     $(selectors.body).on('click', selectors.btnMember, function(){
       _toggleList($(this));
+    });
+
+    $(selectors.body).on('click', selectors.btnTeam, function(){
+      _toggleTeam($(this));
     });
 
     $(selectors.body).on('click', selectors.btnMemberSub, function(){
@@ -82,6 +87,24 @@ var Utils = (function() {
       el.addClass(classes.active);
       el.find('span').addClass(classes.active);
       el.next('div').show();
+    }
+
+  };
+
+  var _toggleTeam = function(el) {
+
+    // toggle
+    if (el.hasClass(classes.active)) {
+      el.removeClass(classes.active);
+      el.next('.contact-member-list-items').hide();
+    }
+    else {
+      // hide all
+      el.parents('.contact__members').find('.contact-member-list-items').hide();
+      el.parents('.contact__members').find('a').removeClass(classes.active);
+
+      el.addClass(classes.active);
+      el.next('.contact-member-list-items').show();
     }
 
   };

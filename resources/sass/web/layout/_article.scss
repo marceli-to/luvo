@@ -215,8 +215,11 @@ article.contact {
 
   }
 
-  a {
+  a:not(.btn-accordeon) {
     @extend %anchor-underline;
+  }
+
+  a {
     padding-bottom: $space-1x;
   }
 
@@ -247,16 +250,24 @@ article.contact {
   }
 
   .contact__members {
-    margin-top: $space-6x;
+    border-bottom: 1px solid $color-black;
+    margin-bottom: $space-4x;
+    margin-top: $space-4x;
 
     @include bp-xs() {
+      border-bottom: none;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       grid-column-gap: $space-3x;
     }
 
     h2 {
-      @include font-size($fs-heading-sm);
+      @include font-size($fs-member-heading);
+
+      @include bp-xs() {
+        font-size: 22px;
+        line-height: 1.2;
+      }
     }
 
     p {
@@ -264,8 +275,47 @@ article.contact {
       text-indent: 0 !important;
     }
 
+    .contact-member-list {
+      border-top: 1px solid $color-black;
+      padding-bottom: $space-1x;
+      padding-top: $space-2x;
+
+      .btn-accordeon {
+        @extend %anchor-chevron;
+        background-position: bottom 10px right;
+        @include font-size($fs-heading-sm);
+
+        &.is-active {
+          margin-bottom: $space-2x;
+        }
+      }
+
+      @include bp-xs() {
+        border-top: none;
+        padding-bottom: 0;
+        padding-top: 0;
+
+        .btn-accordeon {
+          display: none;
+        }
+      }
+    }
+
+    .contact-member-list-items {
+      @include bp-xs() {
+        display: block !important;
+      }
+    }
+
     .contact-member {
-      margin-bottom: $space-3x;
+      margin-bottom: $space-2x;
+      
+      @include bp-xs() {
+        margin-bottom: $space-3x;
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+      }
 
       @include bp-md() {
         margin-bottom: $space-4x;

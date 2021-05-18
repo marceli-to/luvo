@@ -33,6 +33,46 @@
               <a href="{{$data['contact']->map_uri}}" target="_blank" rel="noopener" class="icon-external anchor-maps">{{__('Google Maps')}}</a>
             </div>
           @endif
+
+
+          @if ($data['teams'])
+            <div class="contact__members">
+              <div>
+                @if ($data['teams']['vogt'])
+                  <div class="contact-member-list">
+                    <a href="javascript:;" class="btn-accordeon js-btn-team">
+                      {{ __('Team Vogt') }}
+                    </a>
+                    <div class="contact-member-list-items" style="display:none">
+                      @foreach($data['teams']['vogt']->members as $member)
+                        <div class="contact-member">
+                          <h2>{{ $member->firstname}} {{$member->name}}</h2>{!! $member->credits !!}
+                        </div>
+                      @endforeach
+                    </div>
+                  </div>
+                @endif
+              </div>
+              <div>
+                @if ($data['teams']['luks'])
+                  <div class="contact-member-list">
+                    <a href="javascript:;" class="btn-accordeon js-btn-team">
+                      {{ __('Team Luks') }}
+                    </a>
+                    <div class="contact-member-list-items" style="display:none">
+                      @foreach($data['teams']['luks']->members as $member)
+                        <div class="contact-member">
+                          <h2>{{ $member->firstname}} {{$member->name}}</h2>{!! $member->credits !!}
+                        </div>
+                      @endforeach
+                    </div>
+                  </div>
+                @endif
+              </div>
+            </div>
+          @endif
+
+
           @if ($data['contact']->imprint)
             <div>
               <a href="javascript:;" class="icon-chevron-down anchor-imprint" data-toggle="next:div">{{__('Impressum')}}</a>
@@ -41,28 +81,7 @@
               </div>
             </div>
           @endif
-          @if ($data['teams'])
-            <div class="contact__members">
-              <div>
-                @if ($data['teams']['vogt'])
-                  @foreach($data['teams']['vogt']->members as $member)
-                    <div class="contact-member">
-                      <h2>{{ $member->firstname}} {{$member->name}}</h2>{!! $member->credits !!}
-                    </div>
-                  @endforeach
-                @endif
-              </div>
-              <div>
-                @if ($data['teams']['luks'])
-                  @foreach($data['teams']['luks']->members as $member)
-                    <div class="contact-member">
-                      <h2>{{ $member->firstname}} {{$member->name}}</h2>{!! $member->credits !!}
-                    </div>
-                  @endforeach
-                @endif
-              </div>
-            </div>
-          @endif
+
         </article>
       </div>
     </div>
