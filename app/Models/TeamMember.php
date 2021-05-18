@@ -9,6 +9,7 @@ class TeamMember extends Base
   use HasTranslations;
 
 	public $translatable = [
+    'credits',
     'description',
     'area',
     'biography',

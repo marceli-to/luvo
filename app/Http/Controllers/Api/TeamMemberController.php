@@ -49,7 +49,11 @@ class TeamMemberController extends Controller
     $teamMember = new TeamMember([
       'firstname' => $request->input('firstname'),
       'name' => $request->input('name'),
-      'credits' => $request->input('credits'),
+      'description' => [
+        'de' => $request->input('credits.de'),
+        'fr' => $request->input('credits.fr'),
+        'en' => $request->input('credits.en'),
+      ],
       'description' => [
         'de' => $request->input('description.de'),
         'fr' => $request->input('description.fr'),
@@ -111,21 +115,23 @@ class TeamMemberController extends Controller
     $teamMember = $this->teamMember->findOrFail($teamMember->id);
     $teamMember->firstname = $request->input('firstname');
     $teamMember->name = $request->input('name');
-    $teamMember->credits = $request->input('credits');
     
     // German
+    $teamMember->setTranslation('credits', 'de', $request->input('credits.de'));
     $teamMember->setTranslation('description', 'de', $request->input('description.de'));
     $teamMember->setTranslation('area', 'de', $request->input('area.de'));
     $teamMember->setTranslation('biography', 'de', $request->input('biography.de'));
     $teamMember->setTranslation('membership', 'de', $request->input('membership.de'));
 
     // English
+    $teamMember->setTranslation('credits', 'en', $request->input('credits.en'));
     $teamMember->setTranslation('description', 'en', $request->input('description.en'));
     $teamMember->setTranslation('area', 'en', $request->input('area.en'));
     $teamMember->setTranslation('biography', 'en', $request->input('biography.en'));
     $teamMember->setTranslation('membership', 'en', $request->input('membership.en'));
 
     // French
+    $teamMember->setTranslation('credits', 'fr', $request->input('credits.fr'));
     $teamMember->setTranslation('description', 'fr', $request->input('description.fr'));
     $teamMember->setTranslation('area', 'fr', $request->input('area.fr'));
     $teamMember->setTranslation('biography', 'fr', $request->input('biography.fr'));

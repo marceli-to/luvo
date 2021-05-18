@@ -23,6 +23,7 @@ var SwiperUi = (function() {
 
   var _bind = function() {
     swiperVertical = new Swiper(selectors.swiperVertical, {
+      loop: true,
       slidesPerView: 'auto',
       direction: 'vertical',
       speed: 400,
@@ -40,6 +41,7 @@ var SwiperUi = (function() {
     });
 
     swiperHorizontal = new Swiper(selectors.swiperHorizontal, {
+      loop: true,
       slidesPerView: 'auto',
       speed: 400,
       autoplay: {
@@ -53,6 +55,7 @@ var SwiperUi = (function() {
     });
 
     swiperTeamVertical = new Swiper(selectors.swiperTeamVertical, {
+      loop: true,
       slidesPerView: 'auto',
       direction: 'vertical',
       speed: 400,
@@ -67,6 +70,7 @@ var SwiperUi = (function() {
     });
 
     swiperTeamHorizontal = new Swiper(selectors.swiperTeamHorizontal, {
+      loop: true,
       slidesPerView: 'auto',
       speed: 400,
       pagination: {

@@ -32,7 +32,7 @@
           <tinymce-editor
             :api-key="tinyApiKey"
             :init="tinyConfig"
-            v-model="teamMember.credits"
+            v-model="teamMember.credits.de"
           ></tinymce-editor>
         </div>
         <div class="form-row">
@@ -111,6 +111,14 @@
       <div v-show="languageTabs.fr.active">
         <div>
           <div class="form-row">
+            <label>Info</label>
+            <tinymce-editor
+              :api-key="tinyApiKey"
+              :init="tinyConfig"
+              v-model="teamMember.credits.fr"
+            ></tinymce-editor>
+          </div>
+          <div class="form-row">
             <label>Beschreibung</label>
             <tinymce-editor
               :api-key="tinyApiKey"
@@ -146,6 +154,14 @@
       </div>
       <div v-show="languageTabs.en.active">
         <div>
+          <div class="form-row">
+            <label>Info</label>
+            <tinymce-editor
+              :api-key="tinyApiKey"
+              :init="tinyConfig"
+              v-model="teamMember.credits.en"
+            ></tinymce-editor>
+          </div>
           <div class="form-row">
             <label>Beschreibung</label>
             <tinymce-editor
@@ -279,7 +295,11 @@ export default {
       teamMember: {
         firstname: null,
         name: null,
-        credits: null,
+        credits: {
+          de: null,
+          fr: null,
+          en: null,
+        },
         description: {
           de: null,
           fr: null,
