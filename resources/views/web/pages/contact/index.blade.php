@@ -33,8 +33,6 @@
               <a href="{{$data['contact']->map_uri}}" target="_blank" rel="noopener" class="icon-external anchor-maps">{{__('Google Maps')}}</a>
             </div>
           @endif
-
-
           @if ($data['teams'])
             <div class="contact__members">
               <div>
@@ -71,8 +69,6 @@
               </div>
             </div>
           @endif
-
-
           @if ($data['contact']->imprint)
             <div>
               <a href="javascript:;" class="icon-chevron-down anchor-imprint" data-toggle="next:div">{{__('Impressum')}}</a>
@@ -81,7 +77,6 @@
               </div>
             </div>
           @endif
-
         </article>
       </div>
     </div>

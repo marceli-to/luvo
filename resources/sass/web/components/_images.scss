@@ -37,8 +37,20 @@
 
 %visual,
 .visual {
+  position: relative;
+  
   img {
     @extend %is-responsive;
+  }
+
+  figcaption {
+    background-color: $color-black;
+    bottom: 0;
+    color: $color-white;
+    @include font-size($fs-caption);
+    right: 0;
+    position: absolute;
+    padding: 3px $space-1x;
   }
 }
 

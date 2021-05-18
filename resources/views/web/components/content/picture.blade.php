@@ -8,4 +8,7 @@
     @endif
   @endforeach
 </picture>
+@if ($image->caption)
+<figcaption>{{$image->caption}}</figcaption>
+@endif
 
