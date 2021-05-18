@@ -21,7 +21,8 @@
               @endforeach
             </div>
             @if ($data->publishedImages->count()/2 > 1)
-              <div class="swiper-pagination"></div>
+              <div class="swiper-btn-next"></div>
+              <div class="swiper-btn-prev"></div>
             @endif
           </div>
           <div class="swiper-container js-swiper-team-vertical">

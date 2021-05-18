@@ -73,9 +73,13 @@ var SwiperUi = (function() {
       loop: true,
       slidesPerView: 'auto',
       speed: 400,
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
+      // pagination: {
+      //   el: '.swiper-pagination',
+      //   clickable: true,
+      // },
+      navigation: {
+        nextEl: '.swiper-btn-next',
+        prevEl: '.swiper-btn-prev',
       },
       spaceBetween: 0,
     });
