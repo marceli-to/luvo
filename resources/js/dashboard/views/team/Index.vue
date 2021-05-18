@@ -171,6 +171,8 @@ export default {
 
     toggle(id,event,model) {
 
+      console.log(model);
+
       if (model) {
         if (model == 'team') {
           let uri = `/api/team/state/${id}`;
@@ -188,6 +190,16 @@ export default {
           this.axios.get(uri).then(response => {
             const index = this.teamMembers.findIndex(x => x.id === id);
             this.teamMembers[index].publish = response.data;
+            this.$notify({ type: "success", text: "Status geändert" });
+            this.isLoading = false;
+          });
+        }
+        if (model == 'assistant') {
+          let uri = `/api/assistant/state/${id}`;
+          this.isLoading = true;
+          this.axios.get(uri).then(response => {
+            const index = this.assistants.findIndex(x => x.id === id);
+            this.assistants[index].publish = response.data;
             this.$notify({ type: "success", text: "Status geändert" });
             this.isLoading = false;
           });
