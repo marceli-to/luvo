@@ -31,14 +31,18 @@ class Picture extends Component
     $this->width   = $width;
     $this->height  = $height;
 
-    $coords = [
-      $this->image->coords_w,
-      $this->image->coords_h,
-      $this->image->coords_x,
-      $this->image->coords_y
-    ];
+    // $coords = [
+    //   $this->image->coords_w,
+    //   $this->image->coords_h,
+    //   $this->image->coords_x,
+    //   $this->image->coords_y
+    // ];
 
-    $this->coords = implode(',', $coords);
+    $this->coords = '';
+    if (($this->image->coords_w && $this->image->coords_h) && ($this->image->coords_x || $this->image->coords_y))
+    {
+      $this->coords = $this->image->coords_w . ',' . $this->image->coords_h . ',' . $this->image->coords_x . ',' . $this->image->coords_y;
+    }
 
   }
 
