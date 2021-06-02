@@ -4,7 +4,7 @@
       @foreach($data as $d)
         <li>
           <a href="javascript:;" 
-            class="js-menu-item-parent {{ request()->routeIs('*page.team.' . $d->slug) || (isset(request()->route()->parameter('slugTeam')) && request()->route()->parameter('slugTeam') == $d->slug) || request()->routeIs('*.page.team.' . $d->slug . '.assistant') ? 'is-active' : '' }}">
+            class="js-menu-item-parent {{ request()->routeIs('*page.team.' . $d->slug) || request()->route()->parameter('slugTeam') == $d->slug || request()->routeIs('*.page.team.' . $d->slug . '.assistant') ? 'is-active' : '' }}">
             {{__('Team')}} {{ $d->capitalizedSlug }}
           </a>
           <ul>
