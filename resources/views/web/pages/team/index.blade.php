@@ -29,7 +29,7 @@ $image_count = ['desktop' => 0, 'mobile' => 0];
                 @endif
               @endforeach
             </div>
-            @if ($image_count['mobile'] > 1)
+            @if (isset($image_count['mobile']) && $image_count['mobile'] > 1)
               <div class="swiper-btn-next"></div>
               <div class="swiper-btn-prev"></div>
             @endif
@@ -46,7 +46,7 @@ $image_count = ['desktop' => 0, 'mobile' => 0];
                 @endif
               @endforeach
             </div>
-            @if ($image_count['desktop'] > 1)
+            @if (isset($image_count['desktop']) && $image_count['desktop'] > 1)
               <div class="swiper-btn-next"></div>
               <div class="swiper-btn-prev"></div>
             @endif
