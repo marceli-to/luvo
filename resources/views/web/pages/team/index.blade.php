@@ -3,6 +3,15 @@
 @section('page_title', __('Team') . ' ' . $data->capitalizedSlug)
 @section('content')
 <x-menu-team-members teamId="{{$data->id}}" isMobileMenu="0" />
+@php
+$image_count = ['desktop' => 0, 'mobile' => 0];
+if ($data->publishedImages)
+{
+  $image_count = $data->publishedImages->countBy(function ($image) {
+    return $image->device;
+  });
+}
+@endphp
 <section class="content">
   <div>
     <div class="grid-2x1">
@@ -20,7 +29,7 @@
                 @endif
               @endforeach
             </div>
-            @if ($data->publishedImages->count() > 2)
+            @if ($image_count['mobile'] > 1)
               <div class="swiper-btn-next"></div>
               <div class="swiper-btn-prev"></div>
             @endif
@@ -37,7 +46,7 @@
                 @endif
               @endforeach
             </div>
-            @if ($data->publishedImages->count() > 2)
+            @if ($image_count['desktop'] > 1)
               <div class="swiper-btn-next"></div>
               <div class="swiper-btn-prev"></div>
             @endif

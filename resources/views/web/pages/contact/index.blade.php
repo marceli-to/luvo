@@ -2,6 +2,15 @@
 @section('seo_title', __('Kontakt'))
 @section('page_title', __('Kontakt'))
 @section('content')
+@php
+$image_count = ['desktop' => 0, 'mobile' => 0];
+if ($data['contact']->publishedImages)
+{
+  $image_count = $data['contact']->publishedImages->countBy(function ($image) {
+    return $image->device;
+  });
+}
+@endphp
 <section class="content">
   <div>
     <div class="grid-2x1">
@@ -19,7 +28,7 @@
                 @endif
               @endforeach
             </div>
-            @if ($data['contact']->publishedImages->count() > 2)
+            @if ($image_count['mobile'] > 1)
               <div class="swiper-btn-next"></div>
               <div class="swiper-btn-prev"></div>
             @endif
@@ -36,7 +45,7 @@
                 @endif
               @endforeach
             </div>
-            @if ($data['contact']->publishedImages->count() > 2)
+            @if ($image_count['desktop'] > 1)
               <div class="swiper-btn-next"></div>
               <div class="swiper-btn-prev"></div>
             @endif
