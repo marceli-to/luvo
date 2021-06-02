@@ -16,7 +16,7 @@ if ($data['contact']->publishedImages)
     <div class="grid-2x1">
       <div class="span order-md-2">
         @if ($data['contact']->publishedImages)
-          <div class="swiper-container js-swiper-team-horizontal">
+          <div class="swiper-container @if (isset($image_count['mobile']) && $image_count['mobile'] > 1) js-swiper-team-horizontal @endif">
             <div class="swiper-wrapper">
               @foreach($data['contact']->publishedImages as $image)
                 @if ($image->device == 'mobile')
@@ -33,7 +33,7 @@ if ($data['contact']->publishedImages)
               <div class="swiper-btn-prev"></div>
             @endif
           </div>
-          <div class="swiper-container js-swiper-team-vertical">
+          <div class="swiper-container @if (isset($image_count['desktop']) && $image_count['desktop'] > 1) js-swiper-team-vertical @endif">
             <div class="swiper-wrapper">
               @foreach($data['contact']->publishedImages as $image)
                 @if ($image->device == 'desktop')  

@@ -5,19 +5,19 @@
 <x-menu-team-members teamId="{{$data->id}}" isMobileMenu="0" />
 @php
 $image_count = ['desktop' => 0, 'mobile' => 0];
-// if ($data->publishedImages && $data->publishedImages->count() > 0)
-// {
-//   $image_count = $data->publishedImages->countBy(function ($image) {
-//     return $image->device;
-//   });
-// }
+if ($data->publishedImages && $data->publishedImages->count() > 0)
+{
+  $image_count = $data->publishedImages->countBy(function ($image) {
+    return $image->device;
+  });
+}
 @endphp
 <section class="content">
   <div>
     <div class="grid-2x1">
       <div class="span order-md-2">
         @if ($data->publishedImages)
-          <div class="swiper-container js-swiper-team-horizontal">
+          <div class="swiper-container @if (isset($image_count['mobile']) && $image_count['mobile'] > 1) js-swiper-team-horizontal @endif">
             <div class="swiper-wrapper">
               @foreach($data->publishedImages as $image)
                 @if ($image->device == 'mobile')
@@ -34,7 +34,7 @@ $image_count = ['desktop' => 0, 'mobile' => 0];
               <div class="swiper-btn-prev"></div>
             @endif
           </div>
-          <div class="swiper-container js-swiper-team-vertical">
+          <div class="swiper-container @if (isset($image_count['desktop']) && $image_count['desktop'] > 1) js-swiper-team-vertical @endif">
             <div class="swiper-wrapper">
               @foreach($data->publishedImages as $image)
                 @if ($image->device == 'desktop')  
