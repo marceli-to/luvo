@@ -52,6 +52,7 @@ var Utils = (function() {
   var _toggle = function(el) {
     var data = el.data(attr.toggle).split(":");
     if (data.length == 2) {
+      el.toggleClass(classes.active);
       el[data[0]](data[1]).toggle(); // i.e. el.next('div').toggle();
     }
   };

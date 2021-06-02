@@ -228,6 +228,38 @@ article.contact {
     @include font-size($fs-body-xs);
   }
 
+  a.anchor-imprint {
+    @extend %icon;
+    position: relative;
+  
+    &:after {
+      @include background-default();
+      background-image: url($url-icons + 'chevron-sm.svg');
+      background-size: 12px auto;
+      background-position: center right;
+      content: '';
+      display: block;
+      height: 7px;
+      position: absolute;
+      right: -16px;
+      top: 7px;
+      width: 12px;
+  
+      @include bp-md() {
+        background-size: 18px auto;
+        height: 10px;
+        right: -24px;
+        top: 8px;
+        width: 18px;
+      }
+    }
+
+    &.is-active:after {
+      background-image: url($url-icons + 'chevron-sm-active.svg') !important;
+    }
+  }
+
+
   .contact__imprint {
     padding-top: $space-3x;
     @include bp-md() {

@@ -7,18 +7,40 @@
     <div class="grid-2x1">
       <div class="span order-md-2">
         @if ($data['contact']->publishedImages)
-          @foreach($data['contact']->publishedImages as $image)
-            @if ($image->device == 'mobile')
-              <figure class="visual-mobile">
-                <x-picture :image="$image" :queries="['min-width: 900px', null]" :width="[1200,900]" :height="[800,600]" />
-              </figure>
+          <div class="swiper-container js-swiper-team-horizontal">
+            <div class="swiper-wrapper">
+              @foreach($data['contact']->publishedImages as $image)
+                @if ($image->device == 'mobile')
+                  <div class="swiper-slide">
+                    <figure class="visual-mobile">
+                      <x-picture :image="$image" :queries="['min-width: 900px', null]" :width="[1200,900]" :height="[800,600]" />
+                    </figure>
+                  </div>
+                @endif
+              @endforeach
+            </div>
+            @if ($data['contact']->publishedImages->count() > 2)
+              <div class="swiper-btn-next"></div>
+              <div class="swiper-btn-prev"></div>
             @endif
-            @if ($image->device == 'desktop')
-              <figure class="visual-desktop">
-                <x-picture :image="$image" :queries="[null]" :width="[1600]" :height="[1920]" />
-              </figure>
+          </div>
+          <div class="swiper-container js-swiper-team-vertical">
+            <div class="swiper-wrapper">
+              @foreach($data['contact']->publishedImages as $image)
+                @if ($image->device == 'desktop')  
+                  <div class="swiper-slide">
+                    <figure class="visual-desktop">
+                      <x-picture :image="$image" :queries="[null]" :width="[1600]" :height="[1920]" />
+                    </figure>
+                  </div>
+                @endif
+              @endforeach
+            </div>
+            @if ($data['contact']->publishedImages->count() > 2)
+              <div class="swiper-btn-next"></div>
+              <div class="swiper-btn-prev"></div>
             @endif
-          @endforeach
+          </div>
         @endif
       </div>
       <div class="span order-md-1 content-scrollable" data-simplebar>
@@ -71,7 +93,7 @@
           @endif
           @if ($data['contact']->imprint)
             <div>
-              <a href="javascript:;" class="icon-chevron-down anchor-imprint" data-toggle="next:div">{{__('Impressum')}}</a>
+              <a href="javascript:;" class="anchor-imprint" data-toggle="next:div">{{__('Impressum')}}</a>
               <div style="display:none" class="contact__imprint">
                 {!! $data['contact']->imprint !!}
               </div>

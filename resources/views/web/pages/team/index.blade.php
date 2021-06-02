@@ -20,7 +20,7 @@
                 @endif
               @endforeach
             </div>
-            @if ($data->publishedImages->count()/2 > 1)
+            @if ($data->publishedImages->count() > 2)
               <div class="swiper-btn-next"></div>
               <div class="swiper-btn-prev"></div>
             @endif
@@ -37,8 +37,10 @@
                 @endif
               @endforeach
             </div>
-            <div class="swiper-btn-next"></div>
-            <div class="swiper-btn-prev"></div>
+            @if ($data->publishedImages->count() > 2)
+              <div class="swiper-btn-next"></div>
+              <div class="swiper-btn-prev"></div>
+            @endif
           </div>
         @endif
       </div>
