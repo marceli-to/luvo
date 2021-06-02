@@ -5,7 +5,7 @@
 <x-menu-team-members teamId="{{$data->id}}" isMobileMenu="0" />
 @php
 $image_count = ['desktop' => 0, 'mobile' => 0];
-if ($data->publishedImages)
+if ($data->publishedImages && $data->publishedImages->count() > 0)
 {
   $image_count = $data->publishedImages->countBy(function ($image) {
     return $image->device;
