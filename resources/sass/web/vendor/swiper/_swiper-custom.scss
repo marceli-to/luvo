@@ -81,16 +81,16 @@
     .swiper-btn-next,
     .swiper-btn-prev {
       @include background-default();
-      background-size: 90px auto;
+      background-size: 70px auto;
       cursor: pointer;
       display: block;
-      height: 50px;
-      left: calc(50% - 45px);
+      height: 36px;
+      left: calc(50% - 35px);
       opacity: 1;
       pointer-events: all;
       position: absolute;
       transition: opacity .1s .2s ease-in;
-      width: 90px;
+      width: 70px;
       z-index: 20000;
 
       &:focus {
