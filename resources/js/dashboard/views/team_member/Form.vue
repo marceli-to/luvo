@@ -52,6 +52,14 @@
           ></tinymce-editor>
         </div>
         <div class="form-row">
+          <label>Sprachen</label>
+          <tinymce-editor
+            :api-key="tinyApiKey"
+            :init="tinyConfig"
+            v-model="teamMember.languages.de"
+          ></tinymce-editor>
+        </div>
+        <div class="form-row">
           <label>Werdegang</label>
           <tinymce-editor
             :api-key="tinyApiKey"
@@ -135,6 +143,14 @@
             ></tinymce-editor>
           </div>
           <div class="form-row">
+            <label>Sprachen</label>
+            <tinymce-editor
+              :api-key="tinyApiKey"
+              :init="tinyConfig"
+              v-model="teamMember.languages.fr"
+            ></tinymce-editor>
+          </div>
+          <div class="form-row">
             <label>Werdegang</label>
             <tinymce-editor
               :api-key="tinyApiKey"
@@ -176,6 +192,14 @@
               :api-key="tinyApiKey"
               :init="tinyConfig"
               v-model="teamMember.area.en"
+            ></tinymce-editor>
+          </div>
+          <div class="form-row">
+            <label>Sprachen</label>
+            <tinymce-editor
+              :api-key="tinyApiKey"
+              :init="tinyConfig"
+              v-model="teamMember.languages.en"
             ></tinymce-editor>
           </div>
           <div class="form-row">
@@ -306,6 +330,11 @@ export default {
           en: null,
         },
         area: {
+          de: null,
+          fr: null,
+          en: null,
+        },
+        languages: {
           de: null,
           fr: null,
           en: null,

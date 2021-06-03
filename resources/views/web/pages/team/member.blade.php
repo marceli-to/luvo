@@ -45,6 +45,16 @@
               </div>
             </div>
           @endif
+          @if ($data->languages)
+            <div class="member__list">
+              <a href="javascript:;" class="btn-accordeon js-btn-member-list">
+                <span>{{ __('Sprachen') }}</span>
+              </a>
+              <div style="display:none">
+                {!! $data->languages !!}
+              </div>
+            </div>
+          @endif
           @if ($data->biography)
             <div class="member__list">
               <a href="javascript:;" class="btn-accordeon js-btn-member-list">

@@ -12,6 +12,7 @@ class TeamMember extends Base
     'credits',
     'description',
     'area',
+    'languages',
     'biography',
     'membership',
   ];
@@ -22,6 +23,7 @@ class TeamMember extends Base
     'credits',
 		'description',
     'area',
+    'languages',
     'biography',
     'membership',
 		'order',
