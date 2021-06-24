@@ -41,7 +41,12 @@ class Picture extends Component
     $this->coords = '';
     if (($this->image->coords_w && $this->image->coords_h) && ($this->image->coords_x || $this->image->coords_y))
     {
-      $this->coords = $this->image->coords_w . ',' . $this->image->coords_h . ',' . $this->image->coords_x . ',' . $this->image->coords_y;
+
+      $w = $this->image->coords_w ? $this->image->coords_w : 0;
+      $h = $this->image->coords_h ? $this->image->coords_h : 0;
+      $x = $this->image->coords_x ? $this->image->coords_x : 0;
+      $y = $this->image->coords_y ? $this->image->coords_y : 0;
+      $this->coords = $w . ',' . $h . ',' . $x . ',' . $y;
     }
 
   }
