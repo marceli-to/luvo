@@ -51,6 +51,11 @@ class TeamMember extends Base
 	public function publications()
 	{
 		return $this->hasMany('App\Models\Publication', 'team_member_id', 'id')->orderBy('order');
+  }
+  
+	public function publishedPublications()
+	{
+		return $this->hasMany('App\Models\Publication', 'team_member_id', 'id')->where('publish', '=', 1)->orderBy('order');
 	}
 
   /**
