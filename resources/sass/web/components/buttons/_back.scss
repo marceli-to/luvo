@@ -5,14 +5,31 @@
  */
 
 .btn-back {
-  display: block;
+  align-items: center;
+  display: flex;
   height: 41px;
   position: absolute;
   right: $space-6x;
   top: 0;
-  width: 41px;
+  width: auto;
 
   svg {
-    @extend %is-responsive;
+    display: block;
+    height: 41px;
+    width: 41px;
+  }
+
+  span {
+    color: $color-black;
+    @include font-size($fs-menu-team);
+    opacity: 0;
+    padding-right: $space-3x;
+    transition: opacity .12s ease-in;
+  }
+
+  &:hover {
+    span {
+      opacity: 1;
+    }
   }
 }

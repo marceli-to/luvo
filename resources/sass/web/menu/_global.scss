@@ -26,6 +26,10 @@ nav {
 
     a {
       background: none !important;
+
+      &.inactive {
+        color: $color-grey;
+      }
     }
     
     span {

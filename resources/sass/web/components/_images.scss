@@ -78,7 +78,7 @@
   background-image: url($url-icons + 'chevron-down-xl.svg');
   bottom: $space-4x;
   cursor: pointer;
-  display: block;
+  display: none;
   height: 26px;
   left: calc(50% - 25px);
   opacity: 1;
@@ -90,6 +90,7 @@
 
   @include bp-md() {
     background-size: 70px auto;
+    display: block;
     left: calc(50% - 35px);
     height: 36px;
     width: 70px;

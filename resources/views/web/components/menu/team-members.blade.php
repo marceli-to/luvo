@@ -55,6 +55,7 @@
         @endif
       </ul>
       <a href="{{ localized_route('page.home') }}" class="btn-back">
+        <span>Home</span>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 41 41"><style>.cross-st0{fill:#181716}</style><path class="cross-st0" d="M40.6 1.4l-1-1.1-19.1 19.1L1.1 0 0 1.1l19.4 19.4L.3 39.6l1.1 1 19.1-19.1 18.8 18.8 1-1-18.8-18.8z"/></svg>
       </a>
     </nav>

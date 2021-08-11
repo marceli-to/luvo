@@ -79,6 +79,11 @@ class TeamMemberController extends Controller
         'fr' => $request->input('membership.fr'),
         'en' => $request->input('membership.en'),
       ],
+      'publication' => [
+        'de' => $request->input('publication.de'),
+        'fr' => $request->input('publication.fr'),
+        'en' => $request->input('publication.en'),
+      ],
       'team_id' => $request->input('team_id'),
       'publish' => $request->input('publish'),
     ]);
@@ -128,6 +133,7 @@ class TeamMemberController extends Controller
     $teamMember->setTranslation('languages', 'de', $request->input('languages.de'));
     $teamMember->setTranslation('biography', 'de', $request->input('biography.de'));
     $teamMember->setTranslation('membership', 'de', $request->input('membership.de'));
+    $teamMember->setTranslation('publication', 'de', $request->input('publication.de'));
 
     // English
     $teamMember->setTranslation('credits', 'en', $request->input('credits.en'));
@@ -136,6 +142,7 @@ class TeamMemberController extends Controller
     $teamMember->setTranslation('languages', 'en', $request->input('languages.en'));
     $teamMember->setTranslation('biography', 'en', $request->input('biography.en'));
     $teamMember->setTranslation('membership', 'en', $request->input('membership.en'));
+    $teamMember->setTranslation('publication', 'en', $request->input('publication.en'));
 
     // French
     $teamMember->setTranslation('credits', 'fr', $request->input('credits.fr'));
@@ -144,6 +151,7 @@ class TeamMemberController extends Controller
     $teamMember->setTranslation('languages', 'fr', $request->input('languages.fr'));
     $teamMember->setTranslation('biography', 'fr', $request->input('biography.fr'));
     $teamMember->setTranslation('membership', 'fr', $request->input('membership.fr'));
+    $teamMember->setTranslation('publication', 'fr', $request->input('publication.fr'));
 
     $teamMember->team_id = $request->input('team_id');
     $teamMember->publish = $request->input('publish');

@@ -15,6 +15,7 @@ class TeamMember extends Base
     'languages',
     'biography',
     'membership',
+    'publication',
   ];
 
 	protected $fillable = [
@@ -26,6 +27,7 @@ class TeamMember extends Base
     'languages',
     'biography',
     'membership',
+    'publication',
 		'order',
     'publish',
     'team_id',

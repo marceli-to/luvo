@@ -75,9 +75,17 @@
             v-model="teamMember.membership.de"
           ></tinymce-editor>
         </div>
+        <div class="form-row">
+          <label>Publikationen (Liste)</label>
+          <tinymce-editor
+            :api-key="tinyApiKey"
+            :init="tinyConfig"
+            v-model="teamMember.publication.de"
+          ></tinymce-editor>
+        </div>
         <div class="form-row" v-if="isEdit">
           <header class="content-header" style="margin-bottom: 5px">
-            <label>Publikationen</label>
+            <label>Publikationen (Artikel)</label>
             <router-link :to="{ name: 'publication-create', params: { memberId: teamMember.id }}" class="feather-icon feather-icon--prepend">
               <plus-icon size="16"></plus-icon>
               <span>Hinzufügen</span>
@@ -166,6 +174,14 @@
               v-model="teamMember.membership.fr"
             ></tinymce-editor>
           </div>
+          <div class="form-row">
+            <label>Publikationen (Liste)</label>
+            <tinymce-editor
+              :api-key="tinyApiKey"
+              :init="tinyConfig"
+              v-model="teamMember.publication.fr"
+            ></tinymce-editor>
+          </div>
         </div>
       </div>
       <div v-show="languageTabs.en.active">
@@ -216,6 +232,14 @@
               :api-key="tinyApiKey"
               :init="tinyConfig"
               v-model="teamMember.membership.en"
+            ></tinymce-editor>
+          </div>
+          <div class="form-row">
+            <label>Publikationen (Liste)</label>
+            <tinymce-editor
+              :api-key="tinyApiKey"
+              :init="tinyConfig"
+              v-model="teamMember.publication.en"
             ></tinymce-editor>
           </div>
         </div>
@@ -345,6 +369,11 @@ export default {
           en: null,
         },
         membership: {
+          de: null,
+          fr: null,
+          en: null,
+        },
+        publication: {
           de: null,
           fr: null,
           en: null,

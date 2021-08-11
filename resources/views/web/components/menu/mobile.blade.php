@@ -1,5 +1,8 @@
 <nav class="site-menu-mobile js-menu">
   <ul>
+    <li>
+      <a href="{{ localized_route('page.home') }}">Home</a>
+    </li>
     @if ($data)
       @foreach($data as $d)
         <li>

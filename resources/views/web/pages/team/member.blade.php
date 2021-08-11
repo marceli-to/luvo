@@ -75,6 +75,18 @@
               </div>
             </div>
           @endif
+
+          @if ($data->publication)
+            <div class="member__list is-publication">
+              <a href="javascript:;" class="btn-accordeon js-btn-member-list">
+                <span>{{ __('Publikationen') }}</span>
+              </a>
+              <div style="display:none">
+                {!! $data->publication !!}
+              </div>
+            </div>
+          @endif
+
           @if ($data->publications  && count($data->publications) > 0)
             <div class="member__list">
               <a href="javascript:;" class="btn-accordeon js-btn-member-list">

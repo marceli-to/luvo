@@ -95,6 +95,7 @@ article.member {
       }
     }
 
+    &.is-publication ul li,
     ul ul li {
       &:before {
         background-size: 4px auto;
@@ -103,6 +104,25 @@ article.member {
         @include bp-md() {
           background-size: 6px auto;
         }
+      }
+    }
+
+    &.is-publication ul {
+      padding-left: $space-4x;
+      @include bp-md() {
+        padding-left: $space-4x;
+      }
+    }
+
+    &.is-publication ul li {
+      @include font-size($fs-member-publications);
+      &:before {
+        margin-left: -1.2em;
+        width: 1.2em;
+      }
+
+      a {
+        @include font-medium();
       }
     }
 
