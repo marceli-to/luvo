@@ -100,12 +100,12 @@
 
     .swiper-btn-next {
       background-image: url($url-icons + 'chevron-down-xl.svg');
-      bottom: $space-4x;
+      bottom: $space-6x;
     }
 
     .swiper-btn-prev {
       background-image: url($url-icons + 'chevron-up-xl.svg');
-      top: $space-4x;
+      top: $space-6x;
     }
 
     .swiper-button-disabled {
