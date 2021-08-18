@@ -15,8 +15,10 @@
   }
 
   @include bp-lg() {
-    height: 28px;
-    width: 635px;
+    height: auto;
+    position: relative;
+    top: -3px;
+    width: 700px;
   }
 
   svg {

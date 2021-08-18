@@ -65,6 +65,19 @@
   @extend %visual;
   @extend %is-fullheight;
   display: none;
+
+  &.is-contain {
+    background-color: #eee;
+    img {
+      object-fit: contain !important;
+    }
+  }
+
+  &.is-background {
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: cover;
+  }
 }
 
 .visual-wide {

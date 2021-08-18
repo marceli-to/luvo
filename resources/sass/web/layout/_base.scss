@@ -5,7 +5,7 @@
  */
 
 html {
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 
@@ -17,4 +17,4 @@ body {
 }
 
 // Scrollbars
-@include scrollbar(4px, #999);
+// @include scrollbar(10px, #999);

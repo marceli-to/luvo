@@ -59,6 +59,9 @@ var SwiperUi = (function() {
       slidesPerView: 'auto',
       direction: 'vertical',
       speed: 400,
+      autoplay: {
+        delay: 5000,
+      },
       navigation: {
         nextEl: '.swiper-btn-next',
         prevEl: '.swiper-btn-prev',

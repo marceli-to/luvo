@@ -15,9 +15,21 @@
               </figure>
             @endif
             @if ($image->device == 'desktop')
-              <figure class="visual-desktop">
-                <x-picture :image="$image" :queries="['min-height: 900px', 'min-height: 600px', null]" :width="[1600,1200,1200]" :height="[1920,1440,1440]" />
-              </figure>
+              @if ($data->id == 1)
+                <figure class="visual-desktop is-contain">
+                  <x-picture :image="$image" :queries="['min-height: 900px', 'min-height: 600px', null]" :width="[1600,1200,1200]" :height="[1920,1440,1440]" />
+                </figure>
+              @elseif ($data->id == 2)
+                <figure class="visual-desktop is-background" style="background-image:url(/img/cache/{{$image->name}}?w=1600&h=1920&c={{$image->coords_w ?? 'null'}},{{$image->coords_h ?? 'null'}},{{$image->coords_x ?? 'null'}},{{$image->coords_y ?? 'null'}})">
+                  @if ($image->caption)
+                    <figcaption>{{$image->caption}}</figcaption>
+                  @endif
+                </figure>
+              @else
+                <figure class="visual-desktop">
+                  <x-picture :image="$image" :queries="['min-height: 900px', 'min-height: 600px', null]" :width="[1600,1200,1200]" :height="[1920,1440,1440]" />
+                </figure>
+              @endif
             @endif
           @endforeach
         @endif

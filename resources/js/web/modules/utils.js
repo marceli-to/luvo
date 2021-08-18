@@ -47,6 +47,12 @@ var Utils = (function() {
     $(selectors.body).on('click', selectors.btnScroll, function(){
       $.scrollTo('100%', 400);
     });
+
+    if ($(selectors.body).find(selectors.btnScroll)) {
+      setTimeout(function(){
+        $.scrollTo('100%', 400);
+      }, 4000);
+    }
   };
 
   var _toggle = function(el) {
