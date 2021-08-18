@@ -20,7 +20,7 @@
                   <x-picture :image="$image" :queries="['min-height: 900px', 'min-height: 600px', null]" :width="[1600,1200,1200]" :height="[1920,1440,1440]" />
                 </figure>
               @elseif ($data->id == 2)
-                <figure class="visual-desktop is-background" style="background-image:url(/img/cache/{{$image->name}}?w=1600&h=1920&c={{$image->coords_w ?? 'null'}},{{$image->coords_h ?? 'null'}},{{$image->coords_x ?? 'null'}},{{$image->coords_y ?? 'null'}})">
+                <figure class="visual-desktop is-background" style="background-image:url(/img/cache/{{$image->name}}?w=1600&h=1920&c={{$image->coords_w ?? '0'}},{{$image->coords_h ?? '0'}},{{$image->coords_x ?? '0'}},{{$image->coords_y ?? '0'}})">
                   @if ($image->caption)
                     <figcaption>{{$image->caption}}</figcaption>
                   @endif
