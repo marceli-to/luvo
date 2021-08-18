@@ -39,7 +39,7 @@ if ($data->publishedImages && $data->publishedImages->count() > 0)
               @foreach($data->publishedImages as $image)
                 @if ($image->device == 'desktop')  
                   <div class="swiper-slide">
-                    <figure class="visual-desktop is-background" style="background-image:url(/img/cache/{{$image->name}}?w=1600&h=1920&c={{$image->coords_w ?? 'null'}},{{$image->coords_h ?? 'null'}},{{$image->coords_x ?? 'null'}},{{$image->coords_y ?? 'null'}})">
+                    <figure class="visual-desktop is-background" style="background-image:url(/img/cache/{{$image->name}}?w=1600&h=1920&c={{$image->coords_w ?? ''}},{{$image->coords_h ?? ''}},{{$image->coords_x ?? ''}},{{$image->coords_y ?? ''}})">
                       @if ($image->caption)
                         <figcaption>{{$image->caption}}</figcaption>
                       @endif
