@@ -21,6 +21,11 @@ var Utils = (function() {
     active: 'is-active'
   };
 
+  var mq = {
+    sm: window.matchMedia("(max-width: 768px)"),
+    md: window.matchMedia("(min-width: 1024px)")
+  };
+
   // Init
   var _initialize = function() {
     _bind();
@@ -48,10 +53,12 @@ var Utils = (function() {
       $.scrollTo('100%', 400);
     });
 
-    if ($(selectors.body).find(selectors.btnScroll)) {
-      setTimeout(function(){
-        $.scrollTo('100%', 400);
-      }, 4000);
+    if ($(selectors.body).find(selectors.btnScroll).length) {
+      if (mq.md.matches) {
+        setTimeout(function(){
+          $.scrollTo('100%', 400);
+        }, 3000);
+      }
     }
   };
 
