@@ -13,8 +13,7 @@
               <figure class="visual-mobile">
                 <x-picture :image="$image" :queries="['min-width: 900px', null]" :width="[1200,900]" :height="[800,600]" />
               </figure>
-            @endif
-            @if ($image->device == 'desktop')
+            @elseif ($image->device == 'desktop')
               @if ($data->id == 1)
                 <figure class="visual-desktop is-contain">
                   <x-picture :image="$image" :queries="['min-height: 900px', 'min-height: 600px', null]" :width="[1600,1200,1200]" :height="[1920,1440,1440]" />
