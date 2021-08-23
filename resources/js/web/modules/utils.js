@@ -26,6 +26,8 @@ var Utils = (function() {
     md: window.matchMedia("(min-width: 1024px)")
   };
 
+  var hasScrolled = false;
+
   // Init
   var _initialize = function() {
     _bind();
@@ -53,10 +55,18 @@ var Utils = (function() {
       $.scrollTo('100%', 400);
     });
 
+    if (!hasScrolled) {
+      $(window).scroll(function() {
+        hasScrolled = true;
+      });
+    }
+
     if ($(selectors.body).find(selectors.btnScroll).length) {
       if (mq.md.matches) {
         setTimeout(function(){
-          $.scrollTo('100%', 400);
+          if (!hasScrolled) {
+            $.scrollTo('100%', 400);
+          }
         }, 3000);
       }
     }
