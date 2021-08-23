@@ -1,5 +1,6 @@
 @extends('web.layout.app')
 @section('seo_title', 'Home')
+@section('seo_description', __('Seit 1999 betreuen wir Privatpersonen, Unternehmen und Organisationen in privatrechtlichen Fragen. Mit Fachkompetenz, Sorgfalt, beherztem persönlichem Engagement, Effizienz und starkem Verantwortungsbewusstsein suchen wir stets die bestmögliche und auf Ihre individuellen Bedürfnisse zugeschnittene Lösung.'))
 @section('content')
 @if ($data->publishedImages)
   @foreach($data->publishedImages as $image)

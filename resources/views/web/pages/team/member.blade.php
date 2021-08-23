@@ -1,5 +1,8 @@
 @extends('web.layout.app')
-@section('seo_title', __('Team'))
+@section('seo_title', $data->fullname)
+@if ($data->description)
+  @section('seo_description', \Str::words(strip_tags($data->description), 30, '...'))
+@endif
 @section('page_title', __('Team') .' '. $data->team->capitalizedSlug)
 @section('content')
 <x-menu-team-members teamId="{{$data->team->id}}" isMobileMenu="0" />
