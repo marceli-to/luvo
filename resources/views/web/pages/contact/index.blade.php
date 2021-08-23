@@ -38,7 +38,7 @@ if ($data['contact']->publishedImages)
               @foreach($data['contact']->publishedImages as $image)
                 @if ($image->device == 'desktop')  
                   <div class="swiper-slide">
-                    <figure class="visual-desktop">
+                    <figure class="visual-desktop is-contain">
                       <x-picture :image="$image" :queries="[null]" :width="[1600]" :height="[1920]" />
                     </figure>
                   </div>

@@ -14,21 +14,9 @@
                 <x-picture :image="$image" :queries="['min-width: 900px', null]" :width="[1200,900]" :height="[800,600]" />
               </figure>
             @elseif ($image->device == 'desktop')
-              @if ($data->id == 1)
-                <figure class="visual-desktop is-contain">
-                  <x-picture :image="$image" :queries="['min-height: 900px', 'min-height: 600px', null]" :width="[1600,1200,1200]" :height="[1920,1440,1440]" />
-                </figure>
-              @elseif ($data->id == 2)
-                @if ($image->coords_w && $image->coords_h)
-                  <figure class="visual-desktop is-background" style="background-image:url(/img/cache/{{$image->name}}?w=1600&h=1920&c={{$image->coords_w ?? '0'}},{{$image->coords_h ?? '0'}},{{$image->coords_x ?? '0'}},{{$image->coords_y ?? '0'}})"></figure>
-                @else
-                  <figure class="visual-desktop is-background" style="background-image:url(/img/cache/{{$image->name}}?w=1600&h=1920"></figure>
-                @endif
-              @else
-                <figure class="visual-desktop">
-                  <x-picture :image="$image" :queries="['min-height: 900px', 'min-height: 600px', null]" :width="[1600,1200,1200]" :height="[1920,1440,1440]" />
-                </figure>
-              @endif
+              <figure class="visual-desktop is-contain">
+                <x-picture :image="$image" :queries="['min-height: 900px', 'min-height: 600px', null]" :width="[1600,1200,1200]" :height="[1920,1440,1440]" />
+              </figure>
             @endif
           @endforeach
         @endif

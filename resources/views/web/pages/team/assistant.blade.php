@@ -15,7 +15,7 @@
               </figure>
             @endif
             @if ($image->device == 'desktop')
-              <figure class="visual-desktop">
+              <figure class="visual-desktop is-contain">
                 <x-picture :image="$image" :queries="[null]" :width="[1600]" :height="[1920]" />
               </figure>
             @endif
