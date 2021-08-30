@@ -61,17 +61,20 @@
           </figure>
         </div>
         <div>
-          <div class="form-row">
+          <div class="form-row" v-if="overlayItem.device == 'mobile'">
             <label>Bildlegende</label>
             <input type="text" v-model="overlayItem.caption.de" />
           </div>
-          <div class="form-row">
+          <div class="form-row" v-if="overlayItem.device == 'mobile'">
             <label>Bildlegende (FR)</label>
             <input type="text" v-model="overlayItem.caption.fr" />
           </div>
-          <div class="form-row">
+          <div class="form-row" v-if="overlayItem.device == 'mobile'">
             <label>Bildlegende (EN)</label>
             <input type="text" v-model="overlayItem.caption.en" />
+          </div>
+          <div class="form-row" v-if="overlayItem.device == 'desktop'">
+            <p style="color: #DA2C38">Info: Die Bildlegenden für die Desktop-Version (dt/en) müssen auf Grund der Änderung der Bilddarstellung direkt ins Bild integriert werden. Bivgrafik haben dafür eine Indesign-Vorlage erstellt. Die Bild-Seiten mit Legenden werden als JPG aus dem Indesign exportiert.</p>
           </div>
           <div class="form-row">
             <label>Anwendung</label>
