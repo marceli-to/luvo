@@ -10,12 +10,14 @@ class Contact extends Base
 
 	public $translatable = [
 		'address',
-    'imprint',
+		'imprint',
+		'privacy',
   ];
 
 	protected $fillable = [
 		'address',
 		'imprint',
+		'privacy',
 		'map_uri',
 		'publish',
   ];

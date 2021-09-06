@@ -25,6 +25,14 @@
               v-model="contact.imprint.de"
             ></tinymce-editor>
           </div>
+          <!-- <div class="form-row">
+            <label>Datenschutz</label>
+            <tinymce-editor
+              :api-key="tinyApiKey"
+              :init="tinyConfig"
+              v-model="contact.privacy.de"
+            ></tinymce-editor>
+          </div> -->
           <div class="form-row">
             <label>Google Maps Uri</label>
             <input type="text" v-model="contact.map_uri">
@@ -47,6 +55,14 @@
               v-model="contact.imprint.fr"
             ></tinymce-editor>
           </div>
+          <!-- <div class="form-row">
+            <label>Datenschutz</label>
+            <tinymce-editor
+              :api-key="tinyApiKey"
+              :init="tinyConfig"
+              v-model="contact.privacy.fr"
+            ></tinymce-editor>
+          </div> -->
         </div>
         <div v-show="languageTabs.en.active">
           <div class="form-row">
@@ -65,6 +81,14 @@
               v-model="contact.imprint.en"
             ></tinymce-editor>
           </div>
+          <!-- <div class="form-row">
+            <label>Datenschutz</label>
+            <tinymce-editor
+              :api-key="tinyApiKey"
+              :init="tinyConfig"
+              v-model="contact.privacy.en"
+            ></tinymce-editor>
+          </div> -->
         </div>
       </div>
       <div v-show="tabs.image.active">
@@ -87,7 +111,6 @@
           </div>
         </div>
       </div>
-
       <div v-show="tabs.settings.active">
         <div>
           <div class="form-row is-last">
@@ -168,6 +191,11 @@ export default {
           fr: null,
           en: null,
         },
+        // privacy: {
+        //   de: null,
+        //   fr: null,
+        //   en: null,
+        // },
         images: [],
         map_uri: null,
         publish: 1,

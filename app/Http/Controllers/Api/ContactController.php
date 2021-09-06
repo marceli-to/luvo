@@ -57,6 +57,11 @@ class ContactController extends Controller
         'fr' => $request->input('imprint.fr'),
         'en' => $request->input('imprint.en'),
       ],
+      'privacy' => [
+        'de' => $request->input('privacy.de'),
+        'fr' => $request->input('privacy.fr'),
+        'en' => $request->input('privacy.en'),
+      ],
       'map_uri' => $request->input('map_uri'),
       'publish' => $request->input('publish'),
     ]);
@@ -100,15 +105,18 @@ class ContactController extends Controller
     // German
     $contact->setTranslation('address', 'de', $request->input('address.de'));
     $contact->setTranslation('imprint', 'de', $request->input('imprint.de'));
+    $contact->setTranslation('privacy', 'de', $request->input('privacy.de'));
 
     // English
     $contact->setTranslation('address', 'fr', $request->input('address.fr'));
     $contact->setTranslation('imprint', 'fr', $request->input('imprint.fr'));
+    $contact->setTranslation('privacy', 'fr', $request->input('privacy.fr'));
 
     // English
     $contact->setTranslation('address', 'en', $request->input('address.en'));
     $contact->setTranslation('imprint', 'en', $request->input('imprint.en'));
-
+    $contact->setTranslation('privacy', 'en', $request->input('privacy.en'));
+    
     $contact->map_uri = $request->input('map_uri');
     $contact->publish = $request->input('publish');
 

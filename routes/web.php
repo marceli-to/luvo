@@ -14,8 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Auth routes
-Auth::routes(['verify' => true, 'register' => false]);
+Auth::routes(['verify' => true, 'reset'  => false, 'register' => false]);
 Route::get('/logout', 'Auth\LoginController@logout');
+
+// password/reset
+Route::get('/password/reset', 'HomeController@index')->name('page.home');
 
 // Home
 Route::get('/', 'HomeController@index')->name('page.home');
