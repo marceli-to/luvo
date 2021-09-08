@@ -8,11 +8,11 @@
       <div>
         <div :class="[this.errors.password ? 'has-error' : '', 'form-row']">
           <label>Neues Passwort</label>
-          <input type="text" v-model="user.password">
+          <input type="password" v-model="user.password">
         </div>
         <div :class="[this.errors.password_confirm ? 'has-error' : '', 'form-row']">
           <label>Neues Passwort wiederholen</label>
-          <input type="text" v-model="user.password_confirm">
+          <input type="password" v-model="user.password_confirm">
         </div>
       </div>
       <footer class="module-footer">

@@ -22,7 +22,7 @@ class UserChangePasswordRequest extends FormRequest
   public function rules()
   {
     return [
-      'password' => 'required|string|min:8',
+      'password' => 'required|min:6',
       'password_confirm' => 'required|same:password',
     ];
   }
