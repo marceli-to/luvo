@@ -7,7 +7,7 @@
       </header>
       <div>
         <div :class="[this.errors.password ? 'has-error' : '', 'form-row']">
-          <label>Neues Passwort</label>
+          <label>Neues Passwort (min. 6 Zeichen)</label>
           <input type="password" v-model="user.password">
         </div>
         <div :class="[this.errors.password_confirm ? 'has-error' : '', 'form-row']">
