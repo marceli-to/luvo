@@ -20,6 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group(function() {
   Route::get('user', 'Api\UserController@find');
+  Route::post('user/password', 'Api\UserController@updatePassword');
 
   // Files
   Route::get('files','Api\FileController@get');

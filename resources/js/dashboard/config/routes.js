@@ -35,6 +35,10 @@ import ContactEdit from '@/views/contact/Edit.vue';
 // Dashboard
 import MediaIndex from '@/views/media/Index.vue';
 
+// User
+// import UserIndex from '@/views/user/Index.vue';
+import UserEdit from '@/views/user/Edit.vue';
+
 const routes = [
 
   // Dashboard
@@ -141,6 +145,18 @@ const routes = [
     name: 'media',
     path: '/administration/media',
     component: MediaIndex,
+  },
+
+  // User
+  // {
+  //   name: 'user',
+  //   path: '/administration/user',
+  //   component: UserIndex,
+  // },
+  {
+    name: 'user-edit',
+    path: '/administration/user/edit/:id',
+    component: UserEdit,
   },
 
   // Authorization

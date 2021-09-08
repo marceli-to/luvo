@@ -6,7 +6,7 @@
     <nav :class="[!menuVisible ? '' : 'is-visible', 'page']">
       <header>
         <span>
-          {{user}}<br>
+          <router-link :to="{name: 'user-edit', params: { id: userId }}">{{user}}</router-link><br>
           <a href="/logout" class="feather-icon feather-icon--prepend">
             <log-out-icon size="12"></log-out-icon>
             <span>Logout</span>
@@ -60,6 +60,7 @@ export default {
 		return {
       menuVisible: false,
       user: null,
+      userId: null,
 		}
   },
   
@@ -74,6 +75,7 @@ export default {
         this.axios.get(`/api/user`).then(response => {
           this.$store.commit('user', `${response.data.firstname} ${response.data.name}`);
           this.user = `${response.data.firstname} ${response.data.name}`;
+          this.userId = response.data.id;
         });
       }
     },

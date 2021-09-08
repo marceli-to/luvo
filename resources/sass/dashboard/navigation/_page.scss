@@ -52,6 +52,7 @@ nav.page {
     padding-right: 20px;
     @include responsive-prop('height', $header-heights);
 
+    a,
     span {
       color: $color-dark;
       @include font-size($fs-xs);
