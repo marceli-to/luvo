@@ -307,6 +307,9 @@ article.contact {
 
   .contact__imprint {
     margin-bottom: $space-4x;
+    @include bp-md() {
+      margin-bottom: $space-8x;
+    }
   }
 
   .contact__members {
