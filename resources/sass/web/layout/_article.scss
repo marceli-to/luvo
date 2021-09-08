@@ -283,7 +283,8 @@ article.contact {
   }
 
 
-  .contact__imprint {
+  .contact__imprint,
+  .contact__privacy {
     padding-top: $space-3x;
     @include bp-md() {
       padding-top: $space-4x;
@@ -302,6 +303,10 @@ article.contact {
         margin-bottom: $space-4x;
       }
     }
+  }
+
+  .contact__imprint {
+    margin-bottom: $space-4x;
   }
 
   .contact__members {
