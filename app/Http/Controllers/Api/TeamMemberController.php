@@ -49,7 +49,7 @@ class TeamMemberController extends Controller
     $teamMember = new TeamMember([
       'firstname' => $request->input('firstname'),
       'name' => $request->input('name'),
-      'description' => [
+      'credits' => [
         'de' => $request->input('credits.de'),
         'fr' => $request->input('credits.fr'),
         'en' => $request->input('credits.en'),
