@@ -32,7 +32,7 @@ class Cache implements FilterInterface
     {
       list($coords_w, $coords_h, $coords_x, $coords_y) = explode(',', $this->coords);
       return 
-        $image->crop(floor($coords_w), floor($coords_h), floor($coords_x), floor($coords_y))
+        $image->crop(floor(floatval($coords_w)), floor(floatval($coords_h)), floor(floatval($coords_x)), floor(floatval($coords_y)))
               ->resize($this->maxWidth, $this->maxHeight, function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
