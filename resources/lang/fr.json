@@ -1,11 +1,14 @@
 {
-  "Kontakt": "Contacter",
+  "Kontakt": "Contact",
   "Assistenz": "Assistance",
   "assistenz": "assistance",
-  "Werdegang": "Career",
-  "Sprachen": "Languages",
-  "Tätigkeitsgebiete": "Practice Areas",
-  "Mitgliedschaften": "Memberships",
+  "Werdegang": "Carrières",
+  "Sprachen": "Langues",
+  "Tätigkeitsgebiete": "Domaines d'activité",
+  "Mitgliedschaften": "Affiliations",
   "Publikationen": "Publications",
-  "Über uns": "About us"
+  "Über uns": "Portrait",
+  "Team Luks": "Equipe Luks",
+  "Team Vogt": "Equipe Vogt",
+  "Team": "Equipe"
 }
