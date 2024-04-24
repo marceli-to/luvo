@@ -4,7 +4,7 @@
     <span>/</span>
     <a href="/en/home" class="{{ app()->getLocale() == 'de' || app()->getLocale() == 'fr' ? 'inactive' : ''}}">E</a>
     <span>/</span>
-    <a href="/fr/home" class="{{ app()->getLocale() == 'en' || app()->getLocale() == 'de' ? 'inactive' : ''}}"F</a>
+    <a href="/fr/home" class="{{ app()->getLocale() == 'en' || app()->getLocale() == 'de' ? 'inactive' : ''}}">F</a>
   </li>
 @else
   <li class="languages">
