@@ -59,6 +59,11 @@ class TeamMemberController extends Controller
         'fr' => $request->input('description.fr'),
         'en' => $request->input('description.en'),
       ],
+      'meta_description' => [
+        'de' => $request->input('meta_description.de'),
+        'fr' => $request->input('meta_description.fr'),
+        'en' => $request->input('meta_description.en'),
+      ],
       'area' => [
         'de' => $request->input('area.de'),
         'fr' => $request->input('area.fr'),
@@ -129,6 +134,7 @@ class TeamMemberController extends Controller
     // German
     $teamMember->setTranslation('credits', 'de', $request->input('credits.de'));
     $teamMember->setTranslation('description', 'de', $request->input('description.de'));
+    $teamMember->setTranslation('meta_description', 'de', $request->input('meta_description.de'));
     $teamMember->setTranslation('area', 'de', $request->input('area.de'));
     $teamMember->setTranslation('languages', 'de', $request->input('languages.de'));
     $teamMember->setTranslation('biography', 'de', $request->input('biography.de'));
@@ -138,6 +144,7 @@ class TeamMemberController extends Controller
     // English
     $teamMember->setTranslation('credits', 'en', $request->input('credits.en'));
     $teamMember->setTranslation('description', 'en', $request->input('description.en'));
+    $teamMember->setTranslation('meta_description', 'en', $request->input('meta_description.en'));
     $teamMember->setTranslation('area', 'en', $request->input('area.en'));
     $teamMember->setTranslation('languages', 'en', $request->input('languages.en'));
     $teamMember->setTranslation('biography', 'en', $request->input('biography.en'));
@@ -147,6 +154,7 @@ class TeamMemberController extends Controller
     // French
     $teamMember->setTranslation('credits', 'fr', $request->input('credits.fr'));
     $teamMember->setTranslation('description', 'fr', $request->input('description.fr'));
+    $teamMember->setTranslation('meta_description', 'fr', $request->input('meta_description.fr'));
     $teamMember->setTranslation('area', 'fr', $request->input('area.fr'));
     $teamMember->setTranslation('languages', 'fr', $request->input('languages.fr'));
     $teamMember->setTranslation('biography', 'fr', $request->input('biography.fr'));

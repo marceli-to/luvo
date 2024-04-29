@@ -16,6 +16,7 @@ class TeamMember extends Base
     'biography',
     'membership',
     'publication',
+    'meta_description'
   ];
 
 	protected $fillable = [

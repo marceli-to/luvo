@@ -44,6 +44,10 @@
           ></tinymce-editor>
         </div>
         <div class="form-row">
+          <label>SEO Beschreibung</label>
+          <textarea v-model="teamMember.meta_description.de"></textarea>
+        </div>
+        <div class="form-row">
           <label>Tätigkeitsgebiete</label>
           <tinymce-editor
             :api-key="tinyApiKey"
@@ -135,6 +139,10 @@
             ></tinymce-editor>
           </div>
           <div class="form-row">
+            <label>SEO Beschreibung</label>
+            <textarea v-model="teamMember.meta_description.fr"></textarea>
+          </div>
+          <div class="form-row">
             <label>Beschreibung</label>
             <tinymce-editor
               :api-key="tinyApiKey"
@@ -201,6 +209,10 @@
               :init="tinyConfig"
               v-model="teamMember.description.en"
             ></tinymce-editor>
+          </div>
+          <div class="form-row">
+            <label>SEO Beschreibung</label>
+            <textarea v-model="teamMember.meta_description.en"></textarea>
           </div>
           <div class="form-row">
             <label>Tätigkeitsgebiete</label>
@@ -349,6 +361,11 @@ export default {
           en: null,
         },
         description: {
+          de: null,
+          fr: null,
+          en: null,
+        },
+        meta_description: {
           de: null,
           fr: null,
           en: null,

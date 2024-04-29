@@ -1,7 +1,11 @@
 @extends('web.layout.app')
 @section('seo_title', $data->fullname)
-@if ($data->description)
-  @section('seo_description', \Str::words(strip_tags($data->description), 30, '...'))
+@if ($data->meta_description)
+@section('seo_description', $data->meta_description)
+@else
+  @if ($data->description)
+    @section('seo_description', \Str::words(strip_tags($data->description), 30, '...'))
+  @endif
 @endif
 @section('page_title', __('Team') .' '. $data->team->capitalizedSlug)
 @section('content')
