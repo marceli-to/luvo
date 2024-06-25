@@ -25,7 +25,6 @@
         <div :class="[this.errors.text ? 'has-error' : '', 'form-row']">
           <label>Text*</label>
           <tinymce-editor
-            :api-key="tinyApiKey"
             :init="tinyConfig"
             v-model="team.text.de"
           ></tinymce-editor>
@@ -40,8 +39,7 @@
           <div class="form-row">
             <label>Text</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="team.text.fr"
             ></tinymce-editor>
           </div>
@@ -56,8 +54,7 @@
           <div class="form-row">
             <label>Text</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="team.text.en"
             ></tinymce-editor>
           </div>

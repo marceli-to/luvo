@@ -12,24 +12,21 @@
           <div :class="[this.errors.address ? 'has-error' : '', 'form-row']">
             <label>Adresse</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="contact.address.de"
             ></tinymce-editor>
           </div>
           <div class="form-row">
             <label>Impressum</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="contact.imprint.de"
             ></tinymce-editor>
           </div>
           <div class="form-row">
             <label>Datenschutz</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="contact.privacy.de"
             ></tinymce-editor>
           </div>
@@ -42,24 +39,21 @@
           <div class="form-row">
             <label>Text</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="contact.address.fr"
             ></tinymce-editor>
           </div>
           <div class="form-row">
             <label>Impressum</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="contact.imprint.fr"
             ></tinymce-editor>
           </div>
           <div class="form-row">
             <label>Datenschutz</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="contact.privacy.fr"
             ></tinymce-editor>
           </div>
@@ -68,24 +62,21 @@
           <div class="form-row">
             <label>Text</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="contact.address.en"
             ></tinymce-editor>
           </div>
           <div class="form-row">
             <label>Impressum</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="contact.imprint.en"
             ></tinymce-editor>
           </div>
           <div class="form-row">
             <label>Datenschutz</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="contact.privacy.en"
             ></tinymce-editor>
           </div>

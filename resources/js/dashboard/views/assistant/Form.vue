@@ -20,7 +20,6 @@
         <div :class="[this.errors.description ? 'has-error' : '', 'form-row']">
           <label>Beschreibung</label>
           <tinymce-editor
-            :api-key="tinyApiKey"
             :init="tinyConfig"
             v-model="assistant.description.de"
           ></tinymce-editor>
@@ -28,7 +27,6 @@
         <div class="form-row">
           <label>Assistenten</label>
           <tinymce-editor
-            :api-key="tinyApiKey"
             :init="tinyConfig"
             v-model="assistant.assistants.de"
           ></tinymce-editor>
@@ -38,7 +36,6 @@
         <div class="form-row">
           <label>Beschreibung</label>
           <tinymce-editor
-            :api-key="tinyApiKey"
             :init="tinyConfig"
             v-model="assistant.description.fr"
           ></tinymce-editor>
@@ -46,7 +43,6 @@
         <div class="form-row">
           <label>Assistenten</label>
           <tinymce-editor
-            :api-key="tinyApiKey"
             :init="tinyConfig"
             v-model="assistant.assistants.fr"
           ></tinymce-editor>
@@ -56,7 +52,6 @@
         <div class="form-row">
           <label>Beschreibung</label>
           <tinymce-editor
-            :api-key="tinyApiKey"
             :init="tinyConfig"
             v-model="assistant.description.en"
           ></tinymce-editor>
@@ -64,7 +59,6 @@
         <div class="form-row">
           <label>Assistenten</label>
           <tinymce-editor
-            :api-key="tinyApiKey"
             :init="tinyConfig"
             v-model="assistant.assistants.en"
           ></tinymce-editor>

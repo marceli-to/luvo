@@ -30,7 +30,6 @@
         <div class="form-row">
           <label>Info</label>
           <tinymce-editor
-            :api-key="tinyApiKey"
             :init="tinyConfig"
             v-model="teamMember.credits.de"
           ></tinymce-editor>
@@ -38,7 +37,6 @@
         <div class="form-row">
           <label>Beschreibung</label>
           <tinymce-editor
-            :api-key="tinyApiKey"
             :init="tinyConfig"
             v-model="teamMember.description.de"
           ></tinymce-editor>
@@ -50,7 +48,6 @@
         <div class="form-row">
           <label>Tätigkeitsgebiete</label>
           <tinymce-editor
-            :api-key="tinyApiKey"
             :init="tinyConfig"
             v-model="teamMember.area.de"
           ></tinymce-editor>
@@ -58,7 +55,6 @@
         <div class="form-row">
           <label>Sprachen</label>
           <tinymce-editor
-            :api-key="tinyApiKey"
             :init="tinyConfig"
             v-model="teamMember.languages.de"
           ></tinymce-editor>
@@ -66,7 +62,6 @@
         <div class="form-row">
           <label>Werdegang</label>
           <tinymce-editor
-            :api-key="tinyApiKey"
             :init="tinyConfig"
             v-model="teamMember.biography.de"
           ></tinymce-editor>
@@ -74,7 +69,6 @@
         <div class="form-row">
           <label>Mitgliedschaften</label>
           <tinymce-editor
-            :api-key="tinyApiKey"
             :init="tinyConfig"
             v-model="teamMember.membership.de"
           ></tinymce-editor>
@@ -82,7 +76,6 @@
         <div class="form-row">
           <label>Publikationen (Liste)</label>
           <tinymce-editor
-            :api-key="tinyApiKey"
             :init="tinyConfig"
             v-model="teamMember.publication.de"
           ></tinymce-editor>
@@ -133,8 +126,7 @@
           <div class="form-row">
             <label>Info</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="teamMember.credits.fr"
             ></tinymce-editor>
           </div>
@@ -145,48 +137,42 @@
           <div class="form-row">
             <label>Beschreibung</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="teamMember.description.fr"
             ></tinymce-editor>
           </div>
           <div class="form-row">
             <label>Tätigkeitsgebiete</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="teamMember.area.fr"
             ></tinymce-editor>
           </div>
           <div class="form-row">
             <label>Sprachen</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="teamMember.languages.fr"
             ></tinymce-editor>
           </div>
           <div class="form-row">
             <label>Werdegang</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="teamMember.biography.fr"
             ></tinymce-editor>
           </div>
           <div class="form-row">
             <label>Mitgliedschaften</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="teamMember.membership.fr"
             ></tinymce-editor>
           </div>
           <div class="form-row">
             <label>Publikationen (Liste)</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="teamMember.publication.fr"
             ></tinymce-editor>
           </div>
@@ -197,16 +183,14 @@
           <div class="form-row">
             <label>Info</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="teamMember.credits.en"
             ></tinymce-editor>
           </div>
           <div class="form-row">
             <label>Beschreibung</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="teamMember.description.en"
             ></tinymce-editor>
           </div>
@@ -217,40 +201,35 @@
           <div class="form-row">
             <label>Tätigkeitsgebiete</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="teamMember.area.en"
             ></tinymce-editor>
           </div>
           <div class="form-row">
             <label>Sprachen</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="teamMember.languages.en"
             ></tinymce-editor>
           </div>
           <div class="form-row">
             <label>Werdegang</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="teamMember.biography.en"
             ></tinymce-editor>
           </div>
           <div class="form-row">
             <label>Mitgliedschaften</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="teamMember.membership.en"
             ></tinymce-editor>
           </div>
           <div class="form-row">
             <label>Publikationen (Liste)</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="teamMember.publication.en"
             ></tinymce-editor>
           </div>

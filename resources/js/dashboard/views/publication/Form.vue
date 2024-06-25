@@ -17,16 +17,14 @@
           <div class="form-row">
             <label>Beschreibung</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="publication.description.de"
             ></tinymce-editor>
           </div>
           <div :class="[this.errors.articles ? 'has-error' : '', 'form-row']">
             <label>Artikel</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="publication.articles.de"
             ></tinymce-editor>
           </div>
@@ -49,16 +47,14 @@
           <div class="form-row">
             <label>Beschreibung</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="publication.description.fr"
             ></tinymce-editor>
           </div>
           <div class="form-row">
             <label>Artikel</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="publication.articles.fr"
             ></tinymce-editor>
           </div>
@@ -73,16 +69,14 @@
           <div class="form-row">
             <label>Beschreibung</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="publication.description.en"
             ></tinymce-editor>
           </div>
           <div class="form-row">
             <label>Artikel</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="publication.articles.en"
             ></tinymce-editor>
           </div>

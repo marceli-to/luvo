@@ -17,8 +17,7 @@
           <div class="form-row">
             <label>Text</label>
             <tinymce-editor
-              :api-key="tinyApiKey"
-              :init="tinyConfig"
+                :init="tinyConfig"
               v-model="home.text.de"
             ></tinymce-editor>
           </div>
@@ -32,8 +31,7 @@
             <div class="form-row">
               <label>Text</label>
               <tinymce-editor
-                :api-key="tinyApiKey"
-                :init="tinyConfig"
+                    :init="tinyConfig"
                 v-model="home.text.fr"
               ></tinymce-editor>
             </div>
@@ -48,8 +46,7 @@
             <div class="form-row">
               <label>Text</label>
               <tinymce-editor
-                :api-key="tinyApiKey"
-                :init="tinyConfig"
+                    :init="tinyConfig"
                 v-model="home.text.en"
               ></tinymce-editor>
             </div>

@@ -6,6 +6,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <title>{{ config('app.name', 'Laravel') }}</title>
 <link href="{{ mix('assets/dashboard/css/app.css') }}" rel="stylesheet">
+<script src="{{ asset('assets/dashboard/js/tinymce/tinymce.min.js') }}"></script>
 </head>
 <body>
 <div id="app-administration">
