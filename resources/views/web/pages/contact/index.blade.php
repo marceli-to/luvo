@@ -74,9 +74,11 @@ if ($data['contact']->publishedImages)
                     </a>
                     <div class="contact-member-list-items" style="display:none">
                       @foreach($data['teams']['vogt']->members as $member)
-                        <div class="contact-member">
-                          <h2>{{ $member->firstname}} {{$member->name}}</h2>{!! $member->credits !!}
-                        </div>
+                        @if ($member->publish)
+                          <div class="contact-member">
+                            <h2>{{ $member->firstname}} {{$member->name}}</h2>{!! $member->credits !!}
+                          </div>
+                        @endif
                       @endforeach
                     </div>
                   </div>
@@ -90,9 +92,11 @@ if ($data['contact']->publishedImages)
                     </a>
                     <div class="contact-member-list-items" style="display:none">
                       @foreach($data['teams']['luks']->members as $member)
-                        <div class="contact-member">
-                          <h2>{{ $member->firstname}} {{$member->name}}</h2>{!! $member->credits !!}
-                        </div>
+                        @if ($member->publish)
+                          <div class="contact-member">
+                            <h2>{{ $member->firstname}} {{$member->name}}</h2>{!! $member->credits !!}
+                          </div>
+                        @endif
                       @endforeach
                     </div>
                   </div>
