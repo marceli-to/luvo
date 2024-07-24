@@ -415,6 +415,19 @@ export default {
         .then(response => {
           this.teamMember = response.data;
 
+          // if meta_description.de is not set, set it to null
+          if (this.teamMember.meta_description.de == undefined) {
+            this.teamMember.meta_description.de = null;
+          }
+          // if meta_description.fr is not set, set it to null
+          if (this.teamMember.meta_description.fr == undefined) {
+            this.teamMember.meta_description.fr = null;
+          }
+          // if meta_description.en is not set, set it to null
+          if (this.teamMember.meta_description.en == undefined) {
+            this.teamMember.meta_description.en = null;
+          }
+
           console.log(this.teamMember);
 
           // Get teams
