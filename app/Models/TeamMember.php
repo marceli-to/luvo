@@ -34,6 +34,7 @@ class TeamMember extends Base
     'team_id',
   ];
 
+
 	public function team()
 	{
 		return $this->hasOne('App\Models\Team', 'id', 'team_id');
