@@ -415,6 +415,8 @@ export default {
         .then(response => {
           this.teamMember = response.data;
 
+          console.log(this.teamMember);
+
           // Get teams
           this.axios.get(`/api/team`)
           .then(response => {
