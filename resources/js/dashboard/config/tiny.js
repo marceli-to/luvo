@@ -24,5 +24,8 @@ export default {
   }],
 
   link_list: '/filelist',
+  link_default_protocol: 'https',
+  convert_urls: false, // This prevents TinyMCE from modifying URLs
+  relative_urls: false, // This prevents creation of relative URLs
 
 };
