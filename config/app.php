@@ -232,6 +232,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'AppHelper' => App\Helpers\AppHelper::class,
         'UrlHelper' => App\Helpers\UrlHelper::class,
+        'ImageCache' => Intervention\Image\Facades\Image::class,
     ],
 
 ];

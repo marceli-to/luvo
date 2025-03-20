@@ -19,7 +19,7 @@
               {{__('Über uns')}}
             </a>
             </li>
-            <x-menu-team-members teamId="{{$d->id}}" isMobileMenu="1" />
+            <x-menu-team-members :teamId="$d->id" :isMobileMenu="1" />
           </ul>
         </li>
       @endforeach
