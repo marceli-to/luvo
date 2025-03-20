@@ -6,7 +6,12 @@
     <nav :class="[!menuVisible ? '' : 'is-visible', 'page']">
       <header>
         <span>
-          <router-link :to="{name: 'user-edit', params: { id: userId }}">{{user}}</router-link><br>
+          <template v-if="userId">
+            <router-link :to="{name: 'user-edit', params: { id: userId }}">{{user}}</router-link><br>
+          </template>
+          <template v-else>
+            <span>{{user}}</span><br>
+          </template>
           <a href="/logout" class="feather-icon feather-icon--prepend">
             <log-out-icon size="12"></log-out-icon>
             <span>Logout</span>

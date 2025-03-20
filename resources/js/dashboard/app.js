@@ -1,16 +1,17 @@
 require('@/bootstrap');
 
 // Vue
-window.Vue = require('vue');
-
-// Axios Interceptors
-require('vue-axios-interceptors');
+import Vue from 'vue';
+window.Vue = Vue;
 
 // Axios, Vue-Axios
 import VueAxios from 'vue-axios';
 import axios from 'axios';
-window.axios = require('axios');
+window.axios = axios;
 Vue.use(VueAxios, axios);
+
+// Axios Interceptors
+require('vue-axios-interceptors');
 
 // Filters
 require('@/mixins/Filters');
@@ -60,7 +61,6 @@ import store from '@/config/store';
 // Routes
 import routes from '@/config/routes';
 const router = new VueRouter({ mode: 'history', routes: routes});
-
 
 // App component
 import AppComponent from '@/App.vue';
