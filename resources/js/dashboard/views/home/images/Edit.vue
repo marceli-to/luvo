@@ -30,12 +30,12 @@
           v-for="image in images"
           :key="image.id"
         >
-          <a :href="getSource(image, 'cache')" target="_blank" class="upload__preview">
+          <a :href="getSource(image, 'crop')" target="_blank" class="upload__preview">
             <img :src="getSource(image, 'thumbnail')" height="300" width="300">
             <span v-if="image.preview == 1" class="image-label">Vorschau</span>
           </a>
           <div class="upload__actions">
-            <image-actions :image="image" :publish="image.publish" :grid="image.is_grid" :imagePreviewRoute="'cache'"></image-actions>
+            <image-actions :image="image" :publish="image.publish" :grid="image.is_grid" :imagePreviewRoute="'crop'"></image-actions>
           </div>
         </figure>
       </div>
@@ -53,7 +53,7 @@
       <div class="upload-overlay__grid">
         <div>
           <figure v-if="hasOverlayEdit">
-            <img :src="getSource(overlayItem, 'cache')" height="300" width="300">
+            <img :src="getSource(overlayItem, 'crop')" height="300" width="300">
             <figcaption v-if="overlayItem.caption.de">
               <span v-if="overlayItem.caption.de">{{overlayItem.caption.de}}</span>
             </figcaption>

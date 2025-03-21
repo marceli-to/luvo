@@ -2,6 +2,20 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\FileController;
+use App\Http\Controllers\Api\UploadController;
+use App\Http\Controllers\Api\HomeController;
+use App\Http\Controllers\Api\HomeImageController;
+use App\Http\Controllers\Api\TeamController;
+use App\Http\Controllers\Api\TeamImageController;
+use App\Http\Controllers\Api\TeamMemberController;
+use App\Http\Controllers\Api\TeamMemberImageController;
+use App\Http\Controllers\Api\PublicationController;
+use App\Http\Controllers\Api\ContactController;
+use App\Http\Controllers\Api\ContactImageController;
+use App\Http\Controllers\Api\AssistantController;
+use App\Http\Controllers\Api\AssistantImageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,107 +33,106 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:sanctum')->group(function() {
-  Route::get('user', 'Api\UserController@find');
-  Route::post('user/password', 'Api\UserController@updatePassword');
+  Route::get('user', [UserController::class, 'find']);
+  Route::post('user/password', [UserController::class, 'updatePassword']);
 
   // Files
-  Route::get('files','Api\FileController@get');
-  Route::get('files/fetch','Api\FileController@fetch');
-  Route::post('file/store','Api\FileController@store');
-  Route::delete('file/{file}', 'Api\FileController@destroy');
+  Route::get('files', [FileController::class, 'get']);
+  Route::get('files/fetch', [FileController::class, 'fetch']);
+  Route::post('file/store', [FileController::class, 'store']);
+  Route::delete('file/{file}', [FileController::class, 'destroy']);
 
   // Upload
-  Route::post('image/upload','Api\UploadController@image');
-  Route::post('file/upload','Api\UploadController@file');
-  //Route::get('files/get','Api\UploadController@getFiles');
+  Route::post('image/upload', [UploadController::class, 'image']);
+  Route::post('file/upload', [UploadController::class, 'file']);
+  //Route::get('files/get', [UploadController::class, 'getFiles']);
 
   // Home
-  Route::get('home', 'Api\HomeController@get');
-  Route::get('home/{home}', 'Api\HomeController@find');
-  Route::post('home', 'Api\HomeController@store');
-  Route::put('home/{home}', 'Api\HomeController@update');
-  Route::post('home/order', 'Api\HomeController@order');
-  Route::get('home/state/{home}', 'Api\HomeController@toggle');
-  Route::delete('home/{home}', 'Api\HomeController@destroy');
+  Route::get('home', [HomeController::class, 'get']);
+  Route::get('home/{home}', [HomeController::class, 'find']);
+  Route::post('home', [HomeController::class, 'store']);
+  Route::put('home/{home}', [HomeController::class, 'update']);
+  Route::post('home/order', [HomeController::class, 'order']);
+  Route::get('home/state/{home}', [HomeController::class, 'toggle']);
+  Route::delete('home/{home}', [HomeController::class, 'destroy']);
 
   // Home images
-  Route::get('home/image/state/{homeImage}', 'Api\HomeImageController@toggle');
-  Route::put('home/image/{homeImage}', 'Api\HomeImageController@coords');
-  Route::post('home/image', 'Api\HomeImageController@store');
-  Route::post('home/image/order', 'Api\HomeImageController@order');
-  Route::delete('home/image/{homeImage}', 'Api\HomeImageController@destroy');
+  Route::get('home/image/state/{homeImage}', [HomeImageController::class, 'toggle']);
+  Route::put('home/image/{homeImage}', [HomeImageController::class, 'coords']);
+  Route::post('home/image', [HomeImageController::class, 'store']);
+  Route::post('home/image/order', [HomeImageController::class, 'order']);
+  Route::delete('home/image/{homeImage}', [HomeImageController::class, 'destroy']);
 
   // Team images
-  Route::get('team/image/state/{teamImage}', 'Api\TeamImageController@toggle');
-  Route::put('team/image/{teamImage}', 'Api\TeamImageController@coords');
-  Route::post('team/image', 'Api\TeamImageController@store');
-  Route::post('team/image/order', 'Api\TeamImageController@order');
-  Route::delete('team/image/{teamImage}', 'Api\TeamImageController@destroy');
+  Route::get('team/image/state/{teamImage}', [TeamImageController::class, 'toggle']);
+  Route::put('team/image/{teamImage}', [TeamImageController::class, 'coords']);
+  Route::post('team/image', [TeamImageController::class, 'store']);
+  Route::post('team/image/order', [TeamImageController::class, 'order']);
+  Route::delete('team/image/{teamImage}', [TeamImageController::class, 'destroy']);
 
   // Team members
-  Route::get('team/members/', 'Api\TeamMemberController@get');
-  Route::get('team/member/{teamMember}', 'Api\TeamMemberController@find');
-  Route::post('team/member/', 'Api\TeamMemberController@store');
-  Route::put('team/member/{teamMember}', 'Api\TeamMemberController@update');
-  Route::post('team/member/order', 'Api\TeamMemberController@order');
-  Route::get('team/member/state/{teamMember}', 'Api\TeamMemberController@toggle');
-  Route::delete('team/member/{teamMember}', 'Api\TeamMemberController@destroy');
+  Route::get('team/members/', [TeamMemberController::class, 'get']);
+  Route::get('team/member/{teamMember}', [TeamMemberController::class, 'find']);
+  Route::post('team/member/', [TeamMemberController::class, 'store']);
+  Route::put('team/member/{teamMember}', [TeamMemberController::class, 'update']);
+  Route::post('team/member/order', [TeamMemberController::class, 'order']);
+  Route::get('team/member/state/{teamMember}', [TeamMemberController::class, 'toggle']);
+  Route::delete('team/member/{teamMember}', [TeamMemberController::class, 'destroy']);
 
   // Team member images
-  Route::get('team/member/image/state/{teamMemberImage}', 'Api\TeamMemberImageController@toggle');
-  Route::put('team/member/image/{teamMemberImage}', 'Api\TeamMemberImageController@coords');
-  Route::post('team/member/image', 'Api\TeamMemberImageController@store');
-  Route::post('team/member/image/order', 'Api\TeamMemberImageController@order');
-  Route::delete('team/member/image/{teamMemberImage}', 'Api\TeamMemberImageController@destroy');
+  Route::get('team/member/image/state/{teamMemberImage}', [TeamMemberImageController::class, 'toggle']);
+  Route::put('team/member/image/{teamMemberImage}', [TeamMemberImageController::class, 'coords']);
+  Route::post('team/member/image', [TeamMemberImageController::class, 'store']);
+  Route::post('team/member/image/order', [TeamMemberImageController::class, 'order']);
+  Route::delete('team/member/image/{teamMemberImage}', [TeamMemberImageController::class, 'destroy']);
 
   // Team
-  Route::get('team', 'Api\TeamController@get');
-  Route::get('team/{team}', 'Api\TeamController@find');
-  Route::post('team', 'Api\TeamController@store');
-  Route::put('team/{team}', 'Api\TeamController@update');
-  Route::post('team/order', 'Api\TeamController@order');
-  Route::get('team/state/{team}', 'Api\TeamController@toggle');
-  Route::delete('team/{team}', 'Api\TeamController@destroy');
+  Route::get('team', [TeamController::class, 'get']);
+  Route::get('team/{team}', [TeamController::class, 'find']);
+  Route::post('team', [TeamController::class, 'store']);
+  Route::put('team/{team}', [TeamController::class, 'update']);
+  Route::post('team/order', [TeamController::class, 'order']);
+  Route::get('team/state/{team}', [TeamController::class, 'toggle']);
+  Route::delete('team/{team}', [TeamController::class, 'destroy']);
 
   // Publication
-  Route::get('publications', 'Api\PublicationController@get');
-  Route::get('publication/{publication}', 'Api\PublicationController@find');
-  Route::post('publication', 'Api\PublicationController@store');
-  Route::put('publication/{publication}', 'Api\PublicationController@update');
-  Route::post('publication/order', 'Api\PublicationController@order');
-  Route::get('publication/state/{publication}', 'Api\PublicationController@toggle');
-  Route::delete('publication/{publication}', 'Api\PublicationController@destroy');
+  Route::get('publications', [PublicationController::class, 'get']);
+  Route::get('publication/{publication}', [PublicationController::class, 'find']);
+  Route::post('publication', [PublicationController::class, 'store']);
+  Route::put('publication/{publication}', [PublicationController::class, 'update']);
+  Route::post('publication/order', [PublicationController::class, 'order']);
+  Route::get('publication/state/{publication}', [PublicationController::class, 'toggle']);
+  Route::delete('publication/{publication}', [PublicationController::class, 'destroy']);
 
   // Contact
-  Route::get('contact', 'Api\ContactController@get');
-  Route::get('contact/{contact}', 'Api\ContactController@find');
-  Route::post('contact', 'Api\ContactController@store');
-  Route::put('contact/{contact}', 'Api\ContactController@update');
-  Route::post('contact/order', 'Api\ContactController@order');
-  Route::get('contact/state/{contact}', 'Api\ContactController@toggle');
-  Route::delete('contact/{contact}', 'Api\ContactController@destroy');
+  Route::get('contact', [ContactController::class, 'get']);
+  Route::get('contact/{contact}', [ContactController::class, 'find']);
+  Route::post('contact', [ContactController::class, 'store']);
+  Route::put('contact/{contact}', [ContactController::class, 'update']);
+  Route::post('contact/order', [ContactController::class, 'order']);
+  Route::get('contact/state/{contact}', [ContactController::class, 'toggle']);
+  Route::delete('contact/{contact}', [ContactController::class, 'destroy']);
 
   // Contact images
-  Route::get('contact/image/state/{contactImage}', 'Api\ContactImageController@toggle');
-  Route::put('contact/image/{contactImage}', 'Api\ContactImageController@coords');
-  Route::post('contact/image', 'Api\ContactImageController@store');
-  Route::post('contact/image/order', 'Api\ContactImageController@order');
-  Route::delete('contact/image/{contactImage}', 'Api\ContactImageController@destroy');
+  Route::get('contact/image/state/{contactImage}', [ContactImageController::class, 'toggle']);
+  Route::put('contact/image/{contactImage}', [ContactImageController::class, 'coords']);
+  Route::post('contact/image', [ContactImageController::class, 'store']);
+  Route::post('contact/image/order', [ContactImageController::class, 'order']);
+  Route::delete('contact/image/{contactImage}', [ContactImageController::class, 'destroy']);
 
   // Assistant
-  Route::get('assistants', 'Api\AssistantController@get');
-  Route::get('assistant/{assistant}', 'Api\AssistantController@find');
-  Route::post('assistant', 'Api\AssistantController@store');
-  Route::put('assistant/{assistant}', 'Api\AssistantController@update');
-  Route::post('assistant/order', 'Api\AssistantController@order');
-  Route::get('assistant/state/{assistant}', 'Api\AssistantController@toggle');
-  Route::delete('assistant/{assistant}', 'Api\AssistantController@destroy');
+  Route::get('assistants', [AssistantController::class, 'get']);
+  Route::get('assistant/{assistant}', [AssistantController::class, 'find']);
+  Route::post('assistant', [AssistantController::class, 'store']);
+  Route::put('assistant/{assistant}', [AssistantController::class, 'update']);
+  Route::post('assistant/order', [AssistantController::class, 'order']);
+  Route::get('assistant/state/{assistant}', [AssistantController::class, 'toggle']);
+  Route::delete('assistant/{assistant}', [AssistantController::class, 'destroy']);
 
   // Assistant images
-  Route::get('assistant/image/state/{assistantImage}', 'Api\AssistantImageController@toggle');
-  Route::put('assistant/image/{assistantImage}', 'Api\AssistantImageController@coords');
-  Route::post('assistant/image', 'Api\AssistantImageController@store');
-  Route::post('assistant/image/order', 'Api\AssistantImageController@order');
-  Route::delete('assistant/image/{assistantImage}', 'Api\AssistantImageController@destroy');
-
+  Route::get('assistant/image/state/{assistantImage}', [AssistantImageController::class, 'toggle']);
+  Route::put('assistant/image/{assistantImage}', [AssistantImageController::class, 'coords']);
+  Route::post('assistant/image', [AssistantImageController::class, 'store']);
+  Route::post('assistant/image/order', [AssistantImageController::class, 'order']);
+  Route::delete('assistant/image/{assistantImage}', [AssistantImageController::class, 'destroy']);
 });

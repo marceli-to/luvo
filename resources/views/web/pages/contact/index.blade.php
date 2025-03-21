@@ -39,7 +39,7 @@ if ($data['contact']->publishedImages)
                 @if ($image->device == 'desktop')  
                   <div class="swiper-slide">
                     <figure class="visual-desktop is-contain">
-                      <x-picture :image="$image" :queries="[null]" :width="[1600]" :height="[1920]" />
+                      <x-picture :image="$image" :queries="[null]" :width="[1600]" :height="[1200]" />
                     </figure>
                   </div>
                 @endif

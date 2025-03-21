@@ -4,6 +4,7 @@ use App\Models\TeamImage;
 use App\Http\Resources\DataCollection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
+use MarceliTo\ImageCache\Facades\ImageCache;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -116,13 +117,7 @@ class TeamImageController extends Controller
    */
   private function removeCachedImage(TeamImage $teamImage)
   {
-    // Get an instance of the ImageCache class
-    $imageCache = new \Intervention\Image\ImageCache();
+    ImageCache::clearImageCache($teamMemberImage->name);
 
-    // Get a cached image from it and apply all of your templates / methods
-    $image = $imageCache->make(storage_path('app/public/uploads/') . $teamImage->name)->filter(new \App\Filters\Image\Template\Cache);
-
-    // Remove the image from the cache by using its internal checksum
-    Cache::forget($image->checksum());
   }
 }

@@ -66,7 +66,7 @@
           <div class="form-row">
             <image-edit 
               :images="home.images"
-              :imagePreviewRoute="'cache'"
+              :imagePreviewRoute="'crop'"
               :aspectRatioW="3"
               :aspectRatioH="2"
             ></image-edit>

@@ -6,11 +6,11 @@
     @if ($loop->first)
       <figure class="visual-wide">
         <picture>
-          <source media="(min-width: 1600px)" srcset="/img/cache/{{$image->name}}?w=2400&h=1500">        
-          <source media="(min-width: 1200px)" srcset="/img/cache/{{$image->name}}?w=1600&h=1000">
-          <source media="(min-width: 900px)" srcset="/img/cache/{{$image->name}}?w=1200&h=750">
-          <source srcset="/img/cache/{{$image->name}}?w=900&h=560">
-          <img src="/img/cache/{{$image->name}}?w=900&h=560" width="900" height="560" alt="{{$image->caption}}">
+          <source media="(min-width: 1600px)" srcset="/img/crop/{{$image->name}}/2400/1500">        
+          <source media="(min-width: 1200px)" srcset="/img/crop/{{$image->name}}/1600/1000">
+          <source media="(min-width: 900px)" srcset="/img/crop/{{$image->name}}/1200/750">
+          <source srcset="/img/crop/{{$image->name}}/900/560">
+          <img src="/img/crop/{{$image->name}}/900/560" width="900" height="560" alt="{{$image->caption}}">
         </picture>
         <a href="javascript:;" class="visual-scroller js-btn-scroll"></a>
       </figure>

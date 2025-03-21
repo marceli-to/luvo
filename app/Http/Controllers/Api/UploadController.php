@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
@@ -15,11 +16,15 @@ class UploadController extends Controller
 
   protected $prefix = 'luksundvogt-';
   
+  protected $imageManager;
+  
   /**
    * Constructor
    */
   public function __construct()
   {
+    $this->imageManager = new ImageManager(new Driver());
+    
     $this->image_upload_path = storage_path('app/public/uploads');
     if (!File::isDirectory($this->image_upload_path))
     {
@@ -45,14 +50,14 @@ class UploadController extends Controller
     $name = $this->sanitize(trim($file->getClientOriginalName()));
     $name = $this->prefix . uniqid()  . '_' . $name;
     $file->move($this->image_upload_path, $name);
-    $filetype = \File::extension($this->image_upload_path . $name);
+    $filetype = File::extension($this->image_upload_path . $name);
 
     $image_types = ['jpg', 'jpeg', 'png'];
     $orientation = '';
 
     if (in_array($filetype, $image_types))
     {
-      $img = \Image::make(storage_path('app/public/uploads/') . $name);
+      $img = $this->imageManager->read(storage_path('app/public/uploads/') . $name);
       $orientation = $img->width() >= $img->height() ? 'l' : 'p';
     }
     
@@ -116,7 +121,7 @@ class UploadController extends Controller
 
   protected function sanitize($filename, $force_lowercase = true, $anal = true)
   {
-    $strip = array("~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "=", "+", "[", "{", "]", "}", "\\", "|", ";", ":", "\"", "'", "&#8216;", "&#8217;", "&#8220;", "&#8221;", "&#8211;", "&#8212;", "â€”", "â€“", ",", "<", ">", "/", "?");
+    $strip = array("~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "=", "+", "[", "{", "]", "}", "\\", "|", ";", ":", "\"", "'", "&#8216;", "&#8217;", "&#8220;", "&#8221;", "&#8211;", "&#8212;", "—", "–", ",", "<", ">", "/", "?");
     $clean = trim(str_replace($strip, "", strip_tags($filename)));
     $clean = preg_replace('/\s+/', "-", $clean);
     $clean = ($anal) ? preg_replace("/[^a-zA-Z0-9._\-]/", "", $clean) : $clean ;

@@ -3,7 +3,14 @@
 use App\Models\Assistant;
 use App\Models\Team;
 use App\Models\TeamMember;
-
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TeamController;
+use App\Http\Controllers\TeamMemberController;
+use App\Http\Controllers\AssistantController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ImageController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,36 +22,34 @@ use Illuminate\Support\Facades\Route;
 
 // Auth routes
 Auth::routes(['verify' => true, 'reset'  => false, 'register' => false]);
-Route::get('/logout', 'Auth\LoginController@logout');
+Route::get('/logout', [LoginController::class, 'logout']);
 
 // password/reset
-Route::get('/password/reset', 'HomeController@index')->name('page.home');
+Route::get('/password/reset', [HomeController::class, 'index'])->name('page.home');
 
 // Home
-Route::get('/', 'HomeController@index')->name('page.home');
-Route::get('/de', 'HomeController@index')->name('page.home');
-Route::get('/en', 'HomeController@index')->name('page.home');
-Route::get('/fr', 'HomeController@index')->name('page.home');
-Route::multilingual('/home', 'HomeController@index')->name('page.home');
+Route::get('/', [HomeController::class, 'index'])->name('page.home');
+Route::get('/de', [HomeController::class, 'index'])->name('page.home');
+Route::get('/en', [HomeController::class, 'index'])->name('page.home');
+Route::get('/fr', [HomeController::class, 'index'])->name('page.home');
+Route::multilingual('/home', [HomeController::class, 'index'])->name('page.home');
 
 // Teams
-Route::multilingual('/team-luks', 'TeamController@luks')->name('page.team.luks');
-Route::multilingual('/team-vogt', 'TeamController@vogt')->name('page.team.vogt');
+Route::multilingual('/team-luks', [TeamController::class, 'luks'])->name('page.team.luks');
+Route::multilingual('/team-vogt', [TeamController::class, 'vogt'])->name('page.team.vogt');
 
 // Team members
-Route::multilingual('/team-{slugTeam}/{slugMember}/{teamMember}', 'TeamMemberController@index')->name('page.team.member');
+Route::multilingual('/team-{slugTeam}/{slugMember}/{teamMember}', [TeamMemberController::class, 'index'])->name('page.team.member');
 
 // Team assistant
-Route::multilingual('/team-vogt/assistant', 'AssistantController@vogt')->name('page.team.vogt.assistant');
-Route::multilingual('/team-luks/assistant', 'AssistantController@luks')->name('page.team.luks.assistant');
-
-
+Route::multilingual('/team-vogt/assistant', [AssistantController::class, 'vogt'])->name('page.team.vogt.assistant');
+Route::multilingual('/team-luks/assistant', [AssistantController::class, 'luks'])->name('page.team.luks.assistant');
 
 // Contact
-Route::multilingual('/contact', 'ContactController@index')->name('page.contact');
+Route::multilingual('/contact', [ContactController::class, 'index'])->name('page.contact');
 
 // Url based images
-Route::get('/img/{template}/{filename}', 'ImageController@getResponse');
+// Route::get('/img/{template}/{filename}', [ImageController::class, 'getResponse']);
 
 /*
 |--------------------------------------------------------------------------

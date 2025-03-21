@@ -78,7 +78,7 @@
         <div class="form-row">
           <image-edit 
             :images="assistant.images"
-            :imagePreviewRoute="'cache'"
+            :imagePreviewRoute="'crop'"
             :aspectRatioW="3"
             :aspectRatioH="2"
           ></image-edit>

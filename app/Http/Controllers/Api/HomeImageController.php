@@ -4,6 +4,7 @@ use App\Models\HomeImage;
 use App\Http\Resources\DataCollection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
+use MarceliTo\ImageCache\Facades\ImageCache;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -116,13 +117,7 @@ class HomeImageController extends Controller
    */
   private function removeCachedImage(HomeImage $homeImage)
   {
-    // Get an instance of the ImageCache class
-    $imageCache = new \Intervention\Image\ImageCache();
+    ImageCache::clearImageCache($homeImage->name);
 
-    // Get a cached image from it and apply all of your templates / methods
-    $image = $imageCache->make(storage_path('app/public/uploads/') . $homeImage->name)->filter(new \App\Filters\Image\Template\Cache);
-
-    // Remove the image from the cache by using its internal checksum
-    Cache::forget($image->checksum());
   }
 }

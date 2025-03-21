@@ -161,8 +161,8 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class,
-
+        Intervention\Image\Laravel\ServiceProvider::class,
+        
         /*
          * Package Service Providers...
          */
@@ -229,10 +229,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'ImageHelper' => App\Helpers\ImageHelper::class,
         'MoneyHelper' => App\Helpers\MoneyHelper::class,
-        'Image' => Intervention\Image\Facades\Image::class,
+        'Image' => Intervention\Image\Laravel\Facades\Image::class,
         'AppHelper' => App\Helpers\AppHelper::class,
         'UrlHelper' => App\Helpers\UrlHelper::class,
-        'ImageCache' => Intervention\Image\Facades\Image::class,
     ],
 
 ];
