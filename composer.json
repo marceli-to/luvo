@@ -20,7 +20,8 @@
         "laravel/ui": "^4.0",
         "marceli-to/image-cache": "^1.4",
         "nesbot/carbon": "^2.37",
-        "spatie/laravel-translatable": "^6.1.0"
+        "spatie/laravel-translatable": "^6.1.0",
+        "symfony/polyfill-php72": "^1.31"
     },
     "require-dev": {
       "spatie/laravel-ignition": "^2.0",
