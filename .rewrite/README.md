@@ -11,7 +11,8 @@ Written so the next session can skip re-deriving all of this.
 | `01-inventory.md` | What's actually in the codebase, measured |
 | `02-backend-laravel13.md` | Dependency audit, blockers, step plan |
 | `03-frontend-vue3.md` | Package-by-package migration table, step plan |
-| `04-open-questions.md` | What must be answered before starting |
+| `04-open-questions.md` | What must be answered before starting (+ answers) |
+| `05-image-pipeline.md` | image-cache → Glide evaluation, crop rules, live bugs |
 
 ## The 30-second version
 
