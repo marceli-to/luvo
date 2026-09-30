@@ -13,6 +13,7 @@ Written so the next session can skip re-deriving all of this.
 | `03-frontend-vue3.md` | Package-by-package migration table, step plan |
 | `04-open-questions.md` | What must be answered before starting (+ answers) |
 | `05-image-pipeline.md` | image-cache → Glide evaluation, crop rules, live bugs |
+| `06-progress.md` | What is done, verified, and left to do |
 
 ## The 30-second version
 
