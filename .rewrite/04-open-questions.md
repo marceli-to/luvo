@@ -59,7 +59,7 @@ the same Vite migration is much cheaper than a second pass later.
 # Answers (2026-09-30)
 
 1. **PHP:** production runs 8.3+ (up to 8.5). Gate cleared.
-2. **image-cache:** not decided. Option on the table: replace it with the
+2. **image-cache:** replaced by Glide, see `05-image-pipeline.md`. Option on the table: replace it with the
    Glide-based pipeline from strut.ch (`github.com/marceli-to/rework.strut.ch`),
    which also serves modern formats. Hard requirement: crops must come out
    exactly the same as today. Needs evaluation before committing.

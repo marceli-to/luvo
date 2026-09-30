@@ -65,3 +65,15 @@ A strict 1:1 port keeps 2–4. Bug 1 should be fixed regardless.
 - **Server driver:** strut uses Imagick. luvo's host is unverified. GD works
   (that's what was tested). AVIF/WebP need GD/Imagick built with them; check
   on the server before promising modern formats.
+
+## Decisions (2026-09-30)
+
+- **Replace image-cache with Glide.** This removes the only backend blocker:
+  `marceli-to/image-cache` no longer needs an L13 release.
+- **Fix bug 2:** serve the size the `<picture>` asks for, plus WebP/AVIF.
+- **Fix bug 3:** honour every saved crop, including ones anchored at x=0,y=0.
+- Bug 1 goes away with the new route (no arbitrary 1600 height cap).
+- **Driver:** Imagick. Production is the same server as strut.ch, whose
+  deployment requires Imagick with AVIF + WebP.
+- Guard the new route: only whitelisted sizes/formats, so arbitrary query
+  params can't fill the cache (the old route had no such risk beyond coords).
