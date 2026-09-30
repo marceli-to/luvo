@@ -1,7 +1,6 @@
 <?php
 namespace App\Http\Middleware;
 use Illuminate\Support\Facades\Auth;
-use App\Providers\RouteServiceProvider;
 use Closure;
 
 class CheckRole

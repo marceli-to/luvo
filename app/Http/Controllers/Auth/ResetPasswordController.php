@@ -2,7 +2,6 @@
 namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class ResetPasswordController extends BaseController
@@ -30,5 +29,5 @@ class ResetPasswordController extends BaseController
    *
    * @var string
    */
-  protected $redirectTo = RouteServiceProvider::HOME;
+  protected $redirectTo = '/home';
 }

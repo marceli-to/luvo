@@ -1,6 +1,5 @@
 <?php
 namespace App\Http\Middleware;
-use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,11 +19,11 @@ class RedirectIfAuthenticated
     {
       if (auth()->user()->isAdmin())
       {
-        return redirect(RouteServiceProvider::DASHBOARD_ADMINSTRATION);
+        return redirect('/administration/home');
       }
       else
       {
-        return redirect(RouteServiceProvider::HOME);
+        return redirect('/home');
       }
       
     }
