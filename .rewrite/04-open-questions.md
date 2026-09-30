@@ -53,3 +53,24 @@ and what's the rollback if the upgraded build misbehaves in production?
 The estimate treats `resources/js/web/` (jQuery + Bootstrap 4 + vendored
 swiper) as untouched. If a public-site refresh is coming anyway, doing it in
 the same Vite migration is much cheaper than a second pass later.
+
+---
+
+# Answers (2026-09-30)
+
+1. **PHP:** production runs 8.3+ (up to 8.5). Gate cleared.
+2. **image-cache:** not decided. Option on the table: replace it with the
+   Glide-based pipeline from strut.ch (`github.com/marceli-to/rework.strut.ch`),
+   which also serves modern formats. Hard requirement: crops must come out
+   exactly the same as today. Needs evaluation before committing.
+3. **Dropzone:** thin wrapper around Dropzone v6, keeping the current UX as
+   close as possible.
+4. **Deploy:** SSH onto the server + `git pull`. Built assets are committed
+   (`public/assets/**`), so the Vite output must be committed too. `vendor/`
+   is gitignored, so the server needs `composer install` (PHP 8.3+ CLI) on the
+   release that switches to L13.
+5. **Public site:** client wants the privacy policy (Datenschutz, currently in
+   `web/pages/contact/index.blade.php`) translated into EN and FR. Small
+   content change, not a refresh. Do it alongside, doesn't change the Vite plan.
+6. **Before starting:** take a snapshot of the production DB + `storage/` as the
+   test baseline and rollback point.
