@@ -59,10 +59,9 @@ the same Vite migration is much cheaper than a second pass later.
 # Answers (2026-09-30)
 
 1. **PHP:** production runs 8.3+ (up to 8.5). Gate cleared.
-2. **image-cache:** replaced by Glide, see `05-image-pipeline.md`. Option on the table: replace it with the
-   Glide-based pipeline from strut.ch (`github.com/marceli-to/rework.strut.ch`),
-   which also serves modern formats. Hard requirement: crops must come out
-   exactly the same as today. Needs evaluation before committing.
+2. **image-cache:** replaced by the Glide pipeline from strut.ch, with
+   WebP/AVIF and requested sizes. Verified to reproduce today's crops; see
+   `05-image-pipeline.md`.
 3. **Dropzone:** thin wrapper around Dropzone v6, keeping the current UX as
    close as possible.
 4. **Deploy:** SSH onto the server + `git pull`. Built assets are committed

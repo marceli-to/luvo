@@ -57,7 +57,7 @@ class UploadController extends Controller
 
     if (in_array($filetype, $image_types))
     {
-      $img = $this->imageManager->read(storage_path('app/public/uploads/') . $name);
+      $img = $this->imageManager->decodePath(storage_path('app/public/uploads/') . $name);
       $orientation = $img->width() >= $img->height() ? 'l' : 'p';
     }
     
