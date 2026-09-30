@@ -6,7 +6,7 @@
           <a
           href="{{ localized_route('page.team.member', ['slugTeam' => $team->slug, 'teamMember' => $member, 'slugMember' => \Str::slug($member->firstname .'-'. $member->name)]) }}" 
           title="{{ $member->fullName }}"
-          class="{{ request() && request()->routeIs('*page.team.member') && request()->route()->parameter('teamMember.id') == $member->id ? 'is-active' : '' }}">
+          class="{{ request() && request()->routeIs('*page.team.member') && request()->route()?->parameter('teamMember.id') == $member->id ? 'is-active' : '' }}">
           {{ $member->fullName }}
           </a>
         </li>
@@ -37,7 +37,7 @@
               <a
                 href="{{ localized_route('page.team.member', ['slugTeam' => $team->slug, 'teamMember' => $member, 'slugMember' => \Str::slug($member->firstname . '-' . $member->name)]) }}" 
                 title="{{ $member->fullName }}"
-                class="{{ request() && request()->routeIs('*page.team.member') && request()->route()->parameter('teamMember.id') == $member->id ? 'is-active' : '' }}">
+                class="{{ request() && request()->routeIs('*page.team.member') && request()->route()?->parameter('teamMember.id') == $member->id ? 'is-active' : '' }}">
                 {{ $member->fullName }}
               </a>
             </li>

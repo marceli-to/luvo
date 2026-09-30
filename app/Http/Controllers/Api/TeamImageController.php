@@ -4,7 +4,7 @@ use App\Models\TeamImage;
 use App\Http\Resources\DataCollection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
-use MarceliTo\ImageCache\Facades\ImageCache;
+use App\Support\Glide;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -117,7 +117,6 @@ class TeamImageController extends Controller
    */
   private function removeCachedImage(TeamImage $teamImage)
   {
-    ImageCache::clearImageCache($teamMemberImage->name);
-
+    Glide::server()->deleteCache('uploads/' . $teamImage->name);
   }
 }

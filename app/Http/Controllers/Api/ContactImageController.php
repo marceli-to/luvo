@@ -4,7 +4,7 @@ use App\Models\ContactImage;
 use App\Http\Resources\DataCollection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
-use MarceliTo\ImageCache\Facades\ImageCache;
+use App\Support\Glide;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -117,6 +117,6 @@ class ContactImageController extends Controller
    */
   private function removeCachedImage(ContactImage $contactImage)
   {
-
+    Glide::server()->deleteCache('uploads/' . $contactImage->name);
   }
 }

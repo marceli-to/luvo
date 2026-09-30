@@ -49,7 +49,9 @@ Route::multilingual('/team-luks/assistant', [AssistantController::class, 'luks']
 Route::multilingual('/contact', [ContactController::class, 'index'])->name('page.contact');
 
 // Url based images
-// Route::get('/img/{template}/{filename}', [ImageController::class, 'getResponse']);
+Route::get('/img/original/{filename}', [ImageController::class, 'original']);
+Route::get('/img/thumbnail/{filename}', [ImageController::class, 'thumbnail']);
+Route::get('/img/crop/{filename}/{maxWidth?}/{maxHeight?}/{coords?}', [ImageController::class, 'crop']);
 
 /*
 |--------------------------------------------------------------------------

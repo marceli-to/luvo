@@ -1,5 +1,6 @@
 <?php
 namespace App\View\Components;
+use App\Support\ImageSupport;
 use Illuminate\View\Component;
 
 class Picture extends Component
@@ -20,6 +21,13 @@ class Picture extends Component
   public $coords;
 
   /**
+   * Modern formats offered before the jpg fallback
+   *
+   * @var array
+   */
+  public $formats;
+
+  /**
    * Create a new component instance.
    *
    * @return void
@@ -27,28 +35,38 @@ class Picture extends Component
   public function __construct($image = NULL, $queries, $width, $height)
   {
     $this->image   = $image;
-    $this->queries = $queries;
+    // Callers pass 'min-width: 900px'; a media feature needs parentheses,
+    // without them browsers read the query as "not all" and skip the source.
+    $this->queries = array_map(fn ($q) => $q && $q[0] !== '(' ? '(' . $q . ')' : $q, $queries);
     $this->width   = $width;
     $this->height  = $height;
+    $this->formats = ImageSupport::modernFormats();
 
-    // $coords = [
-    //   $this->image->coords_w,
-    //   $this->image->coords_h,
-    //   $this->image->coords_x,
-    //   $this->image->coords_y
-    // ];
-
+    // A crop needs width and height; x/y may be 0 (crop anchored top/left)
     $this->coords = '';
-    if (($this->image->coords_w && $this->image->coords_h) && ($this->image->coords_x || $this->image->coords_y))
+    if ($this->image->coords_w > 0 && $this->image->coords_h > 0)
     {
-
-      $w = $this->image->coords_w ? $this->image->coords_w : 0;
-      $h = $this->image->coords_h ? $this->image->coords_h : 0;
-      $x = $this->image->coords_x ? $this->image->coords_x : 0;
-      $y = $this->image->coords_y ? $this->image->coords_y : 0;
-      $this->coords = $w . ',' . $h . ',' . $x . ',' . $y;
+      $this->coords = implode(',', [
+        (int) $this->image->coords_w,
+        (int) $this->image->coords_h,
+        (int) $this->image->coords_x,
+        (int) $this->image->coords_y,
+      ]);
     }
+  }
 
+  /**
+   * Image url for a size and an optional format (avif, webp)
+   *
+   * @param int $k index into width/height
+   * @param string|null $format
+   * @return string
+   */
+  public function src($k, $format = NULL)
+  {
+    $url = '/img/crop/' . $this->image->name . '/' . $this->width[$k] . '/' . $this->height[$k];
+    $url .= $this->coords ? '/' . $this->coords : '';
+    return $format ? $url . '?fm=' . $format : $url;
   }
 
   /**

@@ -6,10 +6,12 @@
     @if ($loop->first)
       <figure class="visual-wide">
         <picture>
-          <source media="(min-width: 1600px)" srcset="/img/crop/{{$image->name}}/2400/1500">        
-          <source media="(min-width: 1200px)" srcset="/img/crop/{{$image->name}}/1600/1000">
-          <source media="(min-width: 900px)" srcset="/img/crop/{{$image->name}}/1200/750">
-          <source srcset="/img/crop/{{$image->name}}/900/560">
+          @foreach([...\App\Support\ImageSupport::modernFormats(), null] as $format)
+          <source media="(min-width: 1600px)" @if($format)type="image/{{$format}}" @endif srcset="/img/crop/{{$image->name}}/2400/1500{{ $format ? '?fm='.$format : '' }}">
+          <source media="(min-width: 1200px)" @if($format)type="image/{{$format}}" @endif srcset="/img/crop/{{$image->name}}/1600/1000{{ $format ? '?fm='.$format : '' }}">
+          <source media="(min-width: 900px)" @if($format)type="image/{{$format}}" @endif srcset="/img/crop/{{$image->name}}/1200/750{{ $format ? '?fm='.$format : '' }}">
+          <source @if($format)type="image/{{$format}}" @endif srcset="/img/crop/{{$image->name}}/900/560{{ $format ? '?fm='.$format : '' }}">
+          @endforeach
           <img src="/img/crop/{{$image->name}}/900/560" width="900" height="560" alt="{{$image->caption}}">
         </picture>
         <a href="javascript:;" class="visual-scroller js-btn-scroll"></a>
