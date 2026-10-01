@@ -1,8 +1,7 @@
 <?php
 namespace App\Http\Requests;
-use Illuminate\Foundation\Http\FormRequest;
 
-class PublicationStoreRequest extends FormRequest
+class PublicationStoreRequest extends BaseFormRequest
 {
   /**
    * Determine if the user is authorized to make this request.
@@ -33,7 +32,7 @@ class PublicationStoreRequest extends FormRequest
    *
    * @return array
    */
-  public function messages()
+  public function errorMessages()
   {
     return [
 

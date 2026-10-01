@@ -1,8 +1,7 @@
 <?php
 namespace App\Http\Requests;
-use Illuminate\Foundation\Http\FormRequest;
 
-class HomeStoreRequest extends FormRequest
+class HomeStoreRequest extends BaseFormRequest
 {
   /**
    * Determine if the user is authorized to make this request.
@@ -32,7 +31,7 @@ class HomeStoreRequest extends FormRequest
    *
    * @return array
    */
-  public function messages()
+  public function errorMessages()
   {
     return [
       
