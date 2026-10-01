@@ -114,7 +114,7 @@ export const imageUpload = {
   url: '/api/image/upload',
   label: 'Upload',
   restrictions: 'jpg, png | max. 8 MB',
-  acceptedFiles: '.png,.jpg',
+  acceptedFiles: '.png,.jpg,.jpeg',
   maxFiles: 99,
   maxFilesize: 8,
 };

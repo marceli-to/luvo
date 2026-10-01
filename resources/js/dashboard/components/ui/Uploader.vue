@@ -37,21 +37,32 @@ onMounted(() => {
     createImageThumbnails: false,
     thumbnailWidth: 200,
     thumbnailHeight: 200,
+    dictInvalidFileType: `Dateityp nicht erlaubt (erlaubt: ${props.restrictions.split('|')[0].trim()}).`,
+    dictFileTooBig: 'Datei ist zu gross ({{filesize}} MB, erlaubt: max. {{maxFilesize}} MB).',
+    dictMaxFilesExceeded: 'Zu viele Dateien (max. {{maxFiles}} auf einmal).',
+    filesizeBase: 1024,
+  });
+
+  // Rejected in the browser (type, size, count) or by the server
+  dropzone.on('error', (file, message, xhr) => {
+    notify({ type: 'error', text: `«${file.name}»: ${xhr ? serverError(xhr, message) : message}` });
   });
 
   dropzone.on('complete', file => {
-    if (file.status === 'error' && !file.accepted) {
-      notify({ type: 'error', text: 'Invalid format or file to big!' });
-    }
-    else if (file.status === 'success') {
+    if (file.status === 'success') {
       emit('uploaded', JSON.parse(file.xhr.response));
-    }
-    else {
-      notify({ type: 'error', text: `Upload fehlgeschlagen (${file.xhr?.status ?? '-'})` });
     }
     dropzone.removeFile(file);
   });
 });
+
+function serverError(xhr, response) {
+  if (xhr.status === 413) {
+    return 'Datei ist zu gross für den Server.';
+  }
+  const message = typeof response === 'object' ? response?.message : null;
+  return `Upload fehlgeschlagen (${xhr.status}${message ? ': ' + message : ''}).`;
+}
 
 onBeforeUnmount(() => dropzone?.destroy());
 </script>
