@@ -1,5 +1,6 @@
 <?php
 namespace App\View\Components;
+use App\Helpers\ImageHelper;
 use App\Support\ImageSupport;
 use Illuminate\View\Component;
 
@@ -18,8 +19,6 @@ class Picture extends Component
 
   public $height;
 
-  public $coords;
-
   /**
    * Modern formats offered before the jpg fallback
    *
@@ -32,7 +31,7 @@ class Picture extends Component
    *
    * @return void
    */
-  public function __construct($image = NULL, $queries, $width, $height)
+  public function __construct($image, $queries, $width, $height)
   {
     $this->image   = $image;
     // Callers pass 'min-width: 900px'; a media feature needs parentheses,
@@ -41,18 +40,6 @@ class Picture extends Component
     $this->width   = $width;
     $this->height  = $height;
     $this->formats = ImageSupport::modernFormats();
-
-    // A crop needs width and height; x/y may be 0 (crop anchored top/left)
-    $this->coords = '';
-    if ($this->image->coords_w > 0 && $this->image->coords_h > 0)
-    {
-      $this->coords = implode(',', [
-        (int) $this->image->coords_w,
-        (int) $this->image->coords_h,
-        (int) $this->image->coords_x,
-        (int) $this->image->coords_y,
-      ]);
-    }
   }
 
   /**
@@ -64,9 +51,7 @@ class Picture extends Component
    */
   public function src($k, $format = NULL)
   {
-    $url = '/img/crop/' . $this->image->name . '/' . $this->width[$k] . '/' . $this->height[$k];
-    $url .= $this->coords ? '/' . $this->coords : '';
-    return $format ? $url . '?fm=' . $format : $url;
+    return ImageHelper::cropUrl($this->image, $this->width[$k], $this->height[$k], $format);
   }
 
   /**
