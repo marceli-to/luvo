@@ -1,0 +1,1 @@
+import{b as e,h as t,j as n}from"./vue.runtime.esm-bundler-BIwfRj6z.js";import{t as r}from"./_plugin-vue_export-helper-BDNMzG2s.js";e();var i={},a={class:`separator`};function o(e,r){return n(),t(`span`,a,`•`)}var s=r(i,[[`render`,o]]);export{s as t};

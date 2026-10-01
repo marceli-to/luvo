@@ -1,44 +1,21 @@
 <template>
   <nav class="language">
     <div>
-    <label>Übersetzung:</label>
-    <ul>
-      <li v-for="(language, index) in languages" :key="index">
-        <a
-          href="javascript:;"
-          @click="change(language.key)"
-          :class="[language.active ? 'is-active' : '']"
-        >{{language.label}}</a>
-      </li>
-    </ul>
+      <label>Übersetzung:</label>
+      <ul>
+        <li v-for="language in languages" :key="language">
+          <a
+            href="javascript:;"
+            :class="{ 'is-active': locale === language }"
+            @click="locale = language"
+          >{{ language.toUpperCase() }}</a>
+        </li>
+      </ul>
     </div>
   </nav>
 </template>
-<script>
-export default {
-  props: {
-    languages: Object,
-  },
+<script setup>
+const languages = ['de', 'fr', 'en'];
 
-  created() {
-    this.init();
-  },
-
-  methods: {
-
-    init() {
-      for (let prop in this.languages) {
-        this.languages[prop].active = false;
-      }
-      this.languages['de'].active = true;
-    },
-
-    change(tab) {
-      for (let prop in this.languages) {
-        this.languages[prop].active = false;
-      }
-      this.languages[tab].active = true;
-    },
-  }
-}
+const locale = defineModel({ type: String, default: 'de' });
 </script>

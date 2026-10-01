@@ -1,9 +1,9 @@
 <template>
   <div>
-    <loading-indicator v-if="isLoading"></loading-indicator>
-    <form @submit.prevent="submit" class="half-width" v-if="isFetched">
+    <LoadingIndicator v-if="isLoading" />
+    <form @submit.prevent="submit" class="half-width">
       <header class="content-header">
-        <h1>{{title}}</h1>
+        <h1>Passwort ändern</h1>
       </header>
       <div>
         <div :class="[errors.password ? 'has-error' : '', 'form-row']">
@@ -26,94 +26,31 @@
     </form>
   </div>
 </template>
-<script>
+<script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { notify } from '@kyvg/vue3-notification';
+import LoadingIndicator from '@/components/ui/LoadingIndicator.vue';
+import http, { validationErrors } from '@/lib/http';
 
-// Icons
-import { ArrowLeftIcon } from 'lucide-vue-next';
+const router = useRouter();
 
-// Mixins
-import ErrorHandling from "@/mixins/ErrorHandling";
+const user = ref({ password: null, password_confirm: null });
+const errors = ref({});
+const isLoading = ref(false);
 
-// Components
-import RadioButton from "@/components/ui/RadioButton.vue";
-import LabelRequired from "@/components/ui/LabelRequired.vue";
-
-// Tabs config
-
-export default {
-  components: {
-    ArrowLeftIcon,
-    RadioButton,
-    LabelRequired,
-  },
-
-  mixins: [ErrorHandling],
-
-  props: {
-    type: String
-  },
-
-  data() {
-    return {
-      
-      // Model
-      user: {
-        password: null,
-        password_confirm: null,
-      },
-
-      // Validation
-      errors: {
-        password: false,
-        password_confirm: false,
-      },
-
-      // Loading states
-      isFetched: true,
-      isLoading: false,
-
-    };
-  },
-
-  created() {
-    if (this.$props.type == "edit") {
-      this.isFetched = false;
-      this.isLoading = true;
-      let uri = `/api/user`;
-      this.axios.get(uri).then(response => {
-        this.isFetched = true;
-        this.isLoading = false;
-      });
-    }
-  },
-
-  methods: {
-
-    // Submit form
-    submit() {
-      if (this.$props.type == "edit") {
-        this.update();
-      }
-    },
-
-    update() {
-      let uri = `/api/user/password`;
-      this.isLoading = true;
-      this.axios.post(uri, this.user).then(response => {
-        this.$router.push({ name: "dashboard" });
-        this.$notify({ type: "success", text: "Änderungen gespeichert!" });
-        this.isLoading = false;
-      });
-    },
-
-  },
-
-  computed: {
-    title: function() {
-      return this.$props.type == "edit" 
-        ? "Passwort ändern" 
-        : "Passwort hinzufügen";
-    }
+async function submit() {
+  isLoading.value = true;
+  try {
+    await http.post('/api/user/password', user.value);
+    router.push({ name: 'dashboard' });
+    notify({ type: 'success', text: 'Änderungen gespeichert!' });
   }
-};
+  catch (error) {
+    errors.value = validationErrors(error) ?? errors.value;
+  }
+  finally {
+    isLoading.value = false;
+  }
+}
 </script>

@@ -1,117 +1,50 @@
 <template>
   <div>
-    <loading-indicator v-if="isLoading"></loading-indicator>
+    <LoadingIndicator v-if="isLoading" />
     <form @submit.prevent="submit" class="half-width" v-if="isFetched">
       <header class="content-header">
-        <h1>{{title}}</h1>
+        <h1>{{ title }}</h1>
       </header>
-      <tabs :tabs="tabs" :errors="errors"></tabs>
-      <div v-show="tabs.data.active">
-        <language-tabs :languages="languageTabs"></language-tabs>
-        <div v-show="languageTabs.de.active">
-          <div :class="[errors.address ? 'has-error' : '', 'form-row']">
-            <label>Adresse</label>
-            <tinymce-editor
-                :init="tinyConfig"
-              v-model="contact.address.de"
-            ></tinymce-editor>
+      <Tabs :tabs="formTabs" v-model="tab" />
+      <div v-show="tab === 'data'">
+        <LanguageTabs v-model="locale" />
+        <div v-for="lang in ['de', 'fr', 'en']" :key="lang" v-show="locale === lang">
+          <div :class="[lang === 'de' && errors.address ? 'has-error' : '', 'form-row']">
+            <label>{{ lang === 'de' ? 'Adresse' : 'Text' }}</label>
+            <TinymceEditor :init="tinyConfig" v-model="record.address[lang]" />
           </div>
           <div class="form-row">
             <label>Impressum</label>
-            <tinymce-editor
-                :init="tinyConfig"
-              v-model="contact.imprint.de"
-            ></tinymce-editor>
+            <TinymceEditor :init="tinyConfig" v-model="record.imprint[lang]" />
           </div>
           <div class="form-row">
             <label>Datenschutz</label>
-            <tinymce-editor
-                :init="tinyConfig"
-              v-model="contact.privacy.de"
-            ></tinymce-editor>
+            <TinymceEditor :init="tinyConfig" v-model="record.privacy[lang]" />
           </div>
-          <div class="form-row">
+          <div class="form-row" v-if="lang === 'de'">
             <label>Google Maps Uri</label>
-            <input type="text" v-model="contact.map_uri">
-          </div>
-        </div>
-        <div v-show="languageTabs.fr.active">
-          <div class="form-row">
-            <label>Text</label>
-            <tinymce-editor
-                :init="tinyConfig"
-              v-model="contact.address.fr"
-            ></tinymce-editor>
-          </div>
-          <div class="form-row">
-            <label>Impressum</label>
-            <tinymce-editor
-                :init="tinyConfig"
-              v-model="contact.imprint.fr"
-            ></tinymce-editor>
-          </div>
-          <div class="form-row">
-            <label>Datenschutz</label>
-            <tinymce-editor
-                :init="tinyConfig"
-              v-model="contact.privacy.fr"
-            ></tinymce-editor>
-          </div>
-        </div>
-        <div v-show="languageTabs.en.active">
-          <div class="form-row">
-            <label>Text</label>
-            <tinymce-editor
-                :init="tinyConfig"
-              v-model="contact.address.en"
-            ></tinymce-editor>
-          </div>
-          <div class="form-row">
-            <label>Impressum</label>
-            <tinymce-editor
-                :init="tinyConfig"
-              v-model="contact.imprint.en"
-            ></tinymce-editor>
-          </div>
-          <div class="form-row">
-            <label>Datenschutz</label>
-            <tinymce-editor
-                :init="tinyConfig"
-              v-model="contact.privacy.en"
-            ></tinymce-editor>
+            <input type="text" v-model="record.map_uri">
           </div>
         </div>
       </div>
-      <div v-show="tabs.image.active">
-        <div>
-          <div class="form-row">
-            <image-upload
-              :restrictions="'jpg, png | max. 8 MB'"
-              :maxFiles="99"
-              :maxFilesize="8"
-              :acceptedFiles="'.png,.jpg'"
-            ></image-upload>
-          </div>
-          <div class="form-row">
-            <image-edit 
-              :images="contact.images"
-              :imagePreviewRoute="'crop'"
-              :aspectRatioW="3"
-              :aspectRatioH="2"
-            ></image-edit>
-          </div>
+      <div v-show="tab === 'image'">
+        <div class="form-row">
+          <Uploader v-bind="imageUpload" @uploaded="images.store" />
+        </div>
+        <div class="form-row">
+          <ImageManager
+            v-model:images="record.images"
+            endpoint="contact"
+            devices
+            @toggle="images.toggle"
+            @destroy="images.destroy"
+            @save-coords="images.saveCoords"
+          />
         </div>
       </div>
-      <div v-show="tabs.settings.active">
-        <div>
-          <div class="form-row is-last">
-            <radio-button 
-              :label="'Publizieren?'"
-              v-model:publish="contact.publish"
-              :model="contact.publish"
-              :name="'publish'">
-            </radio-button>
-          </div>
+      <div v-show="tab === 'settings'">
+        <div class="form-row is-last">
+          <RadioButton label="Publizieren?" name="publish" v-model="record.publish" />
         </div>
       </div>
       <footer class="module-footer">
@@ -125,227 +58,47 @@
     </form>
   </div>
 </template>
-<script>
+<script setup>
+import { ref } from 'vue';
+import LoadingIndicator from '@/components/ui/LoadingIndicator.vue';
+import Tabs from '@/components/ui/Tabs.vue';
+import LanguageTabs from '@/components/ui/LanguageTabs.vue';
+import RadioButton from '@/components/ui/RadioButton.vue';
+import TinymceEditor from '@/components/ui/TinymceEditor.js';
+import Uploader from '@/components/ui/Uploader.vue';
+import ImageManager from '@/components/images/ImageManager.vue';
+import { useResourceForm, formTabs, translations } from '@/composables/useResourceForm';
+import { useImages, imageUpload } from '@/composables/useImages';
+import { useTinyConfig } from '@/composables/useTinyConfig';
 
-// Icons
-import { ArrowLeftIcon } from 'lucide-vue-next';
+const props = defineProps({
+  type: { type: String, required: true },
+});
 
-// Mixins
-import ErrorHandling from "@/mixins/ErrorHandling";
+const { record, errors, isEdit, isLoading, isFetched, title, submit } = useResourceForm({
+  type: props.type,
+  endpoint: 'contact',
+  model: () => ({
+    address: translations(),
+    imprint: translations(),
+    privacy: translations(),
+    images: [],
+    map_uri: null,
+    publish: 1,
+  }),
+  redirect: { name: 'contact' },
+  titles: { create: 'Kontakt hinzufügen', edit: 'Kontakt bearbeiten' },
+});
 
-// TinyMCE
-import tinyConfig from "@/config/tiny.js";
-import TinymceEditor from "@/components/ui/TinymceEditor.js";
+const images = useImages({
+  record, isEdit, isLoading,
+  endpoint: 'contact',
+  foreignKey: 'contact_id',
+  idKey: 'contactImageId',
+  fields: () => ({ caption: null, device: 'desktop' }),
+});
 
-// Components
-import RadioButton from "@/components/ui/RadioButton.vue";
-import LabelRequired from "@/components/ui/LabelRequired.vue";
-import Tabs from "@/components/ui/Tabs.vue";
-import LanguageTabs from "@/components/ui/LanguageTabs.vue";
-import ImageUpload from "@/components/images/Upload.vue";
-import ImageEdit from "@/views/contact/images/Edit.vue";
-
-// Tabs config
-import tabsConfig from "@/views/contact/config/tabs.js";
-import languageTabsConfig from "@/config/languageTabs.js";
-
-export default {
-  components: {
-    ArrowLeftIcon,
-    TinymceEditor,
-    RadioButton,
-    LabelRequired,
-    ImageUpload,
-    ImageEdit,
-    Tabs,
-    LanguageTabs
-  },
-
-  mixins: [ErrorHandling],
-
-  props: {
-    type: String
-  },
-
-  data() {
-    return {
-      
-      // Model
-      contact: {
-        address: {
-          de: null,
-          fr: null,
-          en: null,
-        },
-        imprint: {
-          de: null,
-          fr: null,
-          en: null,
-        },
-        privacy: {
-          de: null,
-          fr: null,
-          en: null,
-        },
-        images: [],
-        map_uri: null,
-        publish: 1,
-      },
-
-      // Validation
-      errors: {
-        address: false,
-      },
-
-      // Loading states
-      isFetched: true,
-      isLoading: false,
-
-      // Tabs config
-      tabs: tabsConfig,
-      languageTabs: languageTabsConfig,
-
-      // TinyMCE
-      tinyConfig: tinyConfig,
-      tinyApiKey: 'vuaywur9klvlt3excnrd9xki1a5lj25v18b2j0d0nu5tbwro',
-
-      // Filelist for Tiny Links
-      fileList: null,
-    };
-  },
-
-  created() {
-    if (this.$props.type == "edit") {
-      this.isFetched = false;
-      this.isLoading = true;
-      let uri = `/api/contact/${this.$route.params.id}`;
-      this.axios.get(uri).then(response => {
-        this.contact = response.data;
-        this.isFetched = true;
-        this.isLoading = false;
-      });
-    }
-  },
-
-  methods: {
-
-    // Submit form
-    submit() {
-      if (this.$props.type == "edit") {
-        this.update();
-      }
-
-      if (this.$props.type == "create") {
-        this.store();
-      }
-    },
-
-    fetchFiles() {
-      this.axios.get(`/api/files`).then(response => {
-        this.fileList = response.data;
-      });
-    },
-
-    store() {
-      this.isLoading = true;
-      this.axios.post('/api/contact', this.contact).then(response => {
-        this.$router.push({ name: "contact" });
-        this.$notify({ type: "success", text: "Daten erfasst!" });
-        this.isLoading = false;
-      });
-    },
-
-    update() {
-      let uri = `/api/contact/${this.$route.params.id}`;
-      this.isLoading = true;
-      this.axios.put(uri, this.contact).then(response => {
-        this.$router.push({ name: "contact" });
-        this.$notify({ type: "success", text: "Änderungen gespeichert!" });
-        this.isLoading = false;
-      });
-    },
-
-    // Store uploaded image
-    storeImage(upload) {
-      let image = {
-        id: null,
-        name: upload.name,
-        caption: null,
-        coords_w: 0,
-        coords_h: 0,
-        coords_x: 0,
-        coords_y: 0,
-        orientation: upload.orientation,
-        preview: 0,
-        order: 0,
-        publish: 1,
-      }
-
-      if (this.$props.type == "edit") {
-        image.contact_id = this.$route.params.id;
-        this.axios.post('/api/contact/image', image).then(response => {
-          this.$notify({ type: "success", text: "Bild gespeichert!" });
-          image.id = response.data.contactImageId;
-          this.contact.images.push(image);
-        });
-      }
-      else {
-        this.contact.images.push(image);
-      }
-    },
-
-    // Delete by name
-    destroyImage(image, event) {
-      if (confirm("Bitte löschen bestätigen!")) {
-        let uri = `/api/contact/image/${image}`;
-        this.isLoading = true;
-        this.axios.delete(uri).then(response => {
-          const index = this.contact.images.findIndex(x => x.name === image);
-          this.contact.images.splice(index, 1);
-          this.isLoading = false;
-        });
-      }
-    },
-
-    // Toggle image status
-    toggleImage(image, event) {
-      if (image.id === null) {
-        const index = this.contact.images.findIndex(x => x.name === image.name);
-        this.contact.images[index].publish = image.publish == 1 ? 0 : 1;
-      } else {
-        let uri = `/api/contact/image/state/${image.id}`;
-        this.isLoading = true;
-        this.axios.get(uri).then(response => {
-          const index = this.contact.images.findIndex(x => x.id === image.id);
-          this.contact.images[index].publish = response.data;
-          this.isLoading = false;
-        });
-      }
-    },
-
-    // Save coords
-    saveImageCoords(image) {
-      if (image.id === null) {
-        const index = this.contact.images.findIndex(x => x.name === image.name);
-        this.contact.images[index].coords = image.coords;
-      } 
-      else {
-        let uri = `/api/contact/image/${image.id}`;
-        this.isLoading = true;
-        this.axios.put(uri, image).then(response => {
-          this.$notify({ type: "success", text: "Änderungen gespeichert!" });
-          this.isLoading = false;
-        });
-      }
-    },
-  },
-
-  computed: {
-    title: function() {
-      return this.$props.type == "edit" 
-        ? "Kontakt bearbeiten" 
-        : "Kontakt hinzufügen";
-    }
-  }
-};
+const tab = ref('data');
+const locale = ref('de');
+const tinyConfig = useTinyConfig();
 </script>

@@ -1,357 +1,107 @@
 <template>
-<div>
-  <loading-indicator v-if="isLoading"></loading-indicator>
-  <form @submit.prevent="submit" class="half-width" v-if="isFetched">
-    <header class="content-header">
-      <h1>{{title}}</h1>
-    </header>
-    <tabs :tabs="tabs" :errors="errors"></tabs>
-    <div v-show="tabs.data.active">
-      <language-tabs :languages="languageTabs"></language-tabs>
-      <div v-show="languageTabs.de.active">
-        <div :class="[errors.team_id ? 'has-error' : '', 'form-row']">
-          <label>Team*</label>
-          <div class="select-wrapper is-medium">
-            <select v-model="assistant.team_id" name="layout">
-              <option v-for="(team, index) in teams" :key="index" :value="team.id">{{ team.capitalizedSlug }}</option>
-            </select>
+  <div>
+    <LoadingIndicator v-if="isLoading" />
+    <form @submit.prevent="submit" class="half-width" v-if="isFetched">
+      <header class="content-header">
+        <h1>{{ title }}</h1>
+      </header>
+      <Tabs :tabs="formTabs" v-model="tab" />
+      <div v-show="tab === 'data'">
+        <LanguageTabs v-model="locale" />
+        <div v-for="lang in ['de', 'fr', 'en']" :key="lang" v-show="locale === lang">
+          <div v-if="lang === 'de'" :class="[errors.team_id ? 'has-error' : '', 'form-row']">
+            <label>Team*</label>
+            <div class="select-wrapper is-medium">
+              <select v-model="record.team_id" name="layout">
+                <option v-for="team in teams" :key="team.id" :value="team.id">{{ team.capitalizedSlug }}</option>
+              </select>
+            </div>
           </div>
-        </div> 
-        <div :class="[errors.description ? 'has-error' : '', 'form-row']">
-          <label>Beschreibung</label>
-          <tinymce-editor
-            :init="tinyConfig"
-            v-model="assistant.description.de"
-          ></tinymce-editor>
-        </div>
-        <div class="form-row">
-          <label>Assistenten</label>
-          <tinymce-editor
-            :init="tinyConfig"
-            v-model="assistant.assistants.de"
-          ></tinymce-editor>
+          <div :class="[lang === 'de' && errors.description ? 'has-error' : '', 'form-row']">
+            <label>Beschreibung</label>
+            <TinymceEditor :init="tinyConfig" v-model="record.description[lang]" />
+          </div>
+          <div class="form-row">
+            <label>Assistenten</label>
+            <TinymceEditor :init="tinyConfig" v-model="record.assistants[lang]" />
+          </div>
         </div>
       </div>
-      <div v-show="languageTabs.fr.active">
+      <div v-show="tab === 'image'">
         <div class="form-row">
-          <label>Beschreibung</label>
-          <tinymce-editor
-            :init="tinyConfig"
-            v-model="assistant.description.fr"
-          ></tinymce-editor>
+          <Uploader v-bind="imageUpload" @uploaded="images.store" />
         </div>
         <div class="form-row">
-          <label>Assistenten</label>
-          <tinymce-editor
-            :init="tinyConfig"
-            v-model="assistant.assistants.fr"
-          ></tinymce-editor>
-        </div>
-      </div>
-      <div v-show="languageTabs.en.active">
-        <div class="form-row">
-          <label>Beschreibung</label>
-          <tinymce-editor
-            :init="tinyConfig"
-            v-model="assistant.description.en"
-          ></tinymce-editor>
-        </div>
-        <div class="form-row">
-          <label>Assistenten</label>
-          <tinymce-editor
-            :init="tinyConfig"
-            v-model="assistant.assistants.en"
-          ></tinymce-editor>
+          <ImageManager
+            v-model:images="record.images"
+            endpoint="assistant"
+            devices
+            @toggle="images.toggle"
+            @destroy="images.destroy"
+            @save-coords="images.saveCoords"
+          />
         </div>
       </div>
-    </div>
-    <div v-show="tabs.image.active">
-      <div>
-        <div class="form-row">
-          <image-upload
-            :restrictions="'jpg, png | max. 8 MB'"
-            :maxFiles="99"
-            :maxFilesize="8"
-            :acceptedFiles="'.png,.jpg'"
-          ></image-upload>
-        </div>
-        <div class="form-row">
-          <image-edit 
-            :images="assistant.images"
-            :imagePreviewRoute="'crop'"
-            :aspectRatioW="3"
-            :aspectRatioH="2"
-          ></image-edit>
-        </div>
-      </div>
-    </div>
-    <div v-show="tabs.settings.active">
-      <div>
+      <div v-show="tab === 'settings'">
         <div class="form-row is-last">
-          <radio-button 
-            :label="'Publizieren?'"
-            v-model:publish="assistant.publish"
-            :model="assistant.publish"
-            :name="'publish'">
-          </radio-button>
+          <RadioButton label="Publizieren?" name="publish" v-model="record.publish" />
         </div>
       </div>
-    </div>
-    <footer class="module-footer">
-      <div>
-        <button type="submit" class="btn-primary">Speichern</button>
-        <router-link :to="{ name: 'teams' }" class="btn-secondary">
-          <span>Zurück</span>
-        </router-link>
-      </div>
-    </footer>
-  </form>
-</div>
+      <footer class="module-footer">
+        <div>
+          <button type="submit" class="btn-primary">Speichern</button>
+          <router-link :to="{ name: 'teams' }" class="btn-secondary">
+            <span>Zurück</span>
+          </router-link>
+        </div>
+      </footer>
+    </form>
+  </div>
 </template>
-<script>
+<script setup>
+import { ref } from 'vue';
+import LoadingIndicator from '@/components/ui/LoadingIndicator.vue';
+import Tabs from '@/components/ui/Tabs.vue';
+import LanguageTabs from '@/components/ui/LanguageTabs.vue';
+import RadioButton from '@/components/ui/RadioButton.vue';
+import TinymceEditor from '@/components/ui/TinymceEditor.js';
+import Uploader from '@/components/ui/Uploader.vue';
+import ImageManager from '@/components/images/ImageManager.vue';
+import { useResourceForm, formTabs, translations } from '@/composables/useResourceForm';
+import { useImages, imageUpload } from '@/composables/useImages';
+import { useTinyConfig } from '@/composables/useTinyConfig';
+import http from '@/lib/http';
 
-// Icons
-import { ArrowLeftIcon, PlusIcon } from 'lucide-vue-next';
+const props = defineProps({
+  type: { type: String, required: true },
+});
 
-// Mixins
-import ErrorHandling from "@/mixins/ErrorHandling";
+const teams = ref([]);
 
-// TinyMCE
-import tinyConfig from "@/config/tiny.js";
-import TinymceEditor from "@/components/ui/TinymceEditor.js";
+const { record, errors, isEdit, isLoading, isFetched, title, submit } = useResourceForm({
+  type: props.type,
+  endpoint: 'assistant',
+  model: () => ({
+    description: translations(),
+    assistants: translations(),
+    team_id: 1,
+    images: [],
+    publish: 1,
+  }),
+  redirect: { name: 'teams' },
+  titles: { create: 'Assistenten hinzufügen', edit: 'Assistenten bearbeiten' },
+  load: [() => http.get('/api/team').then(response => teams.value = response.data.data)],
+});
 
-// Components
-import RadioButton from "@/components/ui/RadioButton.vue";
-import LabelRequired from "@/components/ui/LabelRequired.vue";
-import Tabs from "@/components/ui/Tabs.vue";
-import LanguageTabs from "@/components/ui/LanguageTabs.vue";
+const images = useImages({
+  record, isEdit, isLoading,
+  endpoint: 'assistant',
+  foreignKey: 'assistant_id',
+  idKey: 'assistantImageId',
+  fields: () => ({ caption: null, device: 'desktop' }),
+});
 
-import ImageUpload from "@/components/images/Upload.vue";
-import ImageEdit from "@/views/assistant/images/Edit.vue";
-import ListActions from "@/components/ui/ListActions.vue";
-import draggable from "vuedraggable";
-
-// Tabs config
-import tabsConfig from "@/views/assistant/config/tabs.js";
-import languageTabsConfig from "@/config/languageTabs.js";
-
-export default {
-  components: {
-    ArrowLeftIcon,
-    PlusIcon,
-    TinymceEditor,
-    RadioButton,
-    LabelRequired,
-    ImageUpload,
-    ImageEdit,
-    Tabs,
-    LanguageTabs,
-    ListActions,
-    draggable
-  },
-
-  mixins: [ErrorHandling],
-
-  props: {
-    type: String
-  },
-
-  data() {
-    return {
-      
-      // Model
-      assistant: {
-        description: {
-          de: null,
-          fr: null,
-          en: null,
-        },
-        assistants: {
-          de: null,
-          fr: null,
-          en: null,
-        },
-        team_id: 1,
-        images: [],
-        publish: 1,
-      },
-
-      teams: null,
-
-      // Validation
-      errors: {
-        description: false,
-        team_id: false
-      },
-
-      // Loading states
-      isFetched: true,
-      isLoading: false,
-      isEdit: false,
-
-      // Tabs config
-      tabs: tabsConfig,
-      languageTabs: languageTabsConfig,
-
-      // TinyMCE
-      tinyConfig: tinyConfig,
-      tinyApiKey: 'vuaywur9klvlt3excnrd9xki1a5lj25v18b2j0d0nu5tbwro',
-    };
-  },
-
-  created() {
-    if (this.$props.type == "edit") {
-      this.isEdit = true;
-      this.isFetched = false;
-      this.isLoading = true;
-
-      // Get assistants
-      this.axios.get(`/api/assistant/${this.$route.params.id}`)
-        .then(response => {
-          this.assistant = response.data;
-
-          // Get teams
-          this.axios.get(`/api/team`)
-          .then(response => {
-            this.teams = response.data.data;
-            this.isFetched = true;
-            this.isLoading = false;
-          });
-      });
-    }
-    else {
-      this.isLoading = true;
-      this.isFetched = false;
-      let uri = `/api/team`;
-      this.axios.get(uri).then(response => {
-        this.teams = response.data.data;
-        this.isFetched = true;
-        this.isLoading = false;
-      });
-    }
-
-    // Get files for tinymce
-    let _this = this;
-    this.tinyConfig.link_list = function(success) {
-      _this.axios.get(`/api/files`).then(response => {
-        success(response.data);
-      });
-    }
-  },
-
-  methods: {
-
-    // Submit form
-    submit() {
-      if (this.$props.type == "edit") {
-        this.update();
-      }
-
-      if (this.$props.type == "create") {
-        this.store();
-      }
-    },
-
-    store() {
-      this.isLoading = true;
-      this.axios.post('/api/assistant', this.assistant).then(response => {
-        this.$router.push({ name: "teams" });
-        this.$notify({ type: "success", text: "Daten erfasst!" });
-        this.isLoading = false;
-      });
-    },
-
-    update() {
-      let uri = `/api/assistant/${this.$route.params.id}`;
-      this.isLoading = true;
-      this.axios.put(uri, this.assistant).then(response => {
-        this.$router.push({ name: "teams" });
-        this.$notify({ type: "success", text: "Änderungen gespeichert!" });
-        this.isLoading = false;
-      });
-    },
-
-    // Store uploaded image
-    storeImage(upload) {
-      let image = {
-        id: null,
-        name: upload.name,
-        caption: null,
-        coords_w: 0,
-        coords_h: 0,
-        coords_x: 0,
-        coords_y: 0,
-        orientation: upload.orientation,
-        device: 'desktop',
-        order: 0,
-        publish: 1,
-      }
-
-      if (this.$props.type == "edit") {
-        image.assistant_id = this.$route.params.id;
-        this.axios.post('/api/assistant/image', image).then(response => {
-          this.$notify({ type: "success", text: "Bild gespeichert!" });
-          image.id = response.data.assistantImageId;
-          this.assistant.images.push(image);
-        });
-      }
-      else {
-        this.assistant.images.push(image);
-      }
-    },
-
-    // Delete by name
-    destroyImage(image, event) {
-      if (confirm("Bitte löschen bestätigen!")) {
-        let uri = `/api/assistant/image/${image}`;
-        this.isLoading = true;
-        this.axios.delete(uri).then(response => {
-          const index = this.assistant.images.findIndex(x => x.name === image);
-          this.assistant.images.splice(index, 1);
-          this.isLoading = false;
-        });
-      }
-    },
-
-    // Toggle image status
-    toggleImage(image, event) {
-      if (image.id === null) {
-        const index = this.assistant.images.findIndex(x => x.name === image.name);
-        this.assistant.images[index].publish = image.publish == 1 ? 0 : 1;
-      } else {
-        let uri = `/api/assistant/image/state/${image.id}`;
-        this.isLoading = true;
-        this.axios.get(uri).then(response => {
-          const index = this.assistant.images.findIndex(x => x.id === image.id);
-          this.assistant.images[index].publish = response.data;
-          this.isLoading = false;
-        });
-      }
-    },
-
-    // Save coords
-    saveImageCoords(image) {
-      if (image.id === null) {
-        const index = this.assistant.images.findIndex(x => x.name === image.name);
-        this.assistant.images[index].coords = image.coords;
-      } 
-      else {
-        let uri = `/api/assistant/image/${image.id}`;
-        this.isLoading = true;
-        this.axios.put(uri, image).then(response => {
-          this.$notify({ type: "success", text: "Änderungen gespeichert!" });
-          this.isLoading = false;
-        });
-      }
-    },
-  },
-
-  computed: {
-    title: function() {
-      return this.$props.type == "edit" 
-        ? "Assistenten bearbeiten" 
-        : "Assistenten hinzufügen";
-    }
-  }
-};
+const tab = ref('data');
+const locale = ref('de');
+const tinyConfig = useTinyConfig();
 </script>

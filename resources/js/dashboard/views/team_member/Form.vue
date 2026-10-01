@@ -1,607 +1,228 @@
 <template>
-<div>
-  <loading-indicator v-if="isLoading"></loading-indicator>
-  <form @submit.prevent="submit" class="half-width" v-if="isFetched">
-    <header class="content-header">
-      <h1>{{title}}</h1>
-    </header>
-    <tabs :tabs="tabs" :errors="errors"></tabs>
-    <div v-show="tabs.data.active">
-      <language-tabs :languages="languageTabs"></language-tabs>
-      <div v-show="languageTabs.de.active">
-        <div :class="[errors.team_id ? 'has-error' : '', 'form-row']">
-          <label>Team*</label>
-          <div class="select-wrapper is-medium">
-            <select v-model="teamMember.team_id" name="layout">
-              <option v-for="(team, index) in teams" :key="index" :value="team.id">{{ team.capitalizedSlug }}</option>
-            </select>
+  <div>
+    <LoadingIndicator v-if="isLoading" />
+    <form @submit.prevent="submit" class="half-width" v-if="isFetched">
+      <header class="content-header">
+        <h1>{{ title }}</h1>
+      </header>
+      <Tabs :tabs="formTabs" v-model="tab" />
+      <div v-show="tab === 'data'">
+        <LanguageTabs v-model="locale" />
+        <div v-for="lang in ['de', 'fr', 'en']" :key="lang" v-show="locale === lang">
+          <template v-if="lang === 'de'">
+            <div :class="[errors.team_id ? 'has-error' : '', 'form-row']">
+              <label>Team*</label>
+              <div class="select-wrapper is-medium">
+                <select v-model="record.team_id" name="layout">
+                  <option v-for="team in teams" :key="team.id" :value="team.id">{{ team.capitalizedSlug }}</option>
+                </select>
+              </div>
+            </div>
+            <div :class="[errors.firstname ? 'has-error' : '', 'form-row']">
+              <label>Vorname*</label>
+              <input type="text" v-model="record.firstname">
+              <LabelRequired />
+            </div>
+            <div :class="[errors.name ? 'has-error' : '', 'form-row']">
+              <label>Name*</label>
+              <input type="text" v-model="record.name">
+              <LabelRequired />
+            </div>
+          </template>
+          <div class="form-row">
+            <label>Info</label>
+            <TinymceEditor :init="tinyConfig" v-model="record.credits[lang]" />
           </div>
-        </div>  
-        <div :class="[errors.firstname ? 'has-error' : '', 'form-row']">
-          <label>Vorname*</label>
-          <input type="text" v-model="teamMember.firstname">
-          <label-required />
-        </div>
-        <div :class="[errors.name ? 'has-error' : '', 'form-row']">
-          <label>Name*</label>
-          <input type="text" v-model="teamMember.name">
-          <label-required />
-        </div>
-        <div class="form-row">
-          <label>Info</label>
-          <tinymce-editor
-            :init="tinyConfig"
-            v-model="teamMember.credits.de"
-          ></tinymce-editor>
-        </div>
-        <div class="form-row">
-          <label>Beschreibung</label>
-          <tinymce-editor
-            :init="tinyConfig"
-            v-model="teamMember.description.de"
-          ></tinymce-editor>
-        </div>
-        <div class="form-row">
-          <label>SEO Beschreibung</label>
-          <textarea v-model="teamMember.meta_description.de"></textarea>
-        </div>
-        <div class="form-row">
-          <label>Tätigkeitsgebiete</label>
-          <tinymce-editor
-            :init="tinyConfig"
-            v-model="teamMember.area.de"
-          ></tinymce-editor>
-        </div>
-        <div class="form-row">
-          <label>Sprachen</label>
-          <tinymce-editor
-            :init="tinyConfig"
-            v-model="teamMember.languages.de"
-          ></tinymce-editor>
-        </div>
-        <div class="form-row">
-          <label>Werdegang</label>
-          <tinymce-editor
-            :init="tinyConfig"
-            v-model="teamMember.biography.de"
-          ></tinymce-editor>
-        </div>
-        <div class="form-row">
-          <label>Mitgliedschaften</label>
-          <tinymce-editor
-            :init="tinyConfig"
-            v-model="teamMember.membership.de"
-          ></tinymce-editor>
-        </div>
-        <div class="form-row">
-          <label>Publikationen (Liste)</label>
-          <tinymce-editor
-            :init="tinyConfig"
-            v-model="teamMember.publication.de"
-          ></tinymce-editor>
-        </div>
-        <div class="form-row" v-if="isEdit">
-          <header class="content-header" style="margin-bottom: 5px">
-            <label>Publikationen (Artikel)</label>
-            <router-link :to="{ name: 'publication-create', params: { memberId: teamMember.id }}" class="feather-icon feather-icon--prepend">
-              <plus-icon size="16"></plus-icon>
-              <span>Hinzufügen</span>
-            </router-link>
-          </header>
-          <div class="listing" v-if="teamMember.publications.length">
-            <draggable
-              item-key="id" 
-              :disabled="false"
-              v-model="teamMember.publications" 
-              @end="order()"
-              ghost-class="draggable-ghost"
-              draggable=".listing__item">
-              <template #item="{ element: p }">
-                <div
-                  :class="[p.publish == 0 ? 'is-disabled' : '', 'listing__item is-draggable']"
+          <div class="form-row">
+            <label>Beschreibung</label>
+            <TinymceEditor :init="tinyConfig" v-model="record.description[lang]" />
+          </div>
+          <div class="form-row">
+            <label>SEO Beschreibung</label>
+            <textarea v-model="record.meta_description[lang]"></textarea>
+          </div>
+          <div class="form-row" v-for="field in textFields" :key="field.key">
+            <label>{{ field.label }}</label>
+            <TinymceEditor :init="tinyConfig" v-model="record[field.key][lang]" />
+          </div>
+          <template v-if="lang === 'de'">
+            <div class="form-row" v-if="isEdit">
+              <header class="content-header" style="margin-bottom: 5px">
+                <label>Publikationen (Artikel)</label>
+                <router-link :to="{ name: 'publication-create', params: { memberId: record.id } }" class="feather-icon feather-icon--prepend">
+                  <PlusIcon size="16" />
+                  <span>Hinzufügen</span>
+                </router-link>
+              </header>
+              <div class="listing" v-if="record.publications.length">
+                <draggable
+                  v-model="record.publications"
+                  item-key="id"
+                  ghost-class="draggable-ghost"
+                  draggable=".listing__item"
+                  @end="orderPublications(record.publications)"
                 >
-                  <div class="listing__item-body">
-                    {{ p.title.de }}
-                  </div>
-                  <list-actions 
-                    :id="p.id" 
-                    :record="p"
-                    :isDraggable="true"
-                    :routes="{edit: 'publication-edit'}">
-                  </list-actions>
-                </div>
-              </template>
-            </draggable>
-          </div>
-          <div v-if="!teamMember.publications.length">
-            <p class="no-records">Es sind noch keine Publikationen vorhanden...</p>
-          </div>
-        </div>
-        <div class="form-row" v-else>
-          <label>Publikationen</label>
-          <p>Publikationen können erst nach dem Speichern hinzugefügt werden.</p>
-        </div>
-      </div>
-      <div v-show="languageTabs.fr.active">
-        <div>
-          <div class="form-row">
-            <label>Info</label>
-            <tinymce-editor
-                :init="tinyConfig"
-              v-model="teamMember.credits.fr"
-            ></tinymce-editor>
-          </div>
-          <div class="form-row">
-            <label>SEO Beschreibung</label>
-            <textarea v-model="teamMember.meta_description.fr"></textarea>
-          </div>
-          <div class="form-row">
-            <label>Beschreibung</label>
-            <tinymce-editor
-                :init="tinyConfig"
-              v-model="teamMember.description.fr"
-            ></tinymce-editor>
-          </div>
-          <div class="form-row">
-            <label>Tätigkeitsgebiete</label>
-            <tinymce-editor
-                :init="tinyConfig"
-              v-model="teamMember.area.fr"
-            ></tinymce-editor>
-          </div>
-          <div class="form-row">
-            <label>Sprachen</label>
-            <tinymce-editor
-                :init="tinyConfig"
-              v-model="teamMember.languages.fr"
-            ></tinymce-editor>
-          </div>
-          <div class="form-row">
-            <label>Werdegang</label>
-            <tinymce-editor
-                :init="tinyConfig"
-              v-model="teamMember.biography.fr"
-            ></tinymce-editor>
-          </div>
-          <div class="form-row">
-            <label>Mitgliedschaften</label>
-            <tinymce-editor
-                :init="tinyConfig"
-              v-model="teamMember.membership.fr"
-            ></tinymce-editor>
-          </div>
-          <div class="form-row">
-            <label>Publikationen (Liste)</label>
-            <tinymce-editor
-                :init="tinyConfig"
-              v-model="teamMember.publication.fr"
-            ></tinymce-editor>
-          </div>
+                  <template #item="{ element: publication }">
+                    <div :class="[publication.publish == 0 ? 'is-disabled' : '', 'listing__item is-draggable']">
+                      <div class="listing__item-body">
+                        {{ publication.title.de }}
+                      </div>
+                      <ListActions
+                        :record="publication"
+                        edit-route="publication-edit"
+                        @toggle="togglePublication"
+                        @destroy="destroyPublication"
+                      />
+                    </div>
+                  </template>
+                </draggable>
+              </div>
+              <div v-else>
+                <p class="no-records">Es sind noch keine Publikationen vorhanden...</p>
+              </div>
+            </div>
+            <div class="form-row" v-else>
+              <label>Publikationen</label>
+              <p>Publikationen können erst nach dem Speichern hinzugefügt werden.</p>
+            </div>
+          </template>
         </div>
       </div>
-      <div v-show="languageTabs.en.active">
-        <div>
-          <div class="form-row">
-            <label>Info</label>
-            <tinymce-editor
-                :init="tinyConfig"
-              v-model="teamMember.credits.en"
-            ></tinymce-editor>
-          </div>
-          <div class="form-row">
-            <label>Beschreibung</label>
-            <tinymce-editor
-                :init="tinyConfig"
-              v-model="teamMember.description.en"
-            ></tinymce-editor>
-          </div>
-          <div class="form-row">
-            <label>SEO Beschreibung</label>
-            <textarea v-model="teamMember.meta_description.en"></textarea>
-          </div>
-          <div class="form-row">
-            <label>Tätigkeitsgebiete</label>
-            <tinymce-editor
-                :init="tinyConfig"
-              v-model="teamMember.area.en"
-            ></tinymce-editor>
-          </div>
-          <div class="form-row">
-            <label>Sprachen</label>
-            <tinymce-editor
-                :init="tinyConfig"
-              v-model="teamMember.languages.en"
-            ></tinymce-editor>
-          </div>
-          <div class="form-row">
-            <label>Werdegang</label>
-            <tinymce-editor
-                :init="tinyConfig"
-              v-model="teamMember.biography.en"
-            ></tinymce-editor>
-          </div>
-          <div class="form-row">
-            <label>Mitgliedschaften</label>
-            <tinymce-editor
-                :init="tinyConfig"
-              v-model="teamMember.membership.en"
-            ></tinymce-editor>
-          </div>
-          <div class="form-row">
-            <label>Publikationen (Liste)</label>
-            <tinymce-editor
-                :init="tinyConfig"
-              v-model="teamMember.publication.en"
-            ></tinymce-editor>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div v-show="tabs.image.active">
-      <div>
+      <div v-show="tab === 'image'">
         <div class="form-row">
-          <image-upload
-            :restrictions="'jpg, png | max. 8 MB'"
-            :maxFiles="99"
-            :maxFilesize="8"
-            :acceptedFiles="'.png,.jpg'"
-          ></image-upload>
+          <Uploader v-bind="imageUpload" @uploaded="images.store" />
         </div>
         <div class="form-row">
-          <image-edit 
-            :images="teamMember.images"
-            :imagePreviewRoute="'crop'"
-            :aspectRatioW="3"
-            :aspectRatioH="2"
-          ></image-edit>
+          <ImageManager
+            v-model:images="record.images"
+            endpoint="team/member"
+            devices
+            @toggle="images.toggle"
+            @destroy="images.destroy"
+            @save-coords="images.saveCoords"
+          />
         </div>
       </div>
-    </div>
-    <div v-show="tabs.settings.active">
-      <div>
+      <div v-show="tab === 'settings'">
         <div class="form-row is-last">
-          <radio-button 
-            :label="'Publizieren?'"
-            v-model:publish="teamMember.publish"
-            :model="teamMember.publish"
-            :name="'publish'">
-          </radio-button>
+          <RadioButton label="Publizieren?" name="publish" v-model="record.publish" />
         </div>
       </div>
-    </div>
-    <footer class="module-footer">
-      <div>
-        <button type="submit" class="btn-primary">Speichern</button>
-        <router-link :to="{ name: 'teams' }" class="btn-secondary">
-          <span>Zurück</span>
-        </router-link>
-      </div>
-    </footer>
-  </form>
-</div>
+      <footer class="module-footer">
+        <div>
+          <button type="submit" class="btn-primary">Speichern</button>
+          <router-link :to="{ name: 'teams' }" class="btn-secondary">
+            <span>Zurück</span>
+          </router-link>
+        </div>
+      </footer>
+    </form>
+  </div>
 </template>
-<script>
+<script setup>
+import { ref } from 'vue';
+import draggable from 'vuedraggable';
+import { notify } from '@kyvg/vue3-notification';
+import { PlusIcon } from 'lucide-vue-next';
+import LoadingIndicator from '@/components/ui/LoadingIndicator.vue';
+import Tabs from '@/components/ui/Tabs.vue';
+import LanguageTabs from '@/components/ui/LanguageTabs.vue';
+import LabelRequired from '@/components/ui/LabelRequired.vue';
+import RadioButton from '@/components/ui/RadioButton.vue';
+import ListActions from '@/components/ui/ListActions.vue';
+import TinymceEditor from '@/components/ui/TinymceEditor.js';
+import Uploader from '@/components/ui/Uploader.vue';
+import ImageManager from '@/components/images/ImageManager.vue';
+import { useResourceForm, formTabs, translations } from '@/composables/useResourceForm';
+import { useImages, imageUpload } from '@/composables/useImages';
+import { useOrder } from '@/composables/useOrder';
+import { useTinyConfig } from '@/composables/useTinyConfig';
+import http from '@/lib/http';
+import { confirmDelete } from '@/lib/utils';
 
-// Icons
-import { ArrowLeftIcon, PlusIcon } from 'lucide-vue-next';
+const props = defineProps({
+  type: { type: String, required: true },
+});
 
-// Mixins
-import ErrorHandling from "@/mixins/ErrorHandling";
+const textFields = [
+  { key: 'area', label: 'Tätigkeitsgebiete' },
+  { key: 'languages', label: 'Sprachen' },
+  { key: 'biography', label: 'Werdegang' },
+  { key: 'membership', label: 'Mitgliedschaften' },
+  { key: 'publication', label: 'Publikationen (Liste)' },
+];
 
-// TinyMCE
-import tinyConfig from "@/config/tiny.js";
-import TinymceEditor from "@/components/ui/TinymceEditor.js";
+const teams = ref([]);
 
-// Components
-import RadioButton from "@/components/ui/RadioButton.vue";
-import LabelRequired from "@/components/ui/LabelRequired.vue";
-import Tabs from "@/components/ui/Tabs.vue";
-import LanguageTabs from "@/components/ui/LanguageTabs.vue";
+const { record, errors, isEdit, isLoading, isFetched, title, submit } = useResourceForm({
+  type: props.type,
+  endpoint: 'team/member',
+  model: () => ({
+    firstname: null,
+    name: null,
+    credits: translations(),
+    description: translations(),
+    meta_description: translations(),
+    area: translations(),
+    languages: translations(),
+    biography: translations(),
+    membership: translations(),
+    publication: translations(),
+    team_id: 1,
+    images: [],
+    publications: [],
+    publish: 1,
+  }),
+  redirect: { name: 'teams' },
+  titles: { create: 'Mitarbeiter hinzufügen', edit: 'Mitarbeiter bearbeiten' },
+  load: [() => http.get('/api/team').then(response => teams.value = response.data.data)],
+});
 
-import ImageUpload from "@/components/images/Upload.vue";
-import ImageEdit from "@/views/team_member/images/Edit.vue";
-import ListActions from "@/components/ui/ListActions.vue";
-import draggable from "vuedraggable";
+const images = useImages({
+  record, isEdit, isLoading,
+  endpoint: 'team/member',
+  foreignKey: 'team_member_id',
+  idKey: 'teamMemberImageId',
+  fields: () => ({ caption: null, device: 'desktop' }),
+});
 
-// Tabs config
-import tabsConfig from "@/views/team_member/config/tabs.js";
-import languageTabsConfig from "@/config/languageTabs.js";
+// Publications (edit only)
+const orderPublications = useOrder({ url: '/api/publication/order', key: 'publications' });
 
-export default {
-  components: {
-    ArrowLeftIcon,
-    PlusIcon,
-    TinymceEditor,
-    RadioButton,
-    LabelRequired,
-    ImageUpload,
-    ImageEdit,
-    Tabs,
-    LanguageTabs,
-    ListActions,
-    draggable
-  },
-
-  mixins: [ErrorHandling],
-
-  props: {
-    type: String
-  },
-
-  data() {
-    return {
-      
-      // Model
-      teamMember: {
-        firstname: null,
-        name: null,
-        credits: {
-          de: null,
-          fr: null,
-          en: null,
-        },
-        description: {
-          de: null,
-          fr: null,
-          en: null,
-        },
-        meta_description: {
-          de: null,
-          fr: null,
-          en: null,
-        },
-        area: {
-          de: null,
-          fr: null,
-          en: null,
-        },
-        languages: {
-          de: null,
-          fr: null,
-          en: null,
-        },
-        biography: {
-          de: null,
-          fr: null,
-          en: null,
-        },
-        membership: {
-          de: null,
-          fr: null,
-          en: null,
-        },
-        publication: {
-          de: null,
-          fr: null,
-          en: null,
-        },
-        team_id: 1,
-        images: [],
-        publications: [],
-        publish: 1,
-      },
-
-      teams: null,
-
-      // Validation
-      errors: {
-        name: false,
-        firstname: false,
-        team_id: false
-      },
-
-      // Loading states
-      isFetched: true,
-      isLoading: false,
-      isEdit: false,
-
-      // Tabs config
-      tabs: tabsConfig,
-      languageTabs: languageTabsConfig,
-
-      // TinyMCE
-      tinyConfig: tinyConfig,
-      tinyApiKey: 'vuaywur9klvlt3excnrd9xki1a5lj25v18b2j0d0nu5tbwro',
-    };
-  },
-
-  created() {
-    if (this.$props.type == "edit") {
-      this.isEdit = true;
-      this.isFetched = false;
-      this.isLoading = true;
-
-      // Get team members
-      this.axios.get(`/api/team/member/${this.$route.params.id}`)
-        .then(response => {
-          this.teamMember = response.data;
-
-          // if meta_description is null, set meta_description.de to null
-          if (this.teamMember.meta_description == undefined) {
-            this.teamMember.meta_description = {
-              de: null,
-              fr: null,
-              en: null,
-            };
-          }
-
-          // Get teams
-          this.axios.get(`/api/team`)
-          .then(response => {
-            this.teams = response.data.data;
-            this.isFetched = true;
-            this.isLoading = false;
-          });
-      });
-    }
-    else {
-      this.isFetched = false;
-      let uri = `/api/team`;
-      this.axios.get(uri).then(response => {
-        this.teams = response.data.data;
-        this.isFetched = true;
-      });
-    }
-
-    // Get files for tinymce
-    let _this = this;
-    this.tinyConfig.link_list = function(success) {
-      _this.axios.get(`/api/files`).then(response => {
-        success(response.data);
-      });
-    }
-  },
-
-  methods: {
-
-    // Submit form
-    submit() {
-      if (this.$props.type == "edit") {
-        this.update();
-      }
-
-      if (this.$props.type == "create") {
-        this.store();
-      }
-    },
-
-    store() {
-      this.isLoading = true;
-      this.axios.post('/api/team/member', this.teamMember).then(response => {
-        this.$router.push({ name: "teams" });
-        this.$notify({ type: "success", text: "Daten erfasst!" });
-        this.isLoading = false;
-      });
-    },
-
-    update() {
-      let uri = `/api/team/member/${this.$route.params.id}`;
-      this.isLoading = true;
-      this.axios.put(uri, this.teamMember).then(response => {
-        this.$router.push({ name: "teams" });
-        this.$notify({ type: "success", text: "Änderungen gespeichert!" });
-        this.isLoading = false;
-      });
-    },
-
-    toggle(id,event) {
-      let uri = `/api/publication/state/${id}`;
-      this.isLoading = true;
-      this.axios.get(uri).then(response => {
-        const index = this.teamMember.publications.findIndex(x => x.id === id);
-        this.teamMember.publications[index].publish = response.data;
-        this.$notify({ type: "success", text: "Status geändert" });
-        this.isLoading = false;
-      });
-    },
-
-    destroy(id, event) {
-      if (confirm("Bitte löschen bestätigen!")) {
-        let uri = `/api/publication/${id}`;
-        this.isLoading = true;
-        this.axios.delete(uri).then(response => {
-          const index = this.teamMember.publications.findIndex(x => x.id === id);
-          this.teamMember.publications.splice(index, 1);
-          this.isLoading = false;
-        });
-      }
-    },
-
-    order() {
-      let publications = this.teamMember.publications.map(function(p, index) {
-        p.order = index;
-        return p;
-      });
-      if (this.debounce) return;
-      this.debounce = setTimeout(function() {
-        this.debounce = false 
-        this.axios.post(`/api/publication/order`, {publications: publications}).then((response) => {
-          this.$notify({type: 'success', text: 'Reihenfolge angepasst'});
-        });
-      }.bind(this, publications), 500);
-    },
-
-    // Store uploaded image
-    storeImage(upload) {
-      let image = {
-        id: null,
-        name: upload.name,
-        caption: null,
-        coords_w: 0,
-        coords_h: 0,
-        coords_x: 0,
-        coords_y: 0,
-        orientation: upload.orientation,
-        device: 'desktop',
-        order: 0,
-        publish: 1,
-      }
-
-      if (this.$props.type == "edit") {
-        image.team_member_id = this.$route.params.id;
-        this.axios.post('/api/team/member/image', image).then(response => {
-          this.$notify({ type: "success", text: "Bild gespeichert!" });
-          image.id = response.data.teamMemberImageId;
-          this.teamMember.images.push(image);
-        });
-      }
-      else {
-        this.teamMember.images.push(image);
-      }
-    },
-
-    // Delete by name
-    destroyImage(image, event) {
-      if (confirm("Bitte löschen bestätigen!")) {
-        let uri = `/api/team/member/image/${image}`;
-        this.isLoading = true;
-        this.axios.delete(uri).then(response => {
-          const index = this.teamMember.images.findIndex(x => x.name === image);
-          this.teamMember.images.splice(index, 1);
-          this.isLoading = false;
-        });
-      }
-    },
-
-    // Toggle image status
-    toggleImage(image, event) {
-      if (image.id === null) {
-        const index = this.teamMember.images.findIndex(x => x.name === image.name);
-        this.teamMember.images[index].publish = image.publish == 1 ? 0 : 1;
-      } else {
-        let uri = `/api/team/member/image/state/${image.id}`;
-        this.isLoading = true;
-        this.axios.get(uri).then(response => {
-          const index = this.teamMember.images.findIndex(x => x.id === image.id);
-          this.teamMember.images[index].publish = response.data;
-          this.isLoading = false;
-        });
-      }
-    },
-
-    // Save coords
-    saveImageCoords(image) {
-      if (image.id === null) {
-        const index = this.teamMember.images.findIndex(x => x.name === image.name);
-        this.teamMember.images[index].coords = image.coords;
-      } 
-      else {
-        let uri = `/api/team/member/image/${image.id}`;
-        this.isLoading = true;
-        this.axios.put(uri, image).then(response => {
-          this.$notify({ type: "success", text: "Änderungen gespeichert!" });
-          this.isLoading = false;
-        });
-      }
-    },
-  },
-
-  computed: {
-    title: function() {
-      return this.$props.type == "edit" 
-        ? "Mitarbeiter bearbeiten" 
-        : "Mitarbeiter hinzufügen";
-    }
+async function togglePublication(id) {
+  isLoading.value = true;
+  try {
+    const { data } = await http.get(`/api/publication/state/${id}`);
+    record.value.publications.find(p => p.id === id).publish = data;
+    notify({ type: 'success', text: 'Status geändert' });
   }
-};
+  catch {
+    // Notified by the http error handler
+  }
+  finally {
+    isLoading.value = false;
+  }
+}
+
+async function destroyPublication(id) {
+  if (!confirmDelete()) {
+    return;
+  }
+  isLoading.value = true;
+  try {
+    await http.delete(`/api/publication/${id}`);
+    const publications = record.value.publications;
+    publications.splice(publications.findIndex(p => p.id === id), 1);
+  }
+  catch {
+    // Notified by the http error handler
+  }
+  finally {
+    isLoading.value = false;
+  }
+}
+
+const tab = ref('data');
+const locale = ref('de');
+const tinyConfig = useTinyConfig();
 </script>

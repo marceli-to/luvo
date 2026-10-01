@@ -1,25 +1,15 @@
 <template>
-  <div :class="'loading-indicator ' + classNames">
-    <loader-icon :size="iconSize" class="loading-indicator__icon"></loader-icon>
+  <div :class="['loading-indicator', classNames]">
+    <LoaderIcon :size="iconSize" class="loading-indicator__icon" />
   </div>
 </template>
-<script>
+<script setup>
 import { LoaderIcon } from 'lucide-vue-next';
-export default {
-  components: {
-    LoaderIcon
-  },
-  props: {
-    classNames: {
-      type: String,
-      default: null,
-    },
-    iconSize: {
-      type: String,
-      default: '36',
-    }
-  }
-}
+
+defineProps({
+  classNames: { type: String, default: null },
+  iconSize: { type: String, default: '36' },
+});
 </script>
 <style>
 .loading-indicator {

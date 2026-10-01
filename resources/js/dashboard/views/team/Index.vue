@@ -1,265 +1,118 @@
 <template>
-<div>
-  <loading-indicator v-if="isLoading"></loading-indicator>
-  <div :class="isFetched ? 'is-loaded' : 'is-loading'">
-    <header class="content-header">
-      <h1>Teams</h1>
-      <div v-if="teams.length < 2">
-        <router-link :to="{ name: 'team-create' }" class="feather-icon feather-icon--prepend">
-          <plus-icon size="16"></plus-icon>
+  <div>
+    <LoadingIndicator v-if="isLoading" />
+    <div :class="isFetched ? 'is-loaded' : 'is-loading'">
+      <header class="content-header">
+        <h1>Teams</h1>
+        <div v-if="teams.items.length < 2">
+          <router-link :to="{ name: 'team-create' }" class="feather-icon feather-icon--prepend">
+            <PlusIcon size="16" />
+            <span>Hinzufügen</span>
+          </router-link>
+        </div>
+      </header>
+      <div class="listing" v-if="teams.items.length">
+        <div
+          v-for="team in teams.items"
+          :key="team.id"
+          :class="[team.publish == 0 ? 'is-disabled' : '', 'listing__item']"
+        >
+          <div class="listing__item-body">
+            {{ team.title.de }} <Separator /> <span v-if="team.slug">Team {{ capitalizeFirst(team.slug) }}</span>
+          </div>
+          <ListActions :record="team" edit-route="team-edit" @toggle="teams.toggle" @destroy="teams.destroy" />
+        </div>
+      </div>
+      <div v-else>
+        <p class="no-records">Es sind noch keine Inhalte vorhanden...</p>
+      </div>
+
+      <header class="content-header sb-lg">
+        <h1>Mitarbeiter</h1>
+        <router-link :to="{ name: 'team-member-create' }" class="feather-icon feather-icon--prepend">
+          <PlusIcon size="16" />
           <span>Hinzufügen</span>
         </router-link>
-      </div>
-    </header>
-    <div class="listing" v-if="teams.length">
-      <div
-        :class="[t.publish == 0 ? 'is-disabled' : '', 'listing__item']"
-        v-for="t in teams"
-        :key="t.id"
-      >
-        <div class="listing__item-body">
-          {{ t.title.de }} <separator /> <span v-if="t.slug">Team {{ $filters.capitalizeFirst(t.slug) }}</span>
-        </div>
-        <list-actions 
-          :id="t.id" 
-          :record="t"
-          :isDraggable="false"
-          :model="'team'"
-          :routes="{edit: 'team-edit'}">
-        </list-actions>
-      </div>
-    </div>
-    <div v-else>
-      <p class="no-records">Es sind noch keine Inhalte vorhanden...</p>
-    </div>
-    <header class="content-header sb-lg">
-      <h1>Mitarbeiter</h1>
-      <router-link :to="{ name: 'team-member-create' }" class="feather-icon feather-icon--prepend">
-        <plus-icon size="16"></plus-icon>
-        <span>Hinzufügen</span>
-      </router-link>
-    </header>
-    <div v-if="teamMembers.length">
-      <div v-for="(team, index) in teamMembersGrouped" :key="index">
-        <div class="listing is-grouped">
-          <draggable
-            item-key="id" 
-            :disabled="false"
-            v-model="teamMembersGrouped[index]" 
-            @end="order(index)"
-            ghost-class="draggable-ghost"
-            draggable=".listing__item">
-            <template #item="{ element: tm }">
-              <div
-                :class="[tm.publish == 0 ? 'is-disabled' : '', 'listing__item is-draggable']"
-              >
-                <div class="listing__item-body">
-                  {{ tm.firstname }} {{ tm.name}} <separator /> <span v-if="tm.team.slug">Team {{ $filters.capitalizeFirst(tm.team.slug) }}</span>
+      </header>
+      <div v-if="members.items.length">
+        <div v-for="(group, teamId) in memberGroups" :key="teamId">
+          <div class="listing is-grouped">
+            <draggable
+              v-model="memberGroups[teamId]"
+              item-key="id"
+              ghost-class="draggable-ghost"
+              draggable=".listing__item"
+              @end="orderMembers(memberGroups[teamId])"
+            >
+              <template #item="{ element: member }">
+                <div :class="[member.publish == 0 ? 'is-disabled' : '', 'listing__item is-draggable']">
+                  <div class="listing__item-body">
+                    {{ member.firstname }} {{ member.name }} <Separator /> <span v-if="member.team.slug">Team {{ capitalizeFirst(member.team.slug) }}</span>
+                  </div>
+                  <ListActions :record="member" edit-route="team-member-edit" @toggle="members.toggle" @destroy="members.destroy" />
                 </div>
-                <list-actions 
-                  :id="tm.id" 
-                  :record="tm"
-                  :isDraggable="true"
-                  :model="'team_member'"
-                  :routes="{edit: 'team-member-edit'}">
-                </list-actions>
-              </div>
-            </template>
-          </draggable>
+              </template>
+            </draggable>
+          </div>
         </div>
       </div>
-    </div>
-    <div v-else>
-      <p class="no-records">Es sind noch keine Inhalte vorhanden...</p>
-    </div>
-    <header class="content-header sb-lg">
-      <h1>Assistenz</h1>
-      <div v-if="assistants.length < 2">
-        <router-link :to="{ name: 'assistant-create' }" class="feather-icon feather-icon--prepend">
-          <plus-icon size="16"></plus-icon>
-          <span>Hinzufügen</span>
-        </router-link>
+      <div v-else>
+        <p class="no-records">Es sind noch keine Inhalte vorhanden...</p>
       </div>
-    </header>
-    <div class="listing" v-if="assistants.length">
-      <div
-        :class="[a.publish == 0 ? 'is-disabled' : '', 'listing__item']"
-        v-for="a in assistants"
-        :key="a.id"
-      >
-        <div class="listing__item-body">
-          <span v-if="a.team.slug">Team {{ $filters.capitalizeFirst(a.team.slug) }}</span>
+
+      <header class="content-header sb-lg">
+        <h1>Assistenz</h1>
+        <div v-if="assistants.items.length < 2">
+          <router-link :to="{ name: 'assistant-create' }" class="feather-icon feather-icon--prepend">
+            <PlusIcon size="16" />
+            <span>Hinzufügen</span>
+          </router-link>
         </div>
-        <list-actions 
-          :id="a.id" 
-          :record="a"
-          :isDraggable="false"
-          :model="'assistant'"
-          :routes="{edit: 'assistant-edit'}">
-        </list-actions>
+      </header>
+      <div class="listing" v-if="assistants.items.length">
+        <div
+          v-for="assistant in assistants.items"
+          :key="assistant.id"
+          :class="[assistant.publish == 0 ? 'is-disabled' : '', 'listing__item']"
+        >
+          <div class="listing__item-body">
+            <span v-if="assistant.team.slug">Team {{ capitalizeFirst(assistant.team.slug) }}</span>
+          </div>
+          <ListActions :record="assistant" edit-route="assistant-edit" @toggle="assistants.toggle" @destroy="assistants.destroy" />
+        </div>
       </div>
-    </div>
-    <div v-else>
-      <p class="no-records">Es sind noch keine Inhalte vorhanden...</p>
+      <div v-else>
+        <p class="no-records">Es sind noch keine Inhalte vorhanden...</p>
+      </div>
     </div>
   </div>
-</div>
 </template>
-<script>
-
-// Icons
+<script setup>
+import { ref, reactive, computed } from 'vue';
+import draggable from 'vuedraggable';
 import { PlusIcon } from 'lucide-vue-next';
-import { groupBy } from 'lodash-es';
+import LoadingIndicator from '@/components/ui/LoadingIndicator.vue';
+import ListActions from '@/components/ui/ListActions.vue';
+import Separator from '@/components/ui/Separator.vue';
+import { useListing } from '@/composables/useListing';
+import { useOrder } from '@/composables/useOrder';
+import { capitalizeFirst, groupBy } from '@/lib/utils';
 
-// Components
-import ListActions from "@/components/ui/ListActions.vue";
-import draggable from "vuedraggable";
+const isLoading = ref(false);
 
-// Mixins
-import ErrorHandling from "@/mixins/ErrorHandling";
-import Helpers from "@/mixins/Helpers";
+const teams = reactive(useListing({ list: '/api/team', resource: 'team', isLoading }));
 
-export default {
+// Members are ordered within their team
+const memberGroups = ref({});
+const members = reactive(useListing({
+  list: '/api/team/members',
+  resource: 'team/member',
+  isLoading,
+  loaded: items => memberGroups.value = groupBy(items, 'team_id'),
+}));
+const orderMembers = useOrder({ url: '/api/team/member/order', key: 'members', saved: members.fetch });
 
-  components: {
-    ListActions,
-    PlusIcon,
-    draggable
-  },
+const assistants = reactive(useListing({ list: '/api/assistants', resource: 'assistant', isLoading }));
 
-  mixins: [ErrorHandling, Helpers],
-
-  data() {
-    return {
-      isLoading: false,
-      isFetched: false,
-      teams: [],
-      teamMembers: [],
-      teamMembersGrouped: [],
-      assistants: [],
-    };
-  },
-
-  created() {
-    this.fetch();
-  },
-
-  methods: {
-
-    fetch() {
-
-      // Get teams
-      this.isLoading = true;
-      this.axios.get(`/api/team`)
-        .then(response => {
-          this.teams = response.data.data;
-
-          // Get team members
-          this.axios.get(`/api/team/members`)
-          .then(response => {
-            this.teamMembers = response.data.data;
-            this.teamMembersGrouped = groupBy(this.teamMembers, "team_id");
-          });
-
-          // Get assistants
-          this.axios.get(`/api/assistants`)
-          .then(response => {
-            this.assistants = response.data.data;
-            this.isFetched = true;
-            this.isLoading = false;
-          });
-      });
-    },
-
-    toggle(id,event,model) {
-
-      console.log(model);
-
-      if (model) {
-        if (model == 'team') {
-          let uri = `/api/team/state/${id}`;
-          this.isLoading = true;
-          this.axios.get(uri).then(response => {
-            const index = this.teams.findIndex(x => x.id === id);
-            this.teams[index].publish = response.data;
-            this.$notify({ type: "success", text: "Status geändert" });
-            this.isLoading = false;
-          });
-        }
-        if (model == 'team_member') {
-          let uri = `/api/team/member/state/${id}`;
-          this.isLoading = true;
-          this.axios.get(uri).then(response => {
-            const index = this.teamMembers.findIndex(x => x.id === id);
-            this.teamMembers[index].publish = response.data;
-            this.$notify({ type: "success", text: "Status geändert" });
-            this.isLoading = false;
-          });
-        }
-        if (model == 'assistant') {
-          let uri = `/api/assistant/state/${id}`;
-          this.isLoading = true;
-          this.axios.get(uri).then(response => {
-            const index = this.assistants.findIndex(x => x.id === id);
-            this.assistants[index].publish = response.data;
-            this.$notify({ type: "success", text: "Status geändert" });
-            this.isLoading = false;
-          });
-        }
-      }
-    },
-
-    destroy(id, event, model) {
-      if (confirm("Bitte löschen bestätigen!")) {
-
-        if (model) {
-          if (model == 'team') {
-            let uri = `/api/team/${id}`;
-            this.isLoading = true;
-            this.axios.delete(uri).then(response => {
-              this.fetch();
-              this.isLoading = false;
-            });
-          }
-          if (model == 'team_member') {
-            let uri = `/api/team/member/${id}`;
-            this.isLoading = true;
-            this.axios.delete(uri).then(response => {
-              this.fetch();
-              this.isLoading = false;
-            });
-          }
-          if (model == 'assistant') {
-            let uri = `/api/assistant/${id}`;
-            this.isLoading = true;
-            this.axios.delete(uri).then(response => {
-              this.fetch();
-              this.isLoading = false;
-            });
-          }
-        }
-      }
-    },
-
-    order(groupIndex) {
-      let members = this.teamMembersGrouped[groupIndex].map(function(member, index) {
-        member.order = index;
-        return member;
-      });
-
-      if (this.debounce) return;
-      this.debounce = setTimeout(
-        function(members) {
-          this.debounce = false;
-          let uri = `/api/team/member/order`;
-          this.axios.post(uri, { members: members }).then(response => {
-            this.fetch();
-            this.$notify({ type: "success", text: "Reihenfolge angepasst" });
-          });
-        }.bind(this, members),
-        500
-      );
-    }
-  }
-}
+const isFetched = computed(() => teams.isFetched && assistants.isFetched);
 </script>

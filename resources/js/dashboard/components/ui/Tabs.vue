@@ -1,44 +1,20 @@
 <template>
   <nav class="tabs">
     <ul>
-      <li v-for="(tab, index) in tabs" :key="index">
+      <li v-for="tab in tabs" :key="tab.key">
         <a
           href="javascript:;"
-          @click="change(tab.key)"
-          :class="[tab.active ? 'is-active' : '', tab.error ? 'has-error' : '']"
-        >{{tab.label}}</a>
+          :class="{ 'is-active': active === tab.key }"
+          @click="active = tab.key"
+        >{{ tab.label }}</a>
       </li>
     </ul>
   </nav>
 </template>
-<script>
-export default {
-  props: {
-    tabs: Object,
-    errors: Object,
-  },
+<script setup>
+defineProps({
+  tabs: { type: Array, required: true },
+});
 
-  created() {
-    this.init();
-  },
-
-  methods: {
-
-    init() {
-      for (let prop in this.tabs) {
-        this.tabs[prop].active = false;
-        this.tabs[prop].error = false;
-      }
-      this.tabs['data'].active = true;
-    },
-
-    change(tab) {
-      for (let prop in this.tabs) {
-        this.tabs[prop].active = false;
-        this.tabs[prop].error = false;
-      }
-      this.tabs[tab].active = true;
-    },
-  }
-}
+const active = defineModel({ type: String, required: true });
 </script>

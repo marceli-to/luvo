@@ -1,41 +1,19 @@
 <template>
-<div>
-  <header class="page-header">
-    <div>
-      <a href="/administration" class="brand">
-       <logo />
-      </a>
-      <a href="javascript:;" @click="showMenu()" class="feather-icon menu-open">
-        <menu-icon size="24"></menu-icon>
-      </a>
-    </div>
-  </header>
-</div>
+  <div>
+    <header class="page-header">
+      <div>
+        <a href="/administration" class="brand">
+          <img src="/assets/dashboard/img/logo.svg" width="300" height="100" alt="luksundvogt.ch">
+        </a>
+        <a href="javascript:;" @click="emit('open-menu')" class="feather-icon menu-open">
+          <MenuIcon size="24" />
+        </a>
+      </div>
+    </header>
+  </div>
 </template>
-<script>
-
-// Icons
+<script setup>
 import { MenuIcon } from 'lucide-vue-next';
 
-// Theme
-import Logo from '@/components/theme/Logo.vue';
-
-export default {
-  components: {
-    Logo,
-    MenuIcon,
-  },
- 
-	methods: {
-		showMenu() {
-			this.$parent.menuVisible = true;
-		}
-  },
-
-  watch: {
-    '$route'() {
-      this.$parent.menuVisible = false
-    }
-  }
-}
+const emit = defineEmits(['open-menu']);
 </script>

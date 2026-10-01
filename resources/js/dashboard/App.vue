@@ -1,92 +1,60 @@
 <template>
-<div>
-  <notifications classes="notification" dangerously-set-inner-html />
-  <page-header :user="user"></page-header>
-  <main class="site">
-    <nav :class="[!menuVisible ? '' : 'is-visible', 'page']">
-      <header>
-        <span>
-          <template v-if="userId">
-            <router-link :to="{name: 'user-edit', params: { id: userId }}">{{user}}</router-link><br>
-          </template>
-          <template v-else>
-            <span>{{user}}</span><br>
-          </template>
-          <a href="/logout" class="feather-icon feather-icon--prepend">
-            <log-out-icon size="12"></log-out-icon>
-            <span>Logout</span>
+  <div>
+    <notifications classes="notification" dangerously-set-inner-html />
+    <PageHeader @open-menu="menuVisible = true" />
+    <main class="site">
+      <nav :class="[menuVisible ? 'is-visible' : '', 'page']">
+        <header>
+          <span>
+            <template v-if="user">
+              <router-link :to="{ name: 'user-edit', params: { id: user.id } }">{{ user.firstname }} {{ user.name }}</router-link><br>
+            </template>
+            <a href="/logout" class="feather-icon feather-icon--prepend">
+              <LogOutIcon size="12" />
+              <span>Logout</span>
+            </a>
+          </span>
+          <a href="javascript:;" @click="menuVisible = false" class="feather-icon menu-close">
+            <ArrowRightIcon size="24" />
           </a>
-        </span>
-        <a href="javascript:;" @click="hideMenu()" class="feather-icon menu-close">
-          <arrow-right-icon size="24"></arrow-right-icon>
-        </a>
-      </header>
-      <ul>
-        <li>
-          <router-link :to="{name: 'home'}">
-            <span>Home</span>
-          </router-link>
-        </li>
-        <li>
-          <router-link :to="{name: 'teams'}">
-            <span>Teams</span>
-          </router-link>
-        </li>
-        <li>
-          <router-link :to="{name: 'contact'}">
-            <span>Kontakt</span>
-          </router-link>
-        </li>
-        <li>
-          <router-link :to="{name: 'media'}">
-            <span>Dateien</span>
-          </router-link>
-        </li>
-      </ul>
-    </nav>
-    <router-view></router-view>
-  </main>
-</div>
+        </header>
+        <ul>
+          <li>
+            <router-link :to="{ name: 'home' }">
+              <span>Home</span>
+            </router-link>
+          </li>
+          <li>
+            <router-link :to="{ name: 'teams' }">
+              <span>Teams</span>
+            </router-link>
+          </li>
+          <li>
+            <router-link :to="{ name: 'contact' }">
+              <span>Kontakt</span>
+            </router-link>
+          </li>
+          <li>
+            <router-link :to="{ name: 'media' }">
+              <span>Dateien</span>
+            </router-link>
+          </li>
+        </ul>
+      </nav>
+      <router-view :key="$route.fullPath" />
+    </main>
+  </div>
 </template>
-<script>
-import { ArrowRightIcon, MenuIcon, LogOutIcon } from 'lucide-vue-next';
+<script setup>
+import { ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import { ArrowRightIcon, LogOutIcon } from 'lucide-vue-next';
 import PageHeader from '@/views/layout/PageHeader.vue';
+import { useUser } from '@/composables/useUser';
 
-export default {
+const user = useUser();
+const menuVisible = ref(false);
 
-  components: {
-    PageHeader,
-    ArrowRightIcon,
-    MenuIcon,
-    LogOutIcon,
-  },
-
-	data() {
-		return {
-      menuVisible: false,
-      user: null,
-      userId: null,
-		}
-  },
-  
-
-  mounted() {
-    this.fetchUser();
-  },
-
-  methods: {
-    fetchUser() {
-      if (!this.user) {
-        this.axios.get(`/api/user`).then(response => {
-          this.user = `${response.data.firstname} ${response.data.name}`;
-          this.userId = response.data.id;
-        });
-      }
-    },
-
-    hideMenu() {
-      this.menuVisible = false;
-    }
-  }
-}
+const route = useRoute();
+watch(() => route.fullPath, () => menuVisible.value = false);
 </script>
