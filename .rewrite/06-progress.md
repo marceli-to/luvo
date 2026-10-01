@@ -78,8 +78,35 @@ Build: `npm run build` → `public/build` (committed). No more Mix.
 - `api/publications` is dead and broken (missing import); unused by the admin.
 - `public/assets/js/shop.js` is unreferenced Mix output from elsewhere.
 
+## Admin rewrite: done (2026-10-01, branch `rewrite/vue-setup`)
+
+`fc4583f`: `<script setup>` + composables, ~6.9k → ~2.2k LOC, 75 → 37 files.
+
+```
+resources/js/dashboard/
+  app.js, App.vue, router.js      lazy routes, forms get type=create|edit as prop
+  lib/http.js                     axios instance + app-wide error handling
+  lib/images.js, lib/utils.js
+  composables/                    useResourceForm, useImages, useListing,
+                                  useOrder, useTinyConfig, useUser, useEscape
+  components/images/ImageManager  one editor for all image variants
+  components/ui/                  Tabs, LanguageTabs, RadioButton, ListActions,
+                                  Uploader (Dropzone 6), LoadingIndicator, ...
+  views/<entity>/Form.vue|Index.vue
+```
+
+Verified in the browser: all 14 screens (no errors/warnings), toggles in
+lists and draggable groups, save, 422 validation, publication toggle,
+image upload/crop (same geometry)/caption overlay/delete for all three
+image variants, Desktop/Mobile ratios, Escape, list view, file upload/delete.
+Initial admin JS ~216 KB (was 639 KB).
+
+Still by hand: drag-and-drop reorder (see above).
+
 ## Next
 
-- Privacy policy (Datenschutz) in EN + FR: needs the client's texts.
+- Privacy policy (Datenschutz) in EN + FR: **content only**. The admin's
+  Kontakt form already has FR/EN Datenschutz fields; they're empty, so the
+  FR/EN pages fall back to the German text. Enter the client's texts there.
 - Deploy: `git pull`, `composer install --no-dev`, `php artisan optimize:clear`,
   make `storage/app/.glide-cache` writable. Snapshot DB + storage first.
