@@ -70,12 +70,10 @@
     </div>
 
     <div :class="[isEditOpen ? 'is-visible' : '', 'upload-overlay-edit']">
-      <div class="upload-overlay__close">
-        <a href="javascript:;" class="feather-icon icon-close-overlay" @click.prevent="isEditOpen = false">
-          <PhX :size="24" weight="light" />
-        </a>
-      </div>
-      <div class="upload-overlay__grid" v-if="editItem">
+      <a href="javascript:;" class="feather-icon upload-overlay__close" title="Schliessen" @click.prevent="isEditOpen = false">
+        <PhX :size="24" weight="light" />
+      </a>
+      <div class="upload-overlay__body upload-overlay__grid" v-if="editItem">
         <div>
           <figure v-if="isEditOpen">
             <img :src="imageUrl(editItem, 'crop')" height="300" width="300">
@@ -126,12 +124,10 @@
     <div :class="[isCropperOpen ? 'is-visible' : '', 'upload-overlay-cropper']">
       <div class="upload-overlay__loader" v-if="isCropperLoading">Bild wird geladen...</div>
       <template v-else-if="cropItem && isCropperOpen">
-        <div class="upload-overlay__close">
-          <a href="javascript:;" class="feather-icon icon-close-overlay" @click.prevent="closeCropper()">
-            <PhX :size="24" weight="light" />
-          </a>
-        </div>
-        <div class="upload-overlay-cropper__wrapper">
+        <a href="javascript:;" class="feather-icon upload-overlay__close" title="Schliessen" @click.prevent="closeCropper()">
+          <PhX :size="24" weight="light" />
+        </a>
+        <div class="upload-overlay__body upload-overlay-cropper__wrapper">
           <div :class="'is-' + cropItem.orientation">
             <div class="cropper-formats" v-if="devices">
               <div v-for="(label, device) in deviceLabels" :key="device">
@@ -140,6 +136,7 @@
             </div>
             <div class="cropper-info">{{ cropSize.w }} x {{ cropSize.h }}px</div>
             <Cropper
+              class="upload-overlay-cropper__cropper"
               :src="cropSrc"
               :default-position="defaultPosition"
               :default-size="defaultSize"

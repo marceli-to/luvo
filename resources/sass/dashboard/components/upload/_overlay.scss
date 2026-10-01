@@ -34,26 +34,38 @@
   .btn-secondary {
     color: $color-white;
   }
+
+  // Content centred in the window; scrolls when taller than the window
+  align-items: flex-start;
+  display: flex;
+
+  .upload-overlay__body {
+    margin: auto;
+    position: relative;
+    width: 100%;
+  }
+
+  .upload-overlay__close {
+    position: fixed;
+    right: 24px;
+    top: 20px;
+    z-index: 2;
+  }
+
+  .upload-overlay__loader {
+    margin: auto;
+  }
 }
 
 .upload-overlay-edit {
   @extend %overlay;
 
-  > div {
-    @extend %page-block;
-
-    @include bp-lg() {
-      padding-left: 20px;
-      max-width: 1100px;
-    }
-  }
-
   .upload-overlay__grid {
+    align-items: start;
     display: grid;
     grid-template-columns: 2fr 1fr;
     grid-gap: 35px;
-    padding-top: 60px;
-    position: relative;
+    max-width: 1100px;
   }
 
   label {
@@ -89,25 +101,20 @@
 .upload-overlay-cropper {
   @extend %overlay;
 
-  > div {
-    @extend %page-block;
-    @include bp-lg() {
-      padding-left: 20px;
-      max-width: 1200px;
-    }
-  }
-
   .upload-overlay__loader {
     color: $color-dark;
   }
-    
-  .upload-overlay-cropper__wrapper {
-    padding-top: 40px;
 
-    > div {
-      margin-left: auto;
-      margin-right: auto;      
-    }
+  // Room above for the absolutely positioned .cropper-info
+  .upload-overlay-cropper__wrapper {
+    max-width: 1200px;
+    padding-top: 40px;
+    width: auto;
+  }
+
+  // Leave room for the formats, size info and buttons
+  .upload-overlay-cropper__cropper {
+    max-height: calc(100vh - 260px);
   }
   
   img {

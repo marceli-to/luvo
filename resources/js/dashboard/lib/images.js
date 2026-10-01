@@ -14,7 +14,8 @@ export function imageUrl(image, template, maxWidth = 1600, maxHeight = 1000) {
   }
 
   if (image.coords_w && image.coords_h) {
-    return `/img/crop/${image.name}/${maxWidth}/${maxHeight}/${image.coords_w},${image.coords_h},${image.coords_x},${image.coords_y}`;
+    const coords = [image.coords_w, image.coords_h, image.coords_x ?? 0, image.coords_y ?? 0];
+    return `/img/crop/${image.name}/${maxWidth}/${maxHeight}/${coords.join(',')}`;
   }
 
   return image.orientation === 'p'
