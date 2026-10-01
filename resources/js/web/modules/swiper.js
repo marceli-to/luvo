@@ -1,7 +1,7 @@
 /**
  * Dependencies
  */
-import Swiper from '../vendor/swiper.js';
+import Swiper from 'swiper';
 
 var SwiperUi = (function() {
 

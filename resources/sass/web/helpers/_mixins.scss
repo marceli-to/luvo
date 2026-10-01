@@ -1,3 +1,5 @@
+@use 'sass:map';
+@use 'sass:list';
 /**
  * -----------------------------------------------------------------------------
  * File: helper/mixins
@@ -242,7 +244,6 @@
 %clearfix,
 .clearfix,
 .cf {
-    *zoom: 1;
 
     &:before {
         content: ' ';
@@ -340,16 +341,16 @@
  @mixin set-width-height($map, $breakpoints: $breakpoints) {
 	@each $breakpoint, $size in $map {
 		@if $breakpoint == null {
-			width: nth($size, 1);
-			height: nth($size, 2);
+			width: list.nth($size, 1);
+			height: list.nth($size, 2);
 		}
 		@else {
-			@if map-has-key($breakpoints, $breakpoint) {
-				$breakpoint: map-get($breakpoints, $breakpoint);
+			@if map.has-key($breakpoints, $breakpoint) {
+				$breakpoint: map.get($breakpoints, $breakpoint);
 			}
 			@media screen and (min-width: $breakpoint) {
-				width: nth($size, 1);
-				height: nth($size, 2);
+				width: list.nth($size, 1);
+				height: list.nth($size, 2);
 			}
 		}
 	}
@@ -370,14 +371,14 @@
 @mixin responsive-prop($prop, $map, $addProp: '', $breakpoints: $breakpoints) {
 	@each $breakpoint, $size in $map {
 		@if $breakpoint == null {
-			#{$prop}: nth($size, 1) #{$addProp};
+			#{$prop}: list.nth($size, 1) #{$addProp};
 		}
 		@else {
-			@if map-has-key($breakpoints, $breakpoint) {
-				$breakpoint: map-get($breakpoints, $breakpoint);
+			@if map.has-key($breakpoints, $breakpoint) {
+				$breakpoint: map.get($breakpoints, $breakpoint);
 			}
 			@media screen and (min-width: $breakpoint) {
-				#{$prop}: nth($size, 1) #{$addProp};
+				#{$prop}: list.nth($size, 1) #{$addProp};
 			}
 		}
 	}

@@ -8,7 +8,7 @@
     </nav>
   </div>
 </footer>
-<script src="{{ mix('assets/js/app.js') }}" type="text/javascript"></script>
+@vite('resources/js/web/app.js')
 </body>
 <!-- made with ❤ by marceli.to & bivgrafik.ch -->
 </html>

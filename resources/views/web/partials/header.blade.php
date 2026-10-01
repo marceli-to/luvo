@@ -18,7 +18,7 @@
 <meta name="msapplication-TileColor" content="#ffffff">
 <meta name="theme-color" content="#ffffff">
 <meta name="format-detection" content="telephone=no">
-<link href="{{ mix('assets/css/app.css') }}" type="text/css" rel="stylesheet" />
+@vite('resources/sass/web/app.scss')
 <script src="{{ asset('assets/js/modernizr.min.js') }}"></script>
 </head>
 <body class="{{ request()->routeIs('*page.contact') ? 'is-contact' : ''}}">

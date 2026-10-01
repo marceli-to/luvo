@@ -1,14 +1,12 @@
 // Load dependencies
-require('./bootstrap');
+import './bootstrap';
 
 // Vendor
-require('./vendor/lazysizes.js');
-require('./vendor/simplebar.js');
-require('./vendor/scrollTo.js');
+import 'lazysizes';
+import 'simplebar';
+import 'jquery.scrollto';
 
 // Modules
-require('./modules/menu.js');
-require('./modules/utils.js');
-require('./modules/swiper.js');
-
-
+import './modules/menu.js';
+import './modules/utils.js';
+import './modules/swiper.js';

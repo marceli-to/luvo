@@ -1,49 +1,20 @@
 {
     "private": true,
+    "type": "module",
     "scripts": {
-        "dev": "npm run development",
-        "development": "mix",
-        "watch": "mix watch",
-        "watch-poll": "mix watch -- --watch-options-poll=1000",
-        "hot": "mix watch --hot",
-        "prod": "npm run production",
-        "production": "mix --production"
+        "dev": "vite",
+        "build": "vite build"
     },
     "devDependencies": {
-        "axios": "^1.6.7",
-        "bootstrap": "^4.6.2",
-        "cross-env": "^7.0",
-        "jquery": "^3.7.1",
-        "laravel-mix": "^6.0.49",
-        "lodash": "^4.17.21",
-        "popper.js": "^1.16.1",
-        "postcss": "^8.4.35",
-        "resolve-url-loader": "^5.0.0",
-        "sass": "^1.49.0",
-        "sass-loader": "^12.1.0",
-        "vue": "^2.7.16",
-        "vue-loader": "^15.11.1",
-        "vue-template-compiler": "^2.7.16"
+        "laravel-vite-plugin": "^3.2.0",
+        "sass": "^1.105.1",
+        "vite": "^8.3.1"
     },
     "dependencies": {
-        "@fancyapps/ui": "^5.0.14",
-        "@tinymce/tinymce-vue": "^3.2.8",
-        "cleave.js": "^1.6.0",
-        "moment": "^2.29.4",
-        "nth-check": "^2.1.1",
-        "postcss-loader": "^6.2.1",
-        "raw-loader": "^4.0.2",
-        "vue-advanced-cropper": "^0.16.5",
-        "vue-axios": "^2.1.5",
-        "vue-axios-interceptors": "^0.3.1",
-        "vue-feather-icons": "^5.1.0",
-        "vue-moment": "^4.1.0",
-        "vue-notification": "^1.3.20",
-        "vue-router": "^3.6.5",
-        "vue-the-mask": "^0.11.1",
-        "vue2-dropzone": "^3.6.0",
-        "vuedraggable": "^2.24.3",
-        "vuejs-datepicker": "^1.6.2",
-        "vuex": "^3.6.2"
+        "jquery": "^3.7.1",
+        "jquery.scrollto": "2.1.2",
+        "lazysizes": "5.2.0",
+        "simplebar": "5.3.0",
+        "swiper": "5.3.8"
     }
 }
