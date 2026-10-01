@@ -19,11 +19,11 @@
           </div>
           <div :class="[lang === 'de' && errors.description ? 'has-error' : '', 'form-row']">
             <label>Beschreibung</label>
-            <TinymceEditor :init="tinyConfig" v-model="record.description[lang]" />
+            <Editor v-model="record.description[lang]" />
           </div>
           <div class="form-row">
             <label>Assistenten</label>
-            <TinymceEditor :init="tinyConfig" v-model="record.assistants[lang]" />
+            <Editor v-model="record.assistants[lang]" />
           </div>
         </div>
       </div>
@@ -64,12 +64,11 @@ import LoadingIndicator from '@/components/ui/LoadingIndicator.vue';
 import Tabs from '@/components/ui/Tabs.vue';
 import LanguageTabs from '@/components/ui/LanguageTabs.vue';
 import RadioButton from '@/components/ui/RadioButton.vue';
-import TinymceEditor from '@/components/ui/TinymceEditor.js';
+import Editor from '@/components/ui/editor/Editor.vue';
 import Uploader from '@/components/ui/Uploader.vue';
 import ImageManager from '@/components/images/ImageManager.vue';
 import { useResourceForm, formTabs, translations } from '@/composables/useResourceForm';
 import { useImages, imageUpload } from '@/composables/useImages';
-import { useTinyConfig } from '@/composables/useTinyConfig';
 import http from '@/lib/http';
 
 const props = defineProps({
@@ -103,5 +102,4 @@ const images = useImages({
 
 const tab = ref('data');
 const locale = ref('de');
-const tinyConfig = useTinyConfig();
 </script>

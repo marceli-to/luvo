@@ -24,7 +24,7 @@
           </div>
           <div :class="[errors.text ? 'has-error' : '', 'form-row']">
             <label>Text*</label>
-            <TinymceEditor :init="tinyConfig" v-model="record.text.de" />
+            <Editor v-model="record.text.de" />
           </div>
         </div>
         <div v-for="lang in ['fr', 'en']" :key="lang" v-show="locale === lang">
@@ -34,7 +34,7 @@
           </div>
           <div class="form-row">
             <label>Text</label>
-            <TinymceEditor :init="tinyConfig" v-model="record.text[lang]" />
+            <Editor v-model="record.text[lang]" />
           </div>
         </div>
       </div>
@@ -77,12 +77,11 @@ import Tabs from '@/components/ui/Tabs.vue';
 import LanguageTabs from '@/components/ui/LanguageTabs.vue';
 import LabelRequired from '@/components/ui/LabelRequired.vue';
 import RadioButton from '@/components/ui/RadioButton.vue';
-import TinymceEditor from '@/components/ui/TinymceEditor.js';
+import Editor from '@/components/ui/editor/Editor.vue';
 import Uploader from '@/components/ui/Uploader.vue';
 import ImageManager from '@/components/images/ImageManager.vue';
 import { useResourceForm, formTabs, translations } from '@/composables/useResourceForm';
 import { useImages, imageUpload } from '@/composables/useImages';
-import { useTinyConfig } from '@/composables/useTinyConfig';
 
 const props = defineProps({
   type: { type: String, required: true },
@@ -115,5 +114,4 @@ const images = useImages({
 
 const tab = ref('data');
 const locale = ref('de');
-const tinyConfig = useTinyConfig();
 </script>

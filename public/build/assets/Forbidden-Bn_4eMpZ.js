@@ -1,0 +1,1 @@
+import{S as e,g as t,j as n,p as r}from"./vue.runtime.esm-bundler-ByCXuItE.js";import{t as i}from"./_plugin-vue_export-helper-BDNMzG2s.js";e();var a={};function o(e,i){return n(),t(`div`,null,[...i[0]||=[r(`h1`,null,`Access denied`,-1)]])}var s=i(a,[[`render`,o]]);export{s as default};

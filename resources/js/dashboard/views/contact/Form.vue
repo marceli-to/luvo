@@ -11,15 +11,15 @@
         <div v-for="lang in ['de', 'fr', 'en']" :key="lang" v-show="locale === lang">
           <div :class="[lang === 'de' && errors.address ? 'has-error' : '', 'form-row']">
             <label>{{ lang === 'de' ? 'Adresse' : 'Text' }}</label>
-            <TinymceEditor :init="tinyConfig" v-model="record.address[lang]" />
+            <Editor v-model="record.address[lang]" />
           </div>
           <div class="form-row">
             <label>Impressum</label>
-            <TinymceEditor :init="tinyConfig" v-model="record.imprint[lang]" />
+            <Editor v-model="record.imprint[lang]" />
           </div>
           <div class="form-row">
             <label>Datenschutz</label>
-            <TinymceEditor :init="tinyConfig" v-model="record.privacy[lang]" />
+            <Editor v-model="record.privacy[lang]" />
           </div>
           <div class="form-row" v-if="lang === 'de'">
             <label>Google Maps Uri</label>
@@ -64,12 +64,11 @@ import LoadingIndicator from '@/components/ui/LoadingIndicator.vue';
 import Tabs from '@/components/ui/Tabs.vue';
 import LanguageTabs from '@/components/ui/LanguageTabs.vue';
 import RadioButton from '@/components/ui/RadioButton.vue';
-import TinymceEditor from '@/components/ui/TinymceEditor.js';
+import Editor from '@/components/ui/editor/Editor.vue';
 import Uploader from '@/components/ui/Uploader.vue';
 import ImageManager from '@/components/images/ImageManager.vue';
 import { useResourceForm, formTabs, translations } from '@/composables/useResourceForm';
 import { useImages, imageUpload } from '@/composables/useImages';
-import { useTinyConfig } from '@/composables/useTinyConfig';
 
 const props = defineProps({
   type: { type: String, required: true },
@@ -100,5 +99,4 @@ const images = useImages({
 
 const tab = ref('data');
 const locale = ref('de');
-const tinyConfig = useTinyConfig();
 </script>

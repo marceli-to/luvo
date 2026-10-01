@@ -6,7 +6,6 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <title>{{ config('app.name', 'Laravel') }}</title>
 @vite('resources/sass/dashboard/app.scss')
-<script src="{{ asset('assets/dashboard/js/tinymce/tinymce.min.js') }}"></script>
 </head>
 <body>
 <div id="app-administration"></div>

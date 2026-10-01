@@ -1,0 +1,1 @@
+import{S as e,g as t,j as n,rt as r,yt as i}from"./vue.runtime.esm-bundler-ByCXuItE.js";r(),e();var a={class:`is-required`},o={__name:`LabelRequired`,props:{text:{type:String,default:`Pflichtfeld`}},setup(e){return(r,o)=>(n(),t(`div`,a,i(e.text),1))}};export{o as t};

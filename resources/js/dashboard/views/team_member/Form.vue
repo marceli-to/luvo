@@ -31,11 +31,11 @@
           </template>
           <div class="form-row">
             <label>Info</label>
-            <TinymceEditor :init="tinyConfig" v-model="record.credits[lang]" />
+            <Editor v-model="record.credits[lang]" />
           </div>
           <div class="form-row">
             <label>Beschreibung</label>
-            <TinymceEditor :init="tinyConfig" v-model="record.description[lang]" />
+            <Editor v-model="record.description[lang]" />
           </div>
           <div class="form-row">
             <label>SEO Beschreibung</label>
@@ -43,7 +43,7 @@
           </div>
           <div class="form-row" v-for="field in textFields" :key="field.key">
             <label>{{ field.label }}</label>
-            <TinymceEditor :init="tinyConfig" v-model="record[field.key][lang]" />
+            <Editor v-model="record[field.key][lang]" />
           </div>
           <template v-if="lang === 'de'">
             <div class="form-row" v-if="isEdit">
@@ -130,13 +130,12 @@ import LanguageTabs from '@/components/ui/LanguageTabs.vue';
 import LabelRequired from '@/components/ui/LabelRequired.vue';
 import RadioButton from '@/components/ui/RadioButton.vue';
 import ListActions from '@/components/ui/ListActions.vue';
-import TinymceEditor from '@/components/ui/TinymceEditor.js';
+import Editor from '@/components/ui/editor/Editor.vue';
 import Uploader from '@/components/ui/Uploader.vue';
 import ImageManager from '@/components/images/ImageManager.vue';
 import { useResourceForm, formTabs, translations } from '@/composables/useResourceForm';
 import { useImages, imageUpload } from '@/composables/useImages';
 import { useOrder } from '@/composables/useOrder';
-import { useTinyConfig } from '@/composables/useTinyConfig';
 import http from '@/lib/http';
 import { confirmDelete } from '@/lib/utils';
 
@@ -224,5 +223,4 @@ async function destroyPublication(id) {
 
 const tab = ref('data');
 const locale = ref('de');
-const tinyConfig = useTinyConfig();
 </script>

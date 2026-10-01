@@ -15,11 +15,11 @@
           </div>
           <div class="form-row">
             <label>Beschreibung</label>
-            <TinymceEditor :init="tinyConfig" v-model="record.description[lang]" />
+            <Editor v-model="record.description[lang]" />
           </div>
           <div :class="[lang === 'de' && errors.articles ? 'has-error' : '', 'form-row']">
             <label>Artikel</label>
-            <TinymceEditor :init="tinyConfig" v-model="record.articles[lang]" />
+            <Editor v-model="record.articles[lang]" />
           </div>
           <div class="form-row is-last" v-if="lang === 'de'">
             <RadioButton label="Publizieren?" name="publish" v-model="record.publish" />
@@ -44,9 +44,8 @@ import LoadingIndicator from '@/components/ui/LoadingIndicator.vue';
 import LanguageTabs from '@/components/ui/LanguageTabs.vue';
 import LabelRequired from '@/components/ui/LabelRequired.vue';
 import RadioButton from '@/components/ui/RadioButton.vue';
-import TinymceEditor from '@/components/ui/TinymceEditor.js';
+import Editor from '@/components/ui/editor/Editor.vue';
 import { useResourceForm, translations } from '@/composables/useResourceForm';
-import { useTinyConfig } from '@/composables/useTinyConfig';
 
 const props = defineProps({
   type: { type: String, required: true },
@@ -72,5 +71,4 @@ const { record, errors, isLoading, isFetched, title, submit } = useResourceForm(
 });
 
 const locale = ref('de');
-const tinyConfig = useTinyConfig();
 </script>
