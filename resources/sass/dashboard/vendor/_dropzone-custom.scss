@@ -19,6 +19,19 @@
   @include vertical-center(absolute);
 }
 
+// Dropzone 6 renders the message as a <button>; show it as plain text like
+// Dropzone 5's <span>, not with the global button style
+.dropzone .dz-message .dz-button {
+  background: none;
+  border: 0;
+  color: $color-dark;
+  cursor: pointer;
+  display: inline;
+  font: inherit;
+  padding: 0;
+  width: auto;
+}
+
 .dropzone .dz-preview .dz-image {
   border-radius: 0 !important;
 }
