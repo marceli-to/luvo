@@ -26,7 +26,7 @@
 <script>
 
 // Icons
-import { PlusIcon } from 'vue-feather-icons';
+import { PlusIcon } from 'lucide-vue-next';
 
 // Components
 import ListActions from "@/components/ui/ListActions.vue";

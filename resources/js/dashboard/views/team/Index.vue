@@ -18,7 +18,7 @@
         :key="t.id"
       >
         <div class="listing__item-body">
-          {{ t.title.de }} <separator /> <span v-if="t.slug">Team {{ t.slug | capitalizeFirst() }}</span>
+          {{ t.title.de }} <separator /> <span v-if="t.slug">Team {{ $filters.capitalizeFirst(t.slug) }}</span>
         </div>
         <list-actions 
           :id="t.id" 
@@ -42,28 +42,29 @@
     <div v-if="teamMembers.length">
       <div v-for="(team, index) in teamMembersGrouped" :key="index">
         <div class="listing is-grouped">
-          <draggable 
+          <draggable
+            item-key="id" 
             :disabled="false"
             v-model="teamMembersGrouped[index]" 
             @end="order(index)"
             ghost-class="draggable-ghost"
             draggable=".listing__item">
-            <div
-              :class="[tm.publish == 0 ? 'is-disabled' : '', 'listing__item is-draggable']"
-              v-for="tm in team"
-              :key="tm.id"
-            >
-              <div class="listing__item-body">
-                {{ tm.firstname }} {{ tm.name}} <separator /> <span v-if="tm.team.slug">Team {{ tm.team.slug | capitalizeFirst() }}</span>
+            <template #item="{ element: tm }">
+              <div
+                :class="[tm.publish == 0 ? 'is-disabled' : '', 'listing__item is-draggable']"
+              >
+                <div class="listing__item-body">
+                  {{ tm.firstname }} {{ tm.name}} <separator /> <span v-if="tm.team.slug">Team {{ $filters.capitalizeFirst(tm.team.slug) }}</span>
+                </div>
+                <list-actions 
+                  :id="tm.id" 
+                  :record="tm"
+                  :isDraggable="true"
+                  :model="'team_member'"
+                  :routes="{edit: 'team-member-edit'}">
+                </list-actions>
               </div>
-              <list-actions 
-                :id="tm.id" 
-                :record="tm"
-                :isDraggable="true"
-                :model="'team_member'"
-                :routes="{edit: 'team-member-edit'}">
-              </list-actions>
-            </div>
+            </template>
           </draggable>
         </div>
       </div>
@@ -87,7 +88,7 @@
         :key="a.id"
       >
         <div class="listing__item-body">
-          <span v-if="a.team.slug">Team {{ a.team.slug | capitalizeFirst()}}</span>
+          <span v-if="a.team.slug">Team {{ $filters.capitalizeFirst(a.team.slug) }}</span>
         </div>
         <list-actions 
           :id="a.id" 
@@ -107,7 +108,8 @@
 <script>
 
 // Icons
-import { PlusIcon } from 'vue-feather-icons';
+import { PlusIcon } from 'lucide-vue-next';
+import { groupBy } from 'lodash-es';
 
 // Components
 import ListActions from "@/components/ui/ListActions.vue";
@@ -156,7 +158,7 @@ export default {
           this.axios.get(`/api/team/members`)
           .then(response => {
             this.teamMembers = response.data.data;
-            this.teamMembersGrouped = _.groupBy(this.teamMembers, "team_id");
+            this.teamMembersGrouped = groupBy(this.teamMembers, "team_id");
           });
 
           // Get assistants

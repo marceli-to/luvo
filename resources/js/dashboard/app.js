@@ -1,76 +1,32 @@
-require('@/bootstrap');
+import { createApp } from 'vue';
+import { createRouter, createWebHistory } from 'vue-router';
+import Notifications from '@kyvg/vue3-notification';
 
-// Vue
-import Vue from 'vue';
-window.Vue = Vue;
+// vue-advanced-cropper 2 no longer injects its core styles
+import 'vue-advanced-cropper/dist/style.css';
 
-// Axios, Vue-Axios
-import VueAxios from 'vue-axios';
-import axios from 'axios';
-window.axios = axios;
-Vue.use(VueAxios, axios);
+// Axios, incl. the response events the ErrorHandling mixin listens to
+import axios from '@/config/axios';
 
-// Axios Interceptors
-require('vue-axios-interceptors');
+// Filters (Vue 3 has no filters; available as $filters.* in templates)
+import filters from '@/mixins/Filters';
 
-// Filters
-require('@/mixins/Filters');
-
-// Vue-Axios defaults
-Vue.axios.defaults.withCredentials = true;
-
-// Vue-Notifications
-import Notifications from 'vue-notification';
-Vue.use(Notifications);
-
-// Vue-Router
-import VueRouter from 'vue-router';
-Vue.use(VueRouter);
-
-// Vue-Moment
-Vue.use(require('vue-moment'));
-
-// Loading indicator
-import LoadingIndicator from "@/components/ui/LoadingIndicator";
-Vue.component('LoadingIndicator', LoadingIndicator);
-
-import Separator from "@/components/ui/Separator";
-Vue.component('Separator', Separator);
-
-// Vue-cleave
-import Cleave from 'cleave.js';
-Vue.directive('cleave', {
-  inserted: (el, binding) => {
-    el.cleave = new Cleave(el, binding.value || {});
-  },
-  update: (el) => {
-    const event = new Event('input', {bubbles: true});
-    setTimeout(function () {
-      el.value = el.cleave.properties.result;
-      el.dispatchEvent(event);
-    }, 100);
-  }
-});
-
-// Global mixins
-// import ErrorHandling from "@/global/mixins/ErrorHandling";
-
-// Store
-import store from '@/config/store';
+// Global components
+import LoadingIndicator from '@/components/ui/LoadingIndicator.vue';
+import Separator from '@/components/ui/Separator.vue';
 
 // Routes
 import routes from '@/config/routes';
-const router = new VueRouter({ mode: 'history', routes: routes});
+const router = createRouter({ history: createWebHistory(), routes });
 
 // App component
-import AppComponent from '@/App.vue';
+import App from '@/App.vue';
 
-// Mount App
-const app = new Vue({
-  mixins: [],
-  components: { 
-    AppComponent
-  },
-  router,
-  store
-}).$mount('#app-administration');
+const app = createApp(App);
+app.config.globalProperties.axios = axios;
+app.config.globalProperties.$filters = filters;
+app.component('LoadingIndicator', LoadingIndicator);
+app.component('Separator', Separator);
+app.use(router);
+app.use(Notifications);
+app.mount('#app-administration');

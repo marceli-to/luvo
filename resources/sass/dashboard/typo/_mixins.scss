@@ -1,3 +1,6 @@
+@use 'sass:map';
+@use 'sass:list';
+@use 'sass:meta';
 /**
  * -----------------------------------------------------------------------------
  * File: components/typo/mixins
@@ -71,8 +74,8 @@
     @else {
       // If $fs-font-size is a key that exists in
       // $fs-breakpoints, use the value
-      @if map-has-key($fs-breakpoints, $fs-breakpoint) {
-        $fs-breakpoint: map-get($fs-breakpoints, $fs-breakpoint);
+      @if map.has-key($fs-breakpoints, $fs-breakpoint) {
+        $fs-breakpoint: map.get($fs-breakpoints, $fs-breakpoint);
       }
       @media screen and (min-width: $fs-breakpoint) {
         @include make-font-size($fs-font-size);
@@ -85,10 +88,10 @@
 @mixin make-font-size($fs-font-size) {
   // If $fs-font-size is a list, include
   // both font-size and line-height
-  @if type-of($fs-font-size) == "list" {
-    font-size: nth($fs-font-size, 1);
-    @if (length($fs-font-size) > 1) {
-      line-height: nth($fs-font-size, 2);
+  @if meta.type-of($fs-font-size) == "list" {
+    font-size: list.nth($fs-font-size, 1);
+    @if (list.length($fs-font-size) > 1) {
+      line-height: list.nth($fs-font-size, 2);
     }
   }
   @else {

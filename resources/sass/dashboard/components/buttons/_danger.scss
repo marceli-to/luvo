@@ -1,3 +1,4 @@
+@use 'sass:color';
 /**
  * -----------------------------------------------------------------------------
  * File: components/buttons/danger
@@ -9,6 +10,6 @@
 	background-color: $color-danger;
 
 	&:hover {
-		background-color: lighten($color-danger, 10);
+		background-color: color.adjust($color-danger, $lightness: 10%);
 	}
 }

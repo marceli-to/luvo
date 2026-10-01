@@ -11,27 +11,28 @@
     </header>
     <div v-for="(team, index) in groupedTeams" :key="index" class="sa-md">
       <div class="listing" v-if="team.length">
-        <draggable 
+        <draggable
+          item-key="id" 
           :disabled="false"
           v-model="groupedTeams[index]" 
           @end="order(index)"
           ghost-class="draggable-ghost"
           draggable=".listing__item">
-          <div
-            :class="[t.publish == 0 ? 'is-disabled' : '', 'listing__item is-draggable']"
-            v-for="t in team"
-            :key="t.id"
-          >
-            <div class="listing__item-body">
-              {{ t.firstname }} {{ t.name}} <separator /> {{ t.team.capitalizedSlug}}
+          <template #item="{ element: t }">
+            <div
+              :class="[t.publish == 0 ? 'is-disabled' : '', 'listing__item is-draggable']"
+            >
+              <div class="listing__item-body">
+                {{ t.firstname }} {{ t.name}} <separator /> {{ t.team.capitalizedSlug}}
+              </div>
+              <list-actions 
+                :id="t.id" 
+                :record="t"
+                :isDraggable="false"
+                :routes="{edit: 'team-member-edit'}">
+              </list-actions>
             </div>
-            <list-actions 
-              :id="t.id" 
-              :record="t"
-              :isDraggable="false"
-              :routes="{edit: 'team-member-edit'}">
-            </list-actions>
-          </div>
+          </template>
         </draggable>
       </div>
       <div v-else>
@@ -44,7 +45,8 @@
 <script>
 
 // Icons
-import { PlusIcon } from 'vue-feather-icons';
+import { PlusIcon } from 'lucide-vue-next';
+import { groupBy } from 'lodash-es';
 
 // Components
 import ListActions from "@/components/ui/ListActions.vue";
@@ -83,7 +85,7 @@ export default {
       this.axios.get(`/api/team/members`).then(response => {
         this.teamMembers = response.data.data;
         this.isFetched = true;
-        this.groupedTeams = _.groupBy(this.teamMembers, "team_id");
+        this.groupedTeams = groupBy(this.teamMembers, "team_id");
       });
     },
 

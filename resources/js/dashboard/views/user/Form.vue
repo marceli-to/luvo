@@ -6,11 +6,11 @@
         <h1>{{title}}</h1>
       </header>
       <div>
-        <div :class="[this.errors.password ? 'has-error' : '', 'form-row']">
+        <div :class="[errors.password ? 'has-error' : '', 'form-row']">
           <label>Neues Passwort (min. 6 Zeichen)</label>
           <input type="password" v-model="user.password">
         </div>
-        <div :class="[this.errors.password_confirm ? 'has-error' : '', 'form-row']">
+        <div :class="[errors.password_confirm ? 'has-error' : '', 'form-row']">
           <label>Neues Passwort wiederholen</label>
           <input type="password" v-model="user.password_confirm">
         </div>
@@ -29,7 +29,7 @@
 <script>
 
 // Icons
-import { ArrowLeftIcon } from 'vue-feather-icons';
+import { ArrowLeftIcon } from 'lucide-vue-next';
 
 // Mixins
 import ErrorHandling from "@/mixins/ErrorHandling";

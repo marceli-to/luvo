@@ -58,7 +58,7 @@ import {
   Trash2Icon,
   CropIcon,
   ImageIcon,
-} from 'vue-feather-icons';
+} from 'lucide-vue-next';
 
 import ImageUtils from "@/components/images/mixins/utils";
 export default {

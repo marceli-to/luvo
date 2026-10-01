@@ -9,7 +9,7 @@
     <div v-show="tabs.data.active">
       <language-tabs :languages="languageTabs"></language-tabs>
       <div v-show="languageTabs.de.active">
-        <div :class="[this.errors.team_id ? 'has-error' : '', 'form-row']">
+        <div :class="[errors.team_id ? 'has-error' : '', 'form-row']">
           <label>Team*</label>
           <div class="select-wrapper is-medium">
             <select v-model="assistant.team_id" name="layout">
@@ -17,7 +17,7 @@
             </select>
           </div>
         </div> 
-        <div :class="[this.errors.description ? 'has-error' : '', 'form-row']">
+        <div :class="[errors.description ? 'has-error' : '', 'form-row']">
           <label>Beschreibung</label>
           <tinymce-editor
             :init="tinyConfig"
@@ -90,7 +90,7 @@
         <div class="form-row is-last">
           <radio-button 
             :label="'Publizieren?'"
-            v-bind:publish.sync="assistant.publish"
+            v-model:publish="assistant.publish"
             :model="assistant.publish"
             :name="'publish'">
           </radio-button>
@@ -111,14 +111,14 @@
 <script>
 
 // Icons
-import { ArrowLeftIcon, PlusIcon } from 'vue-feather-icons';
+import { ArrowLeftIcon, PlusIcon } from 'lucide-vue-next';
 
 // Mixins
 import ErrorHandling from "@/mixins/ErrorHandling";
 
 // TinyMCE
 import tinyConfig from "@/config/tiny.js";
-import TinymceEditor from "@tinymce/tinymce-vue";
+import TinymceEditor from "@/components/ui/TinymceEditor.js";
 
 // Components
 import RadioButton from "@/components/ui/RadioButton.vue";

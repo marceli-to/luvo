@@ -9,7 +9,7 @@
     <div v-show="tabs.data.active">
       <language-tabs :languages="languageTabs"></language-tabs>
       <div v-show="languageTabs.de.active">
-        <div :class="[this.errors.team_id ? 'has-error' : '', 'form-row']">
+        <div :class="[errors.team_id ? 'has-error' : '', 'form-row']">
           <label>Team*</label>
           <div class="select-wrapper is-medium">
             <select v-model="teamMember.team_id" name="layout">
@@ -17,12 +17,12 @@
             </select>
           </div>
         </div>  
-        <div :class="[this.errors.firstname ? 'has-error' : '', 'form-row']">
+        <div :class="[errors.firstname ? 'has-error' : '', 'form-row']">
           <label>Vorname*</label>
           <input type="text" v-model="teamMember.firstname">
           <label-required />
         </div>
-        <div :class="[this.errors.name ? 'has-error' : '', 'form-row']">
+        <div :class="[errors.name ? 'has-error' : '', 'form-row']">
           <label>Name*</label>
           <input type="text" v-model="teamMember.name">
           <label-required />
@@ -89,27 +89,28 @@
             </router-link>
           </header>
           <div class="listing" v-if="teamMember.publications.length">
-            <draggable 
+            <draggable
+              item-key="id" 
               :disabled="false"
               v-model="teamMember.publications" 
               @end="order()"
               ghost-class="draggable-ghost"
               draggable=".listing__item">
-              <div
-                :class="[p.publish == 0 ? 'is-disabled' : '', 'listing__item is-draggable']"
-                v-for="p in teamMember.publications"
-                :key="p.id"
-              >
-                <div class="listing__item-body">
-                  {{ p.title.de }}
+              <template #item="{ element: p }">
+                <div
+                  :class="[p.publish == 0 ? 'is-disabled' : '', 'listing__item is-draggable']"
+                >
+                  <div class="listing__item-body">
+                    {{ p.title.de }}
+                  </div>
+                  <list-actions 
+                    :id="p.id" 
+                    :record="p"
+                    :isDraggable="true"
+                    :routes="{edit: 'publication-edit'}">
+                  </list-actions>
                 </div>
-                <list-actions 
-                  :id="p.id" 
-                  :record="p"
-                  :isDraggable="true"
-                  :routes="{edit: 'publication-edit'}">
-                </list-actions>
-              </div>
+              </template>
             </draggable>
           </div>
           <div v-if="!teamMember.publications.length">
@@ -261,7 +262,7 @@
         <div class="form-row is-last">
           <radio-button 
             :label="'Publizieren?'"
-            v-bind:publish.sync="teamMember.publish"
+            v-model:publish="teamMember.publish"
             :model="teamMember.publish"
             :name="'publish'">
           </radio-button>
@@ -282,14 +283,14 @@
 <script>
 
 // Icons
-import { ArrowLeftIcon, PlusIcon } from 'vue-feather-icons';
+import { ArrowLeftIcon, PlusIcon } from 'lucide-vue-next';
 
 // Mixins
 import ErrorHandling from "@/mixins/ErrorHandling";
 
 // TinyMCE
 import tinyConfig from "@/config/tiny.js";
-import TinymceEditor from "@tinymce/tinymce-vue";
+import TinymceEditor from "@/components/ui/TinymceEditor.js";
 
 // Components
 import RadioButton from "@/components/ui/RadioButton.vue";

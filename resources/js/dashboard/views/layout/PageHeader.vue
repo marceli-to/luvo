@@ -15,7 +15,7 @@
 <script>
 
 // Icons
-import { MenuIcon } from 'vue-feather-icons';
+import { MenuIcon } from 'lucide-vue-next';
 
 // Theme
 import Logo from '@/components/theme/Logo.vue';

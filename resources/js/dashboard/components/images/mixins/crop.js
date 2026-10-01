@@ -8,7 +8,9 @@ export default {
       cropH: null,
       cropImage: null,
 
-      defaults: {
+      // Not "defaults": Vue 3 merges mixin data shallowly, and the edit mixin
+      // owns defaults.item
+      cropDefaults: {
         w: 425,
         h: 510,
         x: 0,
@@ -48,8 +50,8 @@ export default {
     },
 
     defaultPosition() {
-      let x = this.overlayItem.coords_x || this.defaults.x;
-      let y = this.overlayItem.coords_y || this.defaults.y;
+      let x = this.overlayItem.coords_x || this.cropDefaults.x;
+      let y = this.overlayItem.coords_y || this.cropDefaults.y;
       return {
         left: x,
         top: y
@@ -57,8 +59,8 @@ export default {
     },
 
     defaultSize() {
-      let w = this.overlayItem.coords_w || this.defaults.w;
-      let h = this.overlayItem.coords_h || this.defaults.h;
+      let w = this.overlayItem.coords_w || this.cropDefaults.w;
+      let h = this.overlayItem.coords_h || this.cropDefaults.h;
       return {
         width: w,
         height: h

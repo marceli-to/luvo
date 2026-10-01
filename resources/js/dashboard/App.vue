@@ -1,7 +1,7 @@
 <template>
 <div>
-  <notifications classes="notification" />
-  <page-header :user="$store.state.user"></page-header>
+  <notifications classes="notification" dangerously-set-inner-html />
+  <page-header :user="user"></page-header>
   <main class="site">
     <nav :class="[!menuVisible ? '' : 'is-visible', 'page']">
       <header>
@@ -49,7 +49,7 @@
 </div>
 </template>
 <script>
-import { ArrowRightIcon, MenuIcon, LogOutIcon } from 'vue-feather-icons';
+import { ArrowRightIcon, MenuIcon, LogOutIcon } from 'lucide-vue-next';
 import PageHeader from '@/views/layout/PageHeader.vue';
 
 export default {
@@ -76,9 +76,8 @@ export default {
 
   methods: {
     fetchUser() {
-      if (!this.$store.state.user) {
+      if (!this.user) {
         this.axios.get(`/api/user`).then(response => {
-          this.$store.commit('user', `${response.data.firstname} ${response.data.name}`);
           this.user = `${response.data.firstname} ${response.data.name}`;
           this.userId = response.data.id;
         });

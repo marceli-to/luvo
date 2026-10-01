@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import { LoaderIcon } from 'vue-feather-icons';
+import { LoaderIcon } from 'lucide-vue-next';
 export default {
   components: {
     LoaderIcon

@@ -6,14 +6,15 @@
         <span v-if="view == 'list'">Listen Ansicht</span>
       </a>
       <div class="is-list" v-if="view == 'list'">
-        <template>
-          <draggable 
-            :disabled="false"
-            v-model="imageData" 
-            @end="order"
-            ghost-class="draggable-ghost"
-            draggable=".is-draggable">
-            <div class="upload-item-row is-draggable" v-for="(image) in imageData" :key="image.id">
+        <draggable
+          item-key="id" 
+          :disabled="false"
+          v-model="imageData" 
+          @end="order"
+          ghost-class="draggable-ghost"
+          draggable=".is-draggable">
+          <template #item="{ element: image }">
+            <div class="upload-item-row is-draggable">
               <figure>
                 <img :src="getSource(image, 'thumbnail')" height="300" width="300">
               </figure>
@@ -21,8 +22,8 @@
                 <span class="icon-move"></span>
               </div>
             </div>
-          </draggable>
-        </template>
+          </template>
+        </draggable>
       </div>
       <div v-if="view == 'grid'">
         <figure
@@ -113,7 +114,7 @@
             :defaultPosition="defaultPosition"
             :defaultSize="defaultSize"
             :stencilProps="{
-              aspectRatio: this.ratio.w/this.ratio.h,
+              aspectRatio: ratio.w/ratio.h,
               linesClassnames: {
                 default: 'line',
               },
@@ -157,7 +158,7 @@ import draggable from 'vuedraggable';
 import { Cropper } from "vue-advanced-cropper";
 
 // Icons
-import { XIcon } from 'vue-feather-icons';
+import { XIcon } from 'lucide-vue-next';
 
 export default {
   components: {

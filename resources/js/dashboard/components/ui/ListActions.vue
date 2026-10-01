@@ -76,7 +76,7 @@ import {
   Trash2Icon,
   CopyIcon,
   DownloadCloudIcon
-} from 'vue-feather-icons';
+} from 'lucide-vue-next';
 
 export default {
 

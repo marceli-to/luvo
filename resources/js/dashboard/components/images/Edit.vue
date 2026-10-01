@@ -69,7 +69,7 @@
             :defaultPosition="defaultPosition"
             :defaultSize="defaultSize"
             :stencilProps="{
-              aspectRatio: this.ratioW/this.ratioH,
+              aspectRatio: ratioW/ratioH,
               linesClassnames: {
                 default: 'line',
               },
@@ -110,7 +110,7 @@ import ImageUtils from "@/components/images/mixins/utils";
 import { Cropper } from "vue-advanced-cropper";
 
 // Icons
-import { XIcon } from 'vue-feather-icons';
+import { XIcon } from 'lucide-vue-next';
 
 export default {
   components: {

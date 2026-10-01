@@ -1,3 +1,4 @@
+@use 'sass:color';
 /**
  * -----------------------------------------------------------------------------
  * File: components/buttons/tertiary
@@ -9,6 +10,6 @@
   background-color: $color-dark;
   color: $color-white;
 	&:hover {
-		background-color: lighten($color-dark, 20);
+		background-color: color.adjust($color-dark, $lightness: 20%);
 	}
 }

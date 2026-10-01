@@ -1,22 +1,22 @@
 <template>
   <div>
-    <vue-dropzone
+    <dropzone
       ref="dropzone"
       id="dropzone"
       :options="fileConfig"
-      @vdropzone-complete="complete"
-    ></vue-dropzone>
+      @complete="complete"
+    ></dropzone>
     <span class="bubble is-restriction">{{restrictions}}</span>
   </div>
 </template>
 <script>
-import vue2Dropzone from "vue2-dropzone";
+import Dropzone from "@/components/ui/Dropzone.vue";
 import fileConfig from "@/components/files/config/config.js";
 
 export default {
 
   components: {
-    vueDropzone: vue2Dropzone,
+    Dropzone,
   },
 
   props: {

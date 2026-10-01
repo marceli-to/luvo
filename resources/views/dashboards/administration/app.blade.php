@@ -5,13 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <title>{{ config('app.name', 'Laravel') }}</title>
-<link href="{{ mix('assets/dashboard/css/app.css') }}" rel="stylesheet">
+@vite('resources/sass/dashboard/app.scss')
 <script src="{{ asset('assets/dashboard/js/tinymce/tinymce.min.js') }}"></script>
 </head>
 <body>
-<div id="app-administration">
-  <app-component />
-</div>
-<script src="{{ mix('assets/dashboard/js/bundle.administration.js') }}" defer></script>
+<div id="app-administration"></div>
+@vite('resources/js/dashboard/app.js')
 </body>
 </html>

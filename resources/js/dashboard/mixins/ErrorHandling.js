@@ -34,7 +34,7 @@ export default {
 
   },
 
-  beforeDestroy(){
+  beforeUnmount(){
     window.intercepted.$off('response:401', this.listener);
     window.intercepted.$off('response:403', this.listener);
     window.intercepted.$off('response:404', this.listener);

@@ -1,8 +1,36 @@
 {
+  "_rolldown-runtime-B0Z9INg1.js": {
+    "file": "assets/rolldown-runtime-B0Z9INg1.js",
+    "name": "rolldown-runtime"
+  },
+  "resources/js/dashboard/app.js": {
+    "file": "assets/app-aC-8whEo.js",
+    "name": "app",
+    "src": "resources/js/dashboard/app.js",
+    "isEntry": true,
+    "imports": [
+      "_rolldown-runtime-B0Z9INg1.js"
+    ],
+    "css": [
+      "assets/app-28YPfJ3N.css"
+    ]
+  },
   "resources/js/web/app.js": {
-    "file": "assets/app-DYvxOiJs.js",
+    "file": "assets/app-BpidzCiW.js",
     "name": "app",
     "src": "resources/js/web/app.js",
+    "isEntry": true,
+    "imports": [
+      "_rolldown-runtime-B0Z9INg1.js"
+    ]
+  },
+  "resources/sass/dashboard/app.scss": {
+    "file": "assets/app-DUaiyWRT.css",
+    "name": "app",
+    "names": [
+      "app.css"
+    ],
+    "src": "resources/sass/dashboard/app.scss",
     "isEntry": true
   },
   "resources/sass/web/app.scss": {

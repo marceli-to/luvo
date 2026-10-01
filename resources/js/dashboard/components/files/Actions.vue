@@ -25,7 +25,7 @@
 import { 
   EditIcon,
   Trash2Icon,
-} from 'vue-feather-icons';
+} from 'lucide-vue-next';
 
 export default {
 

@@ -9,7 +9,7 @@
       <div v-show="tabs.data.active">
         <language-tabs :languages="languageTabs"></language-tabs>
         <div v-show="languageTabs.de.active">
-          <div :class="[this.errors.address ? 'has-error' : '', 'form-row']">
+          <div :class="[errors.address ? 'has-error' : '', 'form-row']">
             <label>Adresse</label>
             <tinymce-editor
                 :init="tinyConfig"
@@ -107,7 +107,7 @@
           <div class="form-row is-last">
             <radio-button 
               :label="'Publizieren?'"
-              v-bind:publish.sync="contact.publish"
+              v-model:publish="contact.publish"
               :model="contact.publish"
               :name="'publish'">
             </radio-button>
@@ -128,14 +128,14 @@
 <script>
 
 // Icons
-import { ArrowLeftIcon } from 'vue-feather-icons';
+import { ArrowLeftIcon } from 'lucide-vue-next';
 
 // Mixins
 import ErrorHandling from "@/mixins/ErrorHandling";
 
 // TinyMCE
 import tinyConfig from "@/config/tiny.js";
-import TinymceEditor from "@tinymce/tinymce-vue";
+import TinymceEditor from "@/components/ui/TinymceEditor.js";
 
 // Components
 import RadioButton from "@/components/ui/RadioButton.vue";

@@ -9,7 +9,7 @@
       <div v-show="tabs.data.active">
         <language-tabs :languages="languageTabs"></language-tabs>
         <div v-show="languageTabs.de.active">
-          <div :class="[this.errors.title ? 'has-error' : '', 'form-row']">
+          <div :class="[errors.title ? 'has-error' : '', 'form-row']">
             <label>Titel*</label>
             <input type="text" v-model="home.title.de">
             <label-required />
@@ -79,7 +79,7 @@
           <div class="form-row is-last">
             <radio-button 
               :label="'Publizieren?'"
-              v-bind:publish.sync="home.publish"
+              v-model:publish="home.publish"
               :model="home.publish"
               :name="'publish'">
             </radio-button>
@@ -100,14 +100,14 @@
 <script>
 
 // Icons
-import { ArrowLeftIcon } from 'vue-feather-icons';
+import { ArrowLeftIcon } from 'lucide-vue-next';
 
 // Mixins
 import ErrorHandling from "@/mixins/ErrorHandling";
 
 // TinyMCE
 import tinyConfig from "@/config/tiny.js";
-import TinymceEditor from "@tinymce/tinymce-vue";
+import TinymceEditor from "@/components/ui/TinymceEditor.js";
 
 // Components
 import RadioButton from "@/components/ui/RadioButton.vue";
