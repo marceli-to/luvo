@@ -24,25 +24,13 @@ multilingual-routes v4 → v6 needed **no code changes**.
   Same framing as production for all 55 crops. Weight for those 55:
   20 MB (old, always 2400 px) → 6.1 MB jpg / 4.5 MB webp / 4.4 MB avif.
 
-### Not yet verified
+Later backend fixes found while testing the admin:
 
-- **Admin** (login, CRUD, upload, crop save, reorder): needs a login.
-  The compiled Vue 2 bundle in `public/assets` still talks to the same API.
-
-### Left for the user (deletion was blocked by the permission classifier)
-
-Unreferenced now, safe to remove:
-
-```
-git rm -r app/Filters config/dompdf.php config/image.php config/image-cache.php \
-  app/Http/Kernel.php app/Console/Kernel.php app/Exceptions/Handler.php \
-  app/Providers/AuthServiceProvider.php app/Providers/BroadcastServiceProvider.php \
-  app/Providers/EventServiceProvider.php app/Providers/RouteServiceProvider.php \
-  app/Http/Middleware/CheckForMaintenanceMode.php app/Http/Middleware/EncryptCookies.php \
-  app/Http/Middleware/TrimStrings.php app/Http/Middleware/TrustHosts.php \
-  app/Http/Middleware/TrustProxies.php app/Http/Middleware/VerifyCsrfToken.php \
-  app/Http/Middleware/Authenticate.php
-```
+| Fix | Commit |
+|---|---|
+| Legacy skeleton files removed (by the user) | `c4396d8` |
+| Sanctum 4 config (old one pointed at the deleted CSRF middleware → every api call 500) | `c4ba6a6` |
+| Validation messages: L12+ requires strings → `BaseFormRequest`, same 422 shape | `30baa00` |
 
 After go-live: `storage/app/public/cache/` (old image-cache output) can go.
 
@@ -57,7 +45,41 @@ After go-live: `storage/app/public/cache/` (old image-cache output) can go.
 - Glide cache lives in `storage/app/.glide-cache` (writable, not backed up).
 - First view of each image variant renders it (~0.2–0.7 s for AVIF).
 
-## Frontend: next
+## Frontend: done (2026-10-01)
 
-Vue 2 → 3 + Mix → Vite. Reference for the Vite switch:
-`github.com/marceli-to/generalplaner-ag.ch` (done there 2026-09-30).
+| Step | Commit |
+|---|---|
+| Public site on Vite (pattern from generalplaner-ag.ch) | `6d145f0` |
+| Admin on Vue 3 + Vite | `2d7787e` |
+
+Build: `npm run build` → `public/build` (committed). No more Mix.
+
+### Verified in the browser (local admin user `claude@luvo.test`)
+
+- Public site: pixel-identical to production, no console errors; jQuery
+  plugins, lazysizes, simplebar load; tall screens now get the 1600×1920 AVIF.
+- Admin: login, all 13 screens load without errors (lists, forms, 3–21
+  TinyMCE editors, tabs, dropzones); save (PUT 200 + notification);
+  validation (422 → message + field marked); publish toggle inside a
+  draggable list (`$parent.$parent` chain OK); cropper opens on the saved
+  crop and saves the same coords; image upload → store → delete; file
+  upload → store → delete.
+
+### Still to check by hand
+
+- **Drag-and-drop reorder** (Sortable uses native HTML5 DnD, which the
+  browser automation can't drive). One drag per list type: team members,
+  publications, images.
+- Icons are lucide now (same names as feather); a few glyphs differ slightly.
+
+### Known, unchanged behaviour
+
+- Deleting a file in "Dateien" removes the record only, not the file.
+- `api/publications` is dead and broken (missing import); unused by the admin.
+- `public/assets/js/shop.js` is unreferenced Mix output from elsewhere.
+
+## Next
+
+- Privacy policy (Datenschutz) in EN + FR: needs the client's texts.
+- Deploy: `git pull`, `composer install --no-dev`, `php artisan optimize:clear`,
+  make `storage/app/.glide-cache` writable. Snapshot DB + storage first.
