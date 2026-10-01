@@ -42,7 +42,7 @@
 
 .dz-remove {
   @include background-default();
-  background-image: url($url-icons + 'trash.svg');
+  background-image: url($url-icons + 'trash-light.svg');
   background-size: 16px 16px;
   font-size: 14px;
   line-height: 1 !important;

@@ -2,6 +2,7 @@
   <div>
     <div class="upload-listing">
       <a href="" class="icon-view" @click.prevent="view = view === 'grid' ? 'list' : 'grid'">
+        <PhLayout :size="18" weight="light" />
         <span v-if="view === 'grid'">Grid Ansicht</span>
         <span v-else>Listen Ansicht</span>
       </a>
@@ -161,7 +162,7 @@
 import { ref, reactive } from 'vue';
 import draggable from 'vuedraggable';
 import { Cropper } from 'vue-advanced-cropper';
-import { PhEye, PhEyeSlash, PhPencil, PhImage, PhTrash, PhCrop, PhX } from '@phosphor-icons/vue';
+import { PhLayout, PhEye, PhEyeSlash, PhPencil, PhImage, PhTrash, PhCrop, PhX } from '@phosphor-icons/vue';
 import { imageUrl, preloadImage } from '@/lib/images';
 import { useOrder } from '@/composables/useOrder';
 import { useEscape } from '@/composables/useEscape';

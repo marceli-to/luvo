@@ -5,13 +5,10 @@
  */
 
 .icon-view {
-  @extend %icon-ib;
-  @extend %icon-bg;
-  background-image: url($url-icons + 'layout.svg');
-  background-size: 18px auto;
-  background-position: center left;
+  align-items: center;
   color: $color-dark;
+  display: inline-flex;
+  gap: 6px;
   margin-bottom: 20px;
-  padding-left: 24px;
   text-decoration: none !important;
 }
