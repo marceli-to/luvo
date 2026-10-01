@@ -103,6 +103,19 @@ Initial admin JS ~216 KB (was 639 KB).
 
 Still by hand: drag-and-drop reorder (see above).
 
+## Editor: TinyMCE → Tiptap (2026-10-01, `3bf1067`)
+
+Tiptap 3 as in rework.strut.ch / forrerzimmermann.ch, in
+`components/ui/editor/` (Editor, Toolbar, LinkDialog, smallText).
+Link dialog: URL / E-Mail / Telefon / **Datei** (uploaded files from
+`/api/files`). TinyMCE and its 7.5 MB of self-hosted assets are gone.
+
+All 197 stored rich-text values round-trip with the same visible text,
+links, headings, fs-sm, lists and bold (`.rewrite/tools/tiptap-roundtrip.mjs`;
+needs `@tiptap/html`, `happy-dom` and a `content.json` export). Saving a text
+drops Word/Outlook paste junk (246 KB → 85 KB overall); pasted inline fonts
+(Segoe UI, 12pt) disappear, so those texts use the site font again.
+
 ## Next
 
 - Privacy policy (Datenschutz) in EN + FR: **content only**. The admin's
