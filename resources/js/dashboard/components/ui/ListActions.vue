@@ -3,27 +3,27 @@
     <div v-if="hasToggle">
       <a href="javascript:;" @click.prevent="emit('toggle', record.id)">
         <span v-if="record.publish" class="feather-icon">
-          <EyeIcon size="18" />
+          <PhEye :size="18" weight="light" />
         </span>
         <span v-else>
-          <EyeOffIcon size="18" class="feather-icon" />
+          <PhEyeSlash :size="18" weight="light" class="feather-icon" />
         </span>
       </a>
     </div>
     <div v-if="editRoute">
       <router-link :to="{ name: editRoute, params: { id: record.id } }" class="feather-icon">
-        <EditIcon size="18" />
+        <PhPencil :size="18" weight="light" />
       </router-link>
     </div>
     <div v-if="hasDestroy">
       <a href="javascript:;" class="feather-icon" @click.prevent="emit('destroy', record.id)">
-        <Trash2Icon size="18" />
+        <PhTrash :size="18" weight="light" />
       </a>
     </div>
   </div>
 </template>
 <script setup>
-import { EyeIcon, EyeOffIcon, EditIcon, Trash2Icon } from 'lucide-vue-next';
+import { PhEye, PhEyeSlash, PhPencil, PhTrash } from '@phosphor-icons/vue';
 
 defineProps({
   record: { type: Object, required: true },

@@ -1,10 +1,10 @@
 <template>
   <div :class="['loading-indicator', classNames]">
-    <LoaderIcon :size="iconSize" class="loading-indicator__icon" />
+    <PhCircleNotch :size="iconSize" weight="light" class="loading-indicator__icon" />
   </div>
 </template>
 <script setup>
-import { LoaderIcon } from 'lucide-vue-next';
+import { PhCircleNotch } from '@phosphor-icons/vue';
 
 defineProps({
   classNames: { type: String, default: null },

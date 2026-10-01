@@ -4,7 +4,7 @@
       <header class="editor-dialog__header">
         <h2>Link</h2>
         <a href="javascript:;" class="feather-icon" @click.prevent="close()">
-          <XIcon size="18" />
+          <PhX :size="18" weight="light" />
         </a>
       </header>
 
@@ -76,7 +76,7 @@
 </template>
 <script setup>
 import { ref, reactive, computed } from 'vue';
-import { XIcon } from 'lucide-vue-next';
+import { PhX } from '@phosphor-icons/vue';
 import http from '@/lib/http';
 
 const props = defineProps({

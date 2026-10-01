@@ -39,28 +39,28 @@
             <div>
               <div>
                 <a href="javascript:;" class="feather-icon" @click.prevent="emit('toggle', image)">
-                  <EyeIcon v-if="image.publish == 1" size="18" />
-                  <EyeOffIcon v-else size="18" />
+                  <PhEye v-if="image.publish == 1" :size="18" weight="light" />
+                  <PhEyeSlash v-else :size="18" weight="light" />
                 </a>
               </div>
               <div>
                 <a href="javascript:;" class="feather-icon" @click.prevent="openEdit(image)">
-                  <EditIcon size="18" />
+                  <PhPencil :size="18" weight="light" />
                 </a>
               </div>
               <div>
                 <a :href="imageUrl(image, 'crop')" target="_blank" class="feather-icon">
-                  <ImageIcon size="18" />
+                  <PhImage :size="18" weight="light" />
                 </a>
               </div>
               <div>
                 <a href="javascript:;" class="feather-icon" @click.prevent="emit('destroy', image)">
-                  <Trash2Icon size="18" />
+                  <PhTrash :size="18" weight="light" />
                 </a>
               </div>
               <div>
                 <a href="javascript:;" class="feather-icon" @click.prevent="openCropper(image)">
-                  <CropIcon size="18" />
+                  <PhCrop :size="18" weight="light" />
                 </a>
               </div>
             </div>
@@ -72,7 +72,7 @@
     <div :class="[isEditOpen ? 'is-visible' : '', 'upload-overlay-edit']">
       <div class="upload-overlay__close">
         <a href="javascript:;" class="feather-icon icon-close-overlay" @click.prevent="isEditOpen = false">
-          <XIcon size="24" />
+          <PhX :size="24" weight="light" />
         </a>
       </div>
       <div class="upload-overlay__grid" v-if="editItem">
@@ -128,7 +128,7 @@
       <template v-else-if="cropItem && isCropperOpen">
         <div class="upload-overlay__close">
           <a href="javascript:;" class="feather-icon icon-close-overlay" @click.prevent="closeCropper()">
-            <XIcon size="24" />
+            <PhX :size="24" weight="light" />
           </a>
         </div>
         <div class="upload-overlay-cropper__wrapper">
@@ -164,7 +164,7 @@
 import { ref, reactive } from 'vue';
 import draggable from 'vuedraggable';
 import { Cropper } from 'vue-advanced-cropper';
-import { EyeIcon, EyeOffIcon, EditIcon, ImageIcon, Trash2Icon, CropIcon, XIcon } from 'lucide-vue-next';
+import { PhEye, PhEyeSlash, PhPencil, PhImage, PhTrash, PhCrop, PhX } from '@phosphor-icons/vue';
 import { imageUrl, preloadImage } from '@/lib/images';
 import { useOrder } from '@/composables/useOrder';
 import { useEscape } from '@/composables/useEscape';

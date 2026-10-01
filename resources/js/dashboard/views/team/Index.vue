@@ -6,7 +6,7 @@
         <h1>Teams</h1>
         <div v-if="teams.items.length < 2">
           <router-link :to="{ name: 'team-create' }" class="feather-icon feather-icon--prepend">
-            <PlusIcon size="16" />
+            <PhPlus :size="16" weight="light" />
             <span>Hinzufügen</span>
           </router-link>
         </div>
@@ -30,7 +30,7 @@
       <header class="content-header sb-lg">
         <h1>Mitarbeiter</h1>
         <router-link :to="{ name: 'team-member-create' }" class="feather-icon feather-icon--prepend">
-          <PlusIcon size="16" />
+          <PhPlus :size="16" weight="light" />
           <span>Hinzufügen</span>
         </router-link>
       </header>
@@ -64,7 +64,7 @@
         <h1>Assistenz</h1>
         <div v-if="assistants.items.length < 2">
           <router-link :to="{ name: 'assistant-create' }" class="feather-icon feather-icon--prepend">
-            <PlusIcon size="16" />
+            <PhPlus :size="16" weight="light" />
             <span>Hinzufügen</span>
           </router-link>
         </div>
@@ -90,7 +90,7 @@
 <script setup>
 import { ref, reactive, computed } from 'vue';
 import draggable from 'vuedraggable';
-import { PlusIcon } from 'lucide-vue-next';
+import { PhPlus } from '@phosphor-icons/vue';
 import LoadingIndicator from '@/components/ui/LoadingIndicator.vue';
 import ListActions from '@/components/ui/ListActions.vue';
 import Separator from '@/components/ui/Separator.vue';

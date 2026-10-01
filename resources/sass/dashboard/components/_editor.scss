@@ -38,11 +38,14 @@
   padding: 0;
   width: 30px;
 
+  // Subtle: only the icon darkens (the global button:hover adds a dark background)
   &:hover {
+    background-color: transparent;
     color: $color-dark;
   }
 
-  &.is-active {
+  &.is-active,
+  &.is-active:hover {
     background-color: $color-light-grey;
     color: $color-dark;
   }

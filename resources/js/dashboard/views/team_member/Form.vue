@@ -50,7 +50,7 @@
               <header class="content-header" style="margin-bottom: 5px">
                 <label>Publikationen (Artikel)</label>
                 <router-link :to="{ name: 'publication-create', params: { memberId: record.id } }" class="feather-icon feather-icon--prepend">
-                  <PlusIcon size="16" />
+                  <PhPlus :size="16" weight="light" />
                   <span>Hinzufügen</span>
                 </router-link>
               </header>
@@ -123,7 +123,7 @@
 import { ref } from 'vue';
 import draggable from 'vuedraggable';
 import { notify } from '@kyvg/vue3-notification';
-import { PlusIcon } from 'lucide-vue-next';
+import { PhPlus } from '@phosphor-icons/vue';
 import LoadingIndicator from '@/components/ui/LoadingIndicator.vue';
 import Tabs from '@/components/ui/Tabs.vue';
 import LanguageTabs from '@/components/ui/LanguageTabs.vue';

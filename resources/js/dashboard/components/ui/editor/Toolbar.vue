@@ -8,7 +8,7 @@
       :title="action.title"
       @click="action.run()"
     >
-      <component :is="action.icon" size="16" />
+      <component :is="action.icon" :size="16" weight="light" />
     </button>
     <LinkDialog ref="linkDialog" :editor="editor" />
   </div>
@@ -16,9 +16,9 @@
 <script setup>
 import { ref } from 'vue';
 import {
-  Heading1Icon, Heading2Icon, Heading3Icon, BoldIcon, ListIcon, ListOrderedIcon,
-  ALargeSmallIcon, LinkIcon, RemoveFormattingIcon,
-} from 'lucide-vue-next';
+  PhTextHOne, PhTextHTwo, PhTextHThree, PhTextB, PhListBullets, PhListNumbers,
+  PhTextAa, PhLink, PhEraser,
+} from '@phosphor-icons/vue';
 import LinkDialog from './LinkDialog.vue';
 import { isSmallText } from './smallText';
 
@@ -37,42 +37,42 @@ const heading = (level, icon) => ({
 });
 
 const actions = [
-  heading(1, Heading1Icon),
-  heading(2, Heading2Icon),
-  heading(3, Heading3Icon),
+  heading(1, PhTextHOne),
+  heading(2, PhTextHTwo),
+  heading(3, PhTextHThree),
   {
     title: 'Fett',
-    icon: BoldIcon,
+    icon: PhTextB,
     active: () => props.editor.isActive('bold'),
     run: () => chain().toggleBold().run(),
   },
   {
     title: 'Liste',
-    icon: ListIcon,
+    icon: PhListBullets,
     active: () => props.editor.isActive('bulletList'),
     run: () => chain().toggleBulletList().run(),
   },
   {
     title: 'Nummerierte Liste',
-    icon: ListOrderedIcon,
+    icon: PhListNumbers,
     active: () => props.editor.isActive('orderedList'),
     run: () => chain().toggleOrderedList().run(),
   },
   {
     title: 'Kleine Schrift',
-    icon: ALargeSmallIcon,
+    icon: PhTextAa,
     active: () => isSmallText(props.editor),
     run: () => chain().toggleSmallText().run(),
   },
   {
     title: 'Link',
-    icon: LinkIcon,
+    icon: PhLink,
     active: () => props.editor.isActive('link'),
     run: () => linkDialog.value.open(),
   },
   {
     title: 'Formatierung entfernen',
-    icon: RemoveFormattingIcon,
+    icon: PhEraser,
     run: () => chain().unsetAllMarks().clearNodes().run(),
   },
 ];

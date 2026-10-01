@@ -10,12 +10,12 @@
               <router-link :to="{ name: 'user-edit', params: { id: user.id } }">{{ user.firstname }} {{ user.name }}</router-link><br>
             </template>
             <a href="/logout" class="feather-icon feather-icon--prepend">
-              <LogOutIcon size="12" />
+              <PhSignOut :size="12" weight="light" />
               <span>Logout</span>
             </a>
           </span>
           <a href="javascript:;" @click="menuVisible = false" class="feather-icon menu-close">
-            <ArrowRightIcon size="24" />
+            <PhArrowRight :size="24" weight="light" />
           </a>
         </header>
         <ul>
@@ -48,7 +48,7 @@
 <script setup>
 import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { ArrowRightIcon, LogOutIcon } from 'lucide-vue-next';
+import { PhArrowRight, PhSignOut } from '@phosphor-icons/vue';
 import PageHeader from '@/views/layout/PageHeader.vue';
 import { useUser } from '@/composables/useUser';
 

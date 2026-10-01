@@ -6,7 +6,7 @@
         <h1>Kontakt</h1>
         <div v-if="!items.length">
           <router-link :to="{ name: 'contact-create' }" class="feather-icon feather-icon--prepend">
-            <PlusIcon size="16" />
+            <PhPlus :size="16" weight="light" />
             <span>Hinzufügen</span>
           </router-link>
         </div>
@@ -30,7 +30,7 @@
   </div>
 </template>
 <script setup>
-import { PlusIcon } from 'lucide-vue-next';
+import { PhPlus } from '@phosphor-icons/vue';
 import LoadingIndicator from '@/components/ui/LoadingIndicator.vue';
 import ListActions from '@/components/ui/ListActions.vue';
 import { useListing } from '@/composables/useListing';
