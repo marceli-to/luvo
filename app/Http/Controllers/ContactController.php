@@ -25,11 +25,11 @@ class ContactController extends BaseController
   public function index()
   { 
     $data['teams'] = [
-      'luks' => $this->team->bySlug('luks')->with('members')->get()->first(),
-      'vogt' => $this->team->bySlug('vogt')->with('members')->get()->first()
+      'luks' => $this->team->published()->where('slug', 'luks')->with('members')->first(),
+      'vogt' => $this->team->published()->where('slug', 'vogt')->with('members')->first()
     ];
 
-    $data['contact'] = $this->contact->with('publishedImages')->get()->first();
+    $data['contact'] = $this->contact->published()->with('publishedImages')->orderBy('id')->firstOrFail();
     return view($this->viewPath . 'index', ['data' => $data]);
   }
 }

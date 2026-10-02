@@ -22,7 +22,7 @@ class TeamController extends BaseController
 
   public function luks()
   { 
-    $team = $this->team->with('publishedImages')->where('slug', '=', 'luks')->firstOrFail();
+    $team = $this->team->published()->with('publishedImages')->where('slug', '=', 'luks')->firstOrFail();
     return view($this->viewPath . 'index', ['data' => $team]);
   }
 
@@ -34,7 +34,7 @@ class TeamController extends BaseController
 
   public function vogt()
   { 
-    $team = $this->team->with('publishedImages')->where('slug', '=', 'vogt')->firstOrFail();
+    $team = $this->team->published()->with('publishedImages')->where('slug', '=', 'vogt')->firstOrFail();
     return view($this->viewPath . 'index', ['data' => $team]);
   }
 }

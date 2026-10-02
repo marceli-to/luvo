@@ -41,10 +41,11 @@ class AssistantController extends BaseController
   public function _get($slug)
   {
     return $this->assistant
+      ->published()
       ->with('publishedImages', 'team')
       ->whereHas('team', function($query) use ($slug) {
-        $query->where('slug', $slug);
-      })->get()->first();
+        $query->published()->where('slug', $slug);
+      })->firstOrFail();
   }
 
 }

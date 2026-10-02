@@ -22,7 +22,7 @@ class HomeController extends BaseController
 
   public function index()
   { 
-    $data = $this->home->with('publishedImages')->get()->first();
+    $data = $this->home->published()->with('publishedImages')->orderBy('id')->firstOrFail();
     return view($this->viewPath . 'index', ['data' => $data]);
   }
 }
