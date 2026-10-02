@@ -37,6 +37,18 @@ return [
   
   /*
   |--------------------------------------------------------------------------
+  | Seo description (General, French)
+  |--------------------------------------------------------------------------
+  |
+  | Used for SEO (Meta description, Open Graph Description)
+  | Translated from the German text; to be checked by the client.
+  |
+  */
+
+  'description_fr' => 'Depuis 1999, nous conseillons des particuliers, des entreprises et des organisations dans les questions de droit privé. Avec compétence, rigueur, un engagement personnel résolu, efficacité et un sens aigu des responsabilités, nous recherchons toujours la meilleure solution possible, adaptée à vos besoins individuels.',
+
+  /*
+  |--------------------------------------------------------------------------
   | Seo description (General, English)
   |--------------------------------------------------------------------------
   |

@@ -112,12 +112,11 @@ class PublicPagesTest extends TestCase
         $html = $this->page($locale, $url)->getContent();
         $this->assertMatchesRegularExpression('~<title>[^<]*' . preg_quote(config('seo.title'), '~') . '</title>~u', $html);
 
-        $description = fn () => $this->assertMatchesRegularExpression('~<meta name="description" content="[^"]{5,}">~u', $html);
-        // Pages without their own description use config('seo.description_' . locale); there's none for fr
-        if ($locale === 'fr' && preg_match('~assist|contact~', $url)) {
-            $this->knownFinding('F15', 'no default meta description for fr', $description);
+        $this->assertMatchesRegularExpression('~<meta name="description" content="[^"]{5,}">~u', $html);
+        // Pages without their own description use the default of their language
+        if (preg_match('~home|assist|contact~', $url)) {
+            $this->assertStringContainsString('<meta name="description" content="' . e(config("seo.description_{$locale}")) . '">', $html);
         }
-        $description();
     }
 
     #[Qa('pg-seo')]
