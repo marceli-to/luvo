@@ -5,6 +5,7 @@
       :key="action.title"
       type="button"
       :class="['editor__button', { 'is-active': action.active?.() }]"
+      :disabled="action.disabled?.()"
       :title="action.title"
       @click="action.run()"
     >
@@ -16,8 +17,9 @@
 <script setup>
 import { ref } from 'vue';
 import {
-  PhTextHOne, PhTextHTwo, PhTextHThree, PhTextB, PhListBullets, PhListNumbers,
-  PhTextAa, PhLink, PhEraser,
+  PhArrowUUpLeft, PhArrowUUpRight, PhTextHOne, PhTextHTwo, PhTextHThree, PhTextB,
+  PhListBullets, PhListNumbers, PhTextSuperscript, PhTextAa, PhArrowsInLineHorizontal,
+  PhLink, PhEraser,
 } from '@phosphor-icons/vue';
 import LinkDialog from './LinkDialog.vue';
 import { isSmallText } from './smallText';
@@ -37,6 +39,18 @@ const heading = (level, icon) => ({
 });
 
 const actions = [
+  {
+    title: 'Rückgängig',
+    icon: PhArrowUUpLeft,
+    disabled: () => !props.editor.can().undo(),
+    run: () => chain().undo().run(),
+  },
+  {
+    title: 'Wiederholen',
+    icon: PhArrowUUpRight,
+    disabled: () => !props.editor.can().redo(),
+    run: () => chain().redo().run(),
+  },
   heading(1, PhTextHOne),
   heading(2, PhTextHTwo),
   heading(3, PhTextHThree),
@@ -59,10 +73,22 @@ const actions = [
     run: () => chain().toggleOrderedList().run(),
   },
   {
+    title: 'Hochgestellt',
+    icon: PhTextSuperscript,
+    active: () => props.editor.isActive('superscript'),
+    run: () => chain().toggleSuperscript().run(),
+  },
+  {
     title: 'Kleine Schrift',
     icon: PhTextAa,
     active: () => isSmallText(props.editor),
     run: () => chain().toggleSmallText().run(),
+  },
+  {
+    title: 'Worttrennung deaktivieren',
+    icon: PhArrowsInLineHorizontal,
+    active: () => props.editor.isActive('noWrap'),
+    run: () => chain().toggleNoWrap().run(),
   },
   {
     title: 'Link',

@@ -49,6 +49,13 @@
     background-color: $color-light-grey;
     color: $color-dark;
   }
+
+  &:disabled,
+  &:disabled:hover {
+    color: $color-dark-grey;
+    cursor: default;
+    opacity: .35;
+  }
 }
 
 // Content looks like the TinyMCE editor's did (its default content CSS:
@@ -101,6 +108,12 @@
 
   li > p {
     margin: 0;
+  }
+
+  // Worttrennung deaktivieren
+  span[style*="nowrap"] {
+    background-color: $color-light;
+    outline: 1px dotted $color-dark-grey;
   }
 
   a {

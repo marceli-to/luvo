@@ -9,10 +9,12 @@ import { watch, onBeforeUnmount } from 'vue';
 import { useEditor, EditorContent } from '@tiptap/vue-3';
 import StarterKit from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
+import Superscript from '@tiptap/extension-superscript';
 import Toolbar from './Toolbar.vue';
 import { SmallText } from './smallText';
 import { serialize } from './serialize';
 import { Div } from './div';
+import { NoWrap } from './noWrap';
 
 defineProps({
   hasError: { type: Boolean, default: false },
@@ -38,7 +40,9 @@ const editor = useEditor({
       autolink: false,
       HTMLAttributes: { target: null, rel: null },
     }),
+    Superscript,
     SmallText,
+    NoWrap,
     Div,
   ],
   onUpdate: ({ editor }) => {
