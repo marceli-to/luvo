@@ -22,3 +22,4 @@ app.tar.gz
 /test-results
 /playwright-report
 .env.e2e
+/tests/qa-results.json
