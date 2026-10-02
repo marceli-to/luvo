@@ -28,7 +28,7 @@ if ($data['contact']->publishedImages)
                 @endif
               @endforeach
             </div>
-            @if ($image_count['mobile'] > 1)
+            @if (($image_count['mobile'] ?? 0) > 1)
               <div class="swiper-btn-next"></div>
               <div class="swiper-btn-prev"></div>
             @endif
@@ -45,7 +45,7 @@ if ($data['contact']->publishedImages)
                 @endif
               @endforeach
             </div>
-            @if ($image_count['desktop'] > 1)
+            @if (($image_count['desktop'] ?? 0) > 1)
               <div class="swiper-btn-next"></div>
               <div class="swiper-btn-prev"></div>
             @endif
