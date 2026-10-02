@@ -46,6 +46,15 @@ class UploadController extends Controller
    */
   public function image(Request $request)
   {
+    // Same rules as the uploader in the admin (Dropzone checks them first)
+    $request->validate(
+      ['file' => 'required|file|mimes:jpg,jpeg,png|max:8192'],
+      [
+        'file.required' => 'Keine Datei erhalten.',
+        'file.mimes' => 'Dateityp nicht erlaubt (erlaubt: jpg, png).',
+        'file.max' => 'Datei ist zu gross (erlaubt: max. 8 MB).',
+      ]
+    );
     $file = $request->file('file');
     $name = $this->sanitize(trim($file->getClientOriginalName()));
     $name = $this->prefix . uniqid()  . '_' . $name;
@@ -72,6 +81,14 @@ class UploadController extends Controller
    */
   public function file(Request $request)
   {
+    $request->validate(
+      ['file' => 'required|file|mimes:pdf|max:16384'],
+      [
+        'file.required' => 'Keine Datei erhalten.',
+        'file.mimes' => 'Dateityp nicht erlaubt (erlaubt: pdf).',
+        'file.max' => 'Datei ist zu gross (erlaubt: max. 16 MB).',
+      ]
+    );
     $file = $request->file('file');
     $name = $this->sanitize(trim($file->getClientOriginalName()));
     $name = $this->prefix . uniqid()  . '_' . $name;

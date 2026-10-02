@@ -142,7 +142,7 @@ class ApiTest extends TestCase
     {
         $id = $this->postJson('/api/team/member', $this->memberPayload($this->team()))->assertOk()->json('teamMemberId');
 
-        $this->knownFinding('F6', 'SEO Beschreibung is dropped on create', fn () => $this->assertEquals($this->t('QA-SEO'), TeamMember::find($id)->getTranslations('meta_description')));
+        $this->assertEquals($this->t('QA-SEO'), TeamMember::find($id)->getTranslations('meta_description'));
     }
 
     #[Qa('at-members-crud', 'am-pub-edit')]
@@ -199,12 +199,32 @@ class ApiTest extends TestCase
         $this->assertFileExists(storage_path('app/public/uploads/' . $response->json('name')));
     }
 
+    /**
+     * A real file with a misleading name: its type is detected from the
+     * content, as for a browser upload (fakes take it from the name).
+     */
+    protected function disguised(string $name, string $content): UploadedFile
+    {
+        $path = tempnam(sys_get_temp_dir(), 'qa');
+        file_put_contents($path, $content);
+
+        return new UploadedFile($path, $name, null, null, true);
+    }
+
     #[Qa('im-reject')]
     public function test_image_upload_rejects_other_types_on_the_server(): void
     {
-        $file = UploadedFile::fake()->createWithContent('qa.php', '<?php echo "qa";');
-
-        $this->knownFinding('F8', 'the server accepts any file type and size', fn () => $this->post('/api/image/upload', ['file' => $file])->assertUnprocessable());
+        $cases = [
+            'php' => UploadedFile::fake()->createWithContent('qa.php', '<?php echo "qa";'),
+            'php named .jpg' => $this->disguised('qa.jpg', '<?php echo "qa";'),
+            'gif' => UploadedFile::fake()->image('qa.gif'),
+            'pdf' => UploadedFile::fake()->create('qa.pdf', 10, 'application/pdf'),
+            'over 8 MB' => UploadedFile::fake()->image('qa.jpg')->size(8193),
+        ];
+        foreach ($cases as $case => $file) {
+            $this->postJson('/api/image/upload', ['file' => $file])->assertUnprocessable()->assertJsonValidationErrors('file');
+        }
+        $this->assertSame(['files'], array_map('basename', glob(storage_path('app/public/uploads/*'))), 'nothing was stored');
     }
 
     #[Qa('md-upload')]
@@ -225,8 +245,15 @@ class ApiTest extends TestCase
     #[Qa('md-reject')]
     public function test_file_upload_rejects_other_types_on_the_server(): void
     {
-        $file = UploadedFile::fake()->createWithContent('qa.html', '<script>alert(1)</script>');
-
-        $this->knownFinding('F8', 'the server accepts any file type and size', fn () => $this->post('/api/file/upload', ['file' => $file])->assertUnprocessable());
+        $cases = [
+            'html' => UploadedFile::fake()->createWithContent('qa.html', '<script>alert(1)</script>'),
+            'html named .pdf' => $this->disguised('qa.pdf', '<script>alert(1)</script>'),
+            'jpg' => UploadedFile::fake()->image('qa.jpg'),
+            'over 16 MB' => UploadedFile::fake()->create('qa.pdf', 16385, 'application/pdf'),
+        ];
+        foreach ($cases as $case => $file) {
+            $this->postJson('/api/file/upload', ['file' => $file])->assertUnprocessable()->assertJsonValidationErrors('file');
+        }
+        $this->assertSame([], glob(storage_path('app/public/uploads/files/*')), 'nothing was stored');
     }
 }
