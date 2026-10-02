@@ -29,7 +29,6 @@
   }
 
   h3 {
-    @include font-medium();
     @include font-size($fs-body-md);
   }
 
