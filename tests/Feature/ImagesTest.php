@@ -81,8 +81,8 @@ class ImagesTest extends TestCase
         // Quadrants: red top left, green top right, blue bottom left, yellow bottom right
         $this->upload('qa-region.png', 1000, 1000);
 
-        $topLeft = $this->get('/img/crop/qa-region.png/400/400/500,500,0,0')->getContent();
-        $bottomRight = $this->get('/img/crop/qa-region.png/400/400/500,500,500,500')->getContent();
+        $topLeft = $this->get('/img/crop/qa-region.png/1200/1200/500,500,0,0')->getContent();
+        $bottomRight = $this->get('/img/crop/qa-region.png/1200/1200/500,500,500,500')->getContent();
 
         $this->assertSame([255, 0, 0], $this->pixel($topLeft, 200, 200));
         $this->assertSame([255, 255, 0], $this->pixel($bottomRight, 200, 200));
@@ -134,7 +134,10 @@ class ImagesTest extends TestCase
     {
         $this->upload('qa-guard.jpg');
 
-        $this->knownFinding('F5', 'any size up to 2400 is rendered and cached', fn () => $this->get('/img/crop/qa-guard.jpg/901/601')->assertNotFound());
+        foreach (['901/601', '900/601', '2400/2400', '900', '1/1'] as $size) {
+            $this->get("/img/crop/qa-guard.jpg/{$size}")->assertNotFound();
+        }
+        $this->get('/img/crop/qa-guard.jpg/900/600')->assertOk();
     }
 
     #[Qa('img-guard')]
@@ -142,7 +145,10 @@ class ImagesTest extends TestCase
     {
         $this->upload('qa-guard.jpg');
 
-        $this->knownFinding('F5', 'unknown ?fm= is served as JPEG', fn () => $this->get('/img/crop/qa-guard.jpg/900/600?fm=tiff')->assertNotFound());
+        foreach (['tiff', 'gif', 'png', 'x'] as $format) {
+            $this->get("/img/crop/qa-guard.jpg/900/600?fm={$format}")->assertNotFound();
+        }
+        $this->get('/img/crop/qa-guard.jpg/900/600?fm=jpg')->assertOk()->assertHeader('Content-Type', 'image/jpeg');
     }
 
     #[Qa('img-cache')]

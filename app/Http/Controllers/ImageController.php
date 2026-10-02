@@ -15,13 +15,24 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  *   /img/thumbnail/{file}
  *   /img/crop/{file}/{maxWidth?}/{maxHeight?}/{coords?}   coords = w,h,x,y
  *
- * Every variant accepts ?fm=avif|webp.
+ * Every variant accepts ?fm=avif|webp|jpg. Only the sizes in SIZES and those
+ * formats are rendered, so arbitrary URLs can't fill the Glide cache.
  */
 class ImageController extends Controller
 {
   public const MAX_SIZE = 2400;
 
   public const FORMAT_QUALITY = ['jpg' => 75, 'webp' => 80, 'avif' => 70];
+
+  /**
+   * maxWidth x maxHeight pairs the site and the admin request: the <picture>
+   * slots in the public views, the admin previews (1600x1000, 1000x1600) and
+   * the Open Graph image (1500x1500).
+   */
+  public const SIZES = [
+    '900x560', '900x600', '1200x750', '1200x800', '1200x1200', '1500x1500',
+    '1600x1000', '1000x1600', '1600x1200', '1600x1920', '2400x1500',
+  ];
 
   protected Server $server;
 
@@ -49,6 +60,7 @@ class ImageController extends Controller
   public function crop(Request $request, string $filename, ?string $maxWidth = null, ?string $maxHeight = null, ?string $coords = null): Response
   {
     $source = $this->source($filename);
+    abort_unless($maxWidth === null || in_array("{$maxWidth}x{$maxHeight}", self::SIZES, true), 404);
     $maxWidth = $this->dimension($maxWidth);
     $maxHeight = $this->dimension($maxHeight);
 
@@ -75,7 +87,9 @@ class ImageController extends Controller
 
   protected function respond(string $filename, array $params, Request $request): Response
   {
-    $format = strtolower((string) $request->query('fm'));
+    $format = strtolower((string) $request->query('fm', 'jpg'));
+    abort_unless(in_array($format, ['jpg', 'jpeg', 'webp', 'avif'], true), 404);
+    // A modern format this server can't write falls back to JPEG
     $format = in_array($format, ImageSupport::modernFormats(), true) ? $format : 'jpg';
 
     $params['fm'] = $format;
