@@ -10,14 +10,18 @@ import { removeNewFiles } from './support/storage';
  * the content tables differ from before.
  */
 export default async function globalTeardown() {
-  const leftovers = cleanupQaRecords();
-  if (Object.keys(leftovers).length) {
-    console.warn('[qa] QA- records left behind by tests, now deleted:', leftovers);
+  try {
+    const leftovers = cleanupQaRecords();
+    if (Object.keys(leftovers).length) {
+      console.warn('[qa] QA- records left behind by tests, now deleted:', leftovers);
+    }
   }
-
-  const before = JSON.parse(fs.readFileSync(path.join(stateDir, 'storage-before.json'), 'utf8'));
-  const removed = removeNewFiles(before);
-  console.log(`[qa] removed ${removed.length} new files from storage/app`);
+  finally {
+    // Files go even if the database cleanup failed
+    const before = JSON.parse(fs.readFileSync(path.join(stateDir, 'storage-before.json'), 'utf8'));
+    const removed = removeNewFiles(before);
+    console.log(`[qa] removed ${removed.length} new files from storage/app`);
+  }
 
   const expected = JSON.parse(fs.readFileSync(path.join(stateDir, 'checksum-before.json'), 'utf8'));
   const actual = checksum();

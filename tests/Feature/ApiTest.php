@@ -157,6 +157,53 @@ class ApiTest extends TestCase
         $this->assertSame(0, Publication::where('team_member_id', $member->id)->count());
     }
 
+    #[Qa('im-delete')]
+    public function test_deleting_an_image_removes_its_upload_and_rendered_variants(): void
+    {
+        $member = $this->member($this->team());
+        $kept = $this->memberImage($member, $this->upload('qa-kept.jpg'));
+        $gone = $this->memberImage($member, $this->upload('qa-gone.jpg'));
+        $this->get('/img/crop/qa-gone.jpg/900/600')->assertOk();
+
+        $this->deleteJson('/api/team/member/image/qa-gone.jpg')->assertOk();
+
+        $this->assertNull(TeamMemberImage::find($gone->id));
+        $this->assertFileDoesNotExist(storage_path('app/public/uploads/qa-gone.jpg'));
+        $this->assertSame([], glob(storage_path('app/.glide-cache/uploads/qa-gone.jpg/*')));
+        $this->assertFileExists(storage_path('app/public/uploads/qa-kept.jpg'));
+        $this->assertNotNull($kept->fresh());
+    }
+
+    #[Qa('at-assist-list', 'ak-list')]
+    public function test_assistant_and_contact_with_images_can_be_deleted(): void
+    {
+        $assistant = $this->assistant($this->team());
+        $this->assistantImage($assistant, $this->upload('qa-assist.jpg'));
+        $contact = $this->contact();
+        $this->contactImage($contact, $this->upload('qa-contact.jpg'));
+
+        $this->deleteJson("/api/assistant/{$assistant->id}")->assertOk();
+        $this->deleteJson("/api/contact/{$contact->id}")->assertOk();
+
+        $this->assertNull($assistant->fresh());
+        $this->assertNull($contact->fresh());
+        $this->assertFileDoesNotExist(storage_path('app/public/uploads/qa-assist.jpg'));
+        $this->assertFileDoesNotExist(storage_path('app/public/uploads/qa-contact.jpg'));
+    }
+
+    #[Qa('at-teams-list', 'at-members-crud')]
+    public function test_deleting_a_team_removes_the_uploads_of_its_and_its_members_images(): void
+    {
+        $team = $this->team();
+        $this->teamImage($team, $this->upload('qa-team.jpg'));
+        $this->memberImage($this->member($team), $this->upload('qa-member.jpg'));
+
+        $this->deleteJson("/api/team/{$team->id}")->assertOk();
+
+        $this->assertFileDoesNotExist(storage_path('app/public/uploads/qa-team.jpg'));
+        $this->assertFileDoesNotExist(storage_path('app/public/uploads/qa-member.jpg'));
+    }
+
     #[Qa('at-members-drag', 'am-pub-drag')]
     public function test_order_endpoints_store_the_order(): void
     {
