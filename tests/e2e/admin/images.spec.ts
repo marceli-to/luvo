@@ -266,6 +266,19 @@ test('saving right after moving the crop frame keeps the new frame', async ({ pa
   expect(JSON.parse((await put).postData()!).coords_x).toBeGreaterThan(0);
 });
 
+test('Abbrechen in the cropper also discards a Desktop / Mobile switch', async ({ page, api }) => {
+  qa('im-crop-save');
+  knownFinding('F13', 'the Desktop / Mobile buttons change the device at once; Abbrechen keeps it');
+  const id = await createMember(api);
+  await openMemberImages(page, id);
+  await uploadSaved(page, ['qa-landscape.jpg']);
+  const item = items(page).first();
+  await openCropper(page, item);
+  await page.locator('.btn-cropper-format', { hasText: 'Mobile' }).click();
+  await page.locator('.upload-overlay-cropper a.btn-secondary', { hasText: 'Abbrechen' }).click();
+  await expect(item.locator('.image-label')).toHaveText('Desktop');
+});
+
 test('eye hides the image on the public page; view opens the crop; delete asks first', async ({ page, api, context }) => {
   qa('im-toggle', 'im-view', 'im-delete');
   const id = await createMember(api);

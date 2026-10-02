@@ -46,7 +46,8 @@ export default defineConfig({
       use: { ...phone, storageState: users.admin.state },
       grep: /@phone/,
       workers: 1,
-      dependencies: ['admin'],
+      // Read only: needn't wait for (or be skipped by) the admin project
+      dependencies: ['public-desktop', 'public-tall', 'public-phone'],
     },
   ],
   webServer: {

@@ -1,5 +1,6 @@
 import { execFileSync } from 'node:child_process';
-import { test, expect, qa } from '../support/fixtures';
+import { test, expect, qa, knownFinding } from '../support/fixtures';
+import { snapshot } from '../support/db';
 import { open, toast, row, save, heading } from '../support/admin';
 import { root, users } from '../support/env';
 import { login as storeLogin } from '../global-setup';
@@ -239,4 +240,23 @@ test('Not Found and Forbidden views', async ({ page, strict }) => {
   // Forbidden: only reached after an API 403; render it through the router
   await page.evaluate(() => (document.querySelector('#app-administration') as any).__vue_app__.config.globalProperties.$router.push('/forbidden'));
   await expect(page.locator('h1', { hasText: 'Access denied' })).toBeVisible();
+});
+
+test('stale XSRF token: saving says why it failed', async ({ page, context, strict }) => {
+  qa('auth-expired');
+  knownFinding('F12', 'a 419 (stale XSRF token) shows no message; the save silently does nothing');
+  strict.allow(/419/);
+  const restore = snapshot('home', [1]);
+  try {
+    await open(page, '/administration/home/edit/1');
+    const cookie = (await context.cookies()).find(c => c.name === 'XSRF-TOKEN')!;
+    await context.addCookies([{ ...cookie, value: 'stale' }]);
+    const response = page.waitForResponse(r => r.request().method() === 'PUT');
+    await page.locator('footer.module-footer button[type=submit]').click();
+    expect((await response).status()).toBe(419);
+    await expect(page.locator('.notification.error')).toBeVisible({ timeout: 5_000 });
+  }
+  finally {
+    restore();
+  }
 });
