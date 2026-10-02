@@ -1,0 +1,76 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/rich-text
+ * -----------------------------------------------------------------------------
+ *
+ * Headings and lists from the editor in the Home and Team texts (their
+ * paragraphs are sized by .content-wide / .content)
+ *
+ */
+
+.rich-text {
+
+  h2, h3 {
+    margin-bottom: $space-1x;
+    margin-top: $space-4x;
+
+    @include bp-md() {
+      margin-bottom: $space-2x;
+      margin-top: $space-6x;
+    }
+
+    + p {
+      text-indent: 0;
+    }
+  }
+
+  h2 {
+    @include font-size($fs-heading-sm);
+  }
+
+  h3 {
+    @include font-medium();
+    @include font-size($fs-body-md);
+  }
+
+  ul, ol {
+    margin: 0;
+    padding-left: $space-4x;
+
+    @include bp-md() {
+      padding-left: $space-6x;
+    }
+  }
+
+  ol {
+    list-style: decimal;
+  }
+
+  li {
+    display: list-item;
+    @include font-size($fs-body-md);
+  }
+
+  // Disc like the team member lists
+  ul > li {
+    list-style: none;
+    position: relative;
+
+    &:before {
+      @include background-default();
+      background-image: url($url-icons + 'disc.svg');
+      background-position: center left;
+      background-size: 6px auto;
+      content: "";
+      height: 1em;
+      left: -1em;
+      position: absolute;
+      top: .15em;
+      width: 1em;
+
+      @include bp-md() {
+        background-size: 8px auto;
+      }
+    }
+  }
+}

@@ -57,7 +57,7 @@ if ($data->publishedImages && $data->publishedImages->count() > 0)
         @endif
       </div>
       <div class="span order-md-1 content-scrollable" data-simplebar>
-        <article>
+        <article class="rich-text">
           <h1>{{ $data->title }}</h1>
           {!! $data->text !!}
         </article>
