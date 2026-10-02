@@ -11,6 +11,8 @@ import StarterKit from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
 import Toolbar from './Toolbar.vue';
 import { SmallText } from './smallText';
+import { serialize } from './serialize';
+import { Div } from './div';
 
 defineProps({
   hasError: { type: Boolean, default: false },
@@ -37,15 +39,16 @@ const editor = useEditor({
       HTMLAttributes: { target: null, rel: null },
     }),
     SmallText,
+    Div,
   ],
   onUpdate: ({ editor }) => {
-    model.value = editor.isEmpty ? null : editor.getHTML();
+    model.value = serialize(editor);
   },
 });
 
 // Content set from outside (e.g. after loading the record)
 watch(model, value => {
-  if (!editor.value || value === (editor.value.isEmpty ? null : editor.value.getHTML())) {
+  if (!editor.value || value === serialize(editor.value)) {
     return;
   }
   editor.value.commands.setContent(value ?? '', { emitUpdate: false });

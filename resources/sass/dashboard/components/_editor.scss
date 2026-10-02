@@ -51,51 +51,66 @@
   }
 }
 
+// Content looks like the TinyMCE editor's did (its default content CSS:
+// 16px, line-height 1.4, browser spacing; h1 22px, h2 18px), in the admin font
 .editor__content .ProseMirror {
-  color: $color-dark;
+  color: $color-black;
   @include font-regular();
-  line-height: 1.5;
+  font-size: 16px;
+  line-height: 1.4;
   max-height: 600px;
   min-height: 240px;
   outline: none;
   overflow-y: auto;
-  padding: 10px 12px;
+  padding: 0 16px;
 
-  > * + * {
-    margin-top: .75em;
+  // The admin's reset removes the browser's block spacing
+  p, ul, ol {
+    margin: 1em 0;
   }
 
-  h1 { font-size: 1.5em; }
-  h2 { font-size: 1.25em; }
-  h3 { font-size: 1.1em; }
+  // TinyMCE's div lines, no spacing
+  div {
+    margin: 0;
+  }
 
   h1, h2, h3 {
     @include font-bold();
-    line-height: 1.25;
+    line-height: 1.4;
   }
+
+  h1 { font-size: 22px; margin: .67em 0; }
+  h2 { font-size: 18px; margin: .83em 0; }
+  h3 { font-size: 1.17em; margin: 1em 0; }
 
   strong {
     @include font-bold();
   }
 
   ul, ol {
-    padding-left: 1.5em;
+    padding-left: 40px;
   }
 
   ul { list-style: disc; }
   ol { list-style: decimal; }
+
+  // The global reset shows every li inline-block
+  li {
+    display: list-item;
+  }
 
   li > p {
     margin: 0;
   }
 
   a {
-    color: $color-blue;
+    color: #00e;
     text-decoration: underline;
   }
 
-  .fs-sm {
-    font-size: .85em;
+  // TinyMCE didn't show Kleine Schrift at all; a hint on paragraphs only
+  p.fs-sm {
+    font-size: 14px;
   }
 }
 
@@ -159,7 +174,10 @@
   }
 }
 
-.editor-dialog__hint {
-  color: $color-dark-grey;
-  margin-top: 6px;
+.editor-dialog__upload {
+  margin-top: 10px;
+
+  .dropzone {
+    min-height: 80px;
+  }
 }

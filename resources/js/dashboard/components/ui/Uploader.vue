@@ -1,7 +1,7 @@
 <template>
   <div>
     <label v-if="label">{{ label }}</label>
-    <div ref="el" id="dropzone" class="vue-dropzone dropzone"></div>
+    <div ref="el" class="vue-dropzone dropzone"></div>
     <span class="bubble is-restriction">{{ restrictions }}</span>
   </div>
 </template>
@@ -41,6 +41,9 @@ onMounted(() => {
     dictFileTooBig: 'Datei ist zu gross ({{filesize}} MB, erlaubt: max. {{maxFilesize}} MB).',
     dictMaxFilesExceeded: 'Zu viele Dateien (max. {{maxFiles}} auf einmal).',
     filesizeBase: 1024,
+    // Next to the drop zone rather than in <body>: inside a modal <dialog>
+    // everything outside it is inert
+    hiddenInputContainer: el.value.parentElement,
   });
 
   // Rejected in the browser (type, size, count) or by the server

@@ -49,9 +49,9 @@
             <option v-if="isUnlistedFile" :value="link.value">{{ link.value.slice(FILE_PATH.length) }} (nicht in «Dateien»)</option>
           </select>
         </div>
-        <p class="editor-dialog__hint" v-if="filesLoaded && !files.length">
-          Noch keine Dateien vorhanden. Dateien werden unter «Dateien» hochgeladen.
-        </p>
+        <div class="editor-dialog__upload">
+          <Uploader v-bind="fileUpload" @uploaded="storeFile" />
+        </div>
       </div>
 
       <div class="form-row">
@@ -77,6 +77,8 @@
 <script setup>
 import { ref, reactive, computed } from 'vue';
 import { PhX } from '@phosphor-icons/vue';
+import { notify } from '@kyvg/vue3-notification';
+import Uploader from '@/components/ui/Uploader.vue';
 import http from '@/lib/http';
 
 const props = defineProps({
@@ -108,6 +110,29 @@ async function loadFiles() {
     // Notified by the http error handler
   }
   filesLoaded.value = true;
+}
+
+// Same restrictions as under «Dateien»
+const fileUpload = {
+  url: '/api/file/upload',
+  restrictions: 'pdf | max. 16 MB',
+  acceptedFiles: '.pdf',
+  maxFiles: 1,
+  maxFilesize: 16,
+};
+
+// Add the uploaded file to «Dateien» and link it
+async function storeFile(upload) {
+  try {
+    await http.post('/api/file/store', { name: upload.name, size: upload.size, type: upload.type });
+    const file = { title: upload.name, value: FILE_PATH + upload.name };
+    files.value = [...files.value, file].sort((a, b) => a.title.localeCompare(b.title, 'de'));
+    link.value = file.value;
+    notify({ type: 'success', text: 'Datei gespeichert!' });
+  }
+  catch {
+    // Notified by the http error handler
+  }
 }
 
 // Fill the form from an existing link's href
