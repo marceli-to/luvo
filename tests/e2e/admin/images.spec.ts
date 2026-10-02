@@ -442,7 +442,7 @@ for (const entity of ['assistant', 'contact'] as const) {
 
   test(`${name}: a record with images can be deleted`, async ({ page, api }) => {
     qa(entity === 'assistant' ? 'at-assist-list' : 'ak-list');
-    knownFinding('F18', `deleting a ${name} that has images fails (500): no ON DELETE CASCADE`);
+    knownFinding('F18', `deleting ${entity === 'assistant' ? 'an' : 'a'} ${name} that has images fails (500): no ON DELETE CASCADE`);
     const id = await createRecord(api, entity);
     await open(page, `/administration/${entity}/edit/${id}`);
     await tab(page, 'Bilder');

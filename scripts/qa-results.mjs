@@ -41,11 +41,12 @@ const results = {};
 for (const id of ids) {
   const linked = tests.filter(test => test.ids.includes(id) && test.status !== 'skipped');
   const failed = linked.find(test => test.status === 'failed');
-  const known = linked.find(test => test.status === 'known');
+  // Every known finding behind the id, e.g. "Known finding F4: …; Known finding F18: …"
+  const known = [...new Set(linked.filter(test => test.status === 'known').map(test => test.error?.startsWith('Known finding') ? test.error : `Known finding: ${test.error}`))].join('; ');
   results[id] = {
     status: linked.length === 0 ? 'manual' : failed || known ? 'fail' : 'pass',
     tests: linked.map(test => `${test.suite}: ${test.title}`),
-    error: failed?.error ?? (known ? (known.error?.startsWith('Known finding') ? known.error : `Known finding: ${known.error}`) : null),
+    error: failed?.error ?? (known || null),
   };
 }
 

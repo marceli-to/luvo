@@ -1,16 +1,18 @@
-# QA automation: test plan (Phase 1, for review)
+# QA automation: test plan and results
 
-Written 2026-10-02 against `master` @ `c9c7dc9`. No test code exists yet.
+Planned 2026-10-02 against `master` @ `c9c7dc9`, built the same day on
+branch `test/qa-automation`. Sections 1–5 are the plan as approved (with
+small corrections marked); the results are at the end: [Phase 2 result](#phase-2-result).
 Source checklist: `.rewrite/qa-checklist.json` (135 ids). Brief: `07-qa-automation-prompt.md`.
 
 ## Summary
 
 | Layer | Ids | Runs against |
 |---|---|---|
-| `feature` | 24 | PHPUnit, Laravel app in-process, DB `luvo_test`, temp storage dir |
-| `e2e` | 96 | Playwright + Chromium 1243, `php artisan serve` on 127.0.0.1:8010, DB `luvo_e2e` |
-| `visual` | 3 | Playwright, local vs `https://luvo.ch` (GET only, at most 2 in flight) |
-| `manual` | 12 | 9 deploy items + setup-db, setup-browsers, ak-privacy |
+| `feature` (planned) | 24 | PHPUnit, Laravel app in-process, DB `luvo_test`, temp storage dir |
+| `e2e` (planned) | 96 | Playwright + Chromium 1243, `php artisan serve` on 127.0.0.1:8010, DB `luvo_e2e` |
+| `visual` (planned) | 3 | Playwright, local vs `https://luvo.ch` (GET only, at most 2 in flight) |
+| `manual` (planned) | 12 | 9 deploy items + setup-db, setup-browsers, ak-privacy |
 | **Total** | **135** | |
 
 Many ids also get a secondary test in another layer (e.g. a 422 shape in `feature`
@@ -265,8 +267,8 @@ All `manual`: they run on the production server, which this suite never touches.
 - `phpunit.xml`: drop the SQLite-in-memory block, set `DB_CONNECTION=mysql`,
   `DB_DATABASE=luvo_test` (with `force="true"`). `TestCase::setUp()` aborts
   unless the connection's database is exactly `luvo_test`.
-- Data: small factory classes in `database/factories/` used via
-  `XFactory::new()` (no `HasFactory` trait needed, so no model changes).
+- Data: built by `tests/Support/BuildsRecords.php` (`forceCreate`, names start
+  with `QA-`) instead of factory classes; no model changes.
 - Storage: `UploadController` and Glide use `storage_path()` directly, so
   `Storage::fake()` doesn't help. `TestCase` points the app at a per-test temp
   dir with `$app->useStoragePath()` and copies in the fixture images. The real
@@ -281,8 +283,8 @@ All `manual`: they run on the production server, which this suite never touches.
   `DB_DATABASE=luvo_e2e`, `APP_URL=http://127.0.0.1:8010`,
   `SANCTUM_STATEFUL_DOMAINS=127.0.0.1:8010`, `SESSION_DOMAIN=null`,
   `SESSION_SECURE_COOKIE=false`, `MAIL_MAILER=log`, `APP_DEBUG=true`,
-  `CACHE_STORE=array`, QA user credentials.
-  - `CACHE_STORE=array` matters: the API is throttled to 200 requests/min per
+  `CACHE_DRIVER=array`, QA user credentials.
+  - `CACHE_DRIVER=array` (this app's `config/cache.php` reads the old name) matters: the API is throttled to 200 requests/min per
     user and an E2E run exceeds that. With the array store the limiter resets
     on every request (built-in server). The throttle itself isn't under test.
   - `PHP_CLI_SERVER_WORKERS=4` so parallel workers don't queue on one PHP process.
@@ -386,7 +388,7 @@ comments, inline Segoe UI).
   the other suites' last partial files are reused and their age is printed.
 - It also fails if an id in a test doesn't exist in the checklist (typos).
 
-## 4. Dependencies to add
+## 4. Dependencies (added as planned)
 
 | Package | Why |
 |---|---|
@@ -413,30 +415,39 @@ Two `example` stubs in `tests/Unit` and `tests/Feature` get deleted.
 
 ---
 
-## Findings from reading the code
+## Findings
 
-Not fixed. Each will get a test that fails (marked as a known finding) once
-written. Severity is my estimate.
+Not fixed (application code is unchanged). Each has a test that fails until
+it's fixed: in PHPUnit it's skipped as "Known finding F<n>" (and fails once
+the assertion passes, so the marker gets removed), in Playwright it's marked
+with `test.fail()` via `knownFinding()`. In `tests/qa-results.json` the ids
+show as `fail` with the error "Known finding F<n>: …".
 
-| # | Severity | Finding | Where | Checklist |
-|---|---|---|---|---|
-| F1 | Medium | Member page lists **all** publications, including unpublished ones, whenever the member has at least one published. The `@if` checks `publishedPublications`, the `@foreach` loops `publications`. No member hits it today (member 2 has only unpublished ones, member 1 only published). | `member.blade.php`, `TeamMemberController::index` | pp-member-pubs |
-| F2 | Medium | "Beschreibung" is only shown when "Info" (`credits`) is filled: the description block is wrapped in `@if ($data->credits)`. | `member.blade.php` | pp-member-sections |
-| F3 | Medium | The API has no role check: any logged-in user, admin or not, verified or not, can read and write everything under `/api/*`. Only `/administration` has `role:admin` + `verified`. Registration is disabled, so today it only matters for existing accounts. | `routes/api.php` | auth-role |
-| F4 | Low | Public pages ignore the record-level publish flag for Home, Team, Assistenz and Kontakt (Home and Kontakt take the first row, teams by slug). The flag only hides menu entries. So "eye icon toggles publish and the public site follows" holds for menus and images, not for the page itself. A new Home or Kontakt entry never shows publicly. Likely old behaviour. | `HomeController`, `ContactController`, `TeamController`, `AssistantController` | ah-list, ak-list |
-| F5 | Low | The image route has **no whitelist**: any size 1–2400 and any `w,h,x,y` coords are rendered and cached, and an unknown `?fm=` silently becomes JPEG instead of being rejected. `05-image-pipeline.md` says the route was to be guarded by a whitelist. Cache-filling risk. | `ImageController` | img-guard |
-| F6 | Low | Creating a member drops "SEO Beschreibung": `meta_description` is not in `$fillable`, and `store()` mass-assigns. Editing works (it uses `setTranslation`). | `TeamMember::$fillable` | am-fields |
-| F7 | Low | Unpublished members' pages are publicly reachable by URL (200). Maybe intended (preview). | `TeamMemberController::index` | pp-member-all |
-| F8 | Medium | Uploads have **no server-side validation**: type and size are only checked by Dropzone. Any file, including `.php` or `.html`, can be uploaded by a logged-in user into `storage/app/public/uploads`, which is web-served via `/storage`. With F3, that's any account. Whether a `.php` there executes depends on the server config. | `UploadController::image/file` | im-reject, md-reject |
-| F9 | Medium | Migrations don't match the production schema (no `ON DELETE CASCADE` on 6 FKs, coords as `double` instead of `double(16,12)`). A fresh install from migrations 500s when deleting a member/team that has images or publications. | `database/migrations` | (setup) |
-| F10 | Low | Deleting an image removes only the DB row; the upload stays on disk (same as for Dateien, but not documented for images). | `*ImageController::destroy` | im-delete |
-| F11 | Low | Member menu never marks the current member as active: it reads `parameter('teamMember.id')`, which doesn't exist (the parameter is `teamMember`). Mobile menu same. | `menu/team-members.blade.php` | pg-member-menu |
-| F12 | Low | A 419 (stale CSRF/XSRF) gets no message in the admin; the http interceptor handles 401/403/404/405/422/500 only. Saving after a long idle may fail silently. | `lib/http.js` | auth-expired |
-| F13 | Info | Cropper: the Desktop/Mobile buttons change the image's `device` immediately, so "Abbrechen" discards the coords but not the device switch (it's saved with the next form save). | `ImageManager.vue` `switchDevice` | im-crop-save |
+F1–F13 come from reading the code (Phase 1); F14–F21 were found by the tests.
 
-Also noted (data, not code): local `luvo` has a team member "Marcel
-Stadelmann" (id 20, team Luks, published). If production doesn't, the visual
-compare will show it in the Luks menu. Is that a test record?
+| # | Severity | Finding | Where | Test | Ids |
+|---|---|---|---|---|---|
+| F1 | Medium | Member page lists **all** publications, including unpublished ones, as soon as the member has one published: the `@if` checks `publishedPublications`, the `@foreach` loops `publications`. No member hits it today. | `member.blade.php`, `TeamMemberController::index` | feature | pp-member-pubs |
+| F2 | Medium | "Beschreibung" is only shown when "Info" (`credits`) is filled (`@if ($data->credits)` around the description). | `member.blade.php` | feature | pp-member-sections |
+| F3 | Medium | The API has no role or verified check: any logged-in account can read and write everything under `/api/*`. Only `/administration` has `role:admin` + `verified`. Registration is disabled, so it concerns existing accounts. | `routes/api.php` | feature | auth-role |
+| F4 | Low | The publish flag of Home, Team, Assistenz and Kontakt doesn't hide the page (Home and Kontakt take the first row, teams by slug); it only hides menu entries. Decided 2026-10-02: it should. | public controllers | feature, e2e | ah-list, ak-list, at-teams-list, at-assist-list |
+| F5 | Low | The image route has no whitelist: any size 1–2400 and any coords are rendered and cached; an unknown `?fm=` becomes JPEG instead of being rejected. Cache-filling risk. | `ImageController` | feature | img-guard |
+| F6 | Low | Creating a member drops "SEO Beschreibung" (`meta_description` isn't in `$fillable`; `store()` mass-assigns). Editing works. | `TeamMember::$fillable` | feature, e2e | am-fields |
+| F7 | Low | Unpublished members' pages are reachable by URL (200). Decided 2026-10-02: they shouldn't be. | `TeamMemberController::index` | feature | pp-member-all |
+| F8 | Medium | Uploads have no server-side validation: type and size are only checked by Dropzone. Any file (`.php`, `.html`, …) can be uploaded into `storage/app/public/uploads`, which is web-served via `/storage`; with F3 by any account. | `UploadController` | feature | im-reject, md-reject |
+| F9 | Medium | The migrations don't reproduce the production schema: no `ON DELETE CASCADE` on 6 foreign keys, coords `double` instead of `double(16,12)`. A fresh install from migrations 500s when deleting a member or team with images/publications. Checked once during planning; the suite uses the schema dump, so no test fails on it. | `database/migrations` | (manual check) | — |
+| F10 | Info | Deleting an image removes only the DB row; the upload stays on disk (like Dateien). Not asserted. | `*ImageController::destroy` | — | im-delete |
+| ~~F11~~ | — | Withdrawn: the member menu does mark the current member (`parameter('teamMember.id')` reads the model's id through `Arr::get`). The test passes. | | | |
+| F12 | Low | A 419 (stale XSRF token) gets no message in the admin: the http interceptor handles 401/403/404/405/422/500 only, so the save silently does nothing. | `lib/http.js` | e2e | auth-expired |
+| F13 | Info | Cropper: the Desktop/Mobile buttons change the image's `device` at once, so "Abbrechen" discards the frame but not the device switch. | `ImageManager.vue` `switchDevice` | e2e | im-crop-save |
+| F14 | **High** | The Kontakt page **500s** when its published images aren't there for both devices (no image at all, or only desktop/mobile): `$image_count['mobile']` is read without `isset`. Unpublishing the last mobile image takes the contact page down. | `contact/index.blade.php` | feature | pp-contact |
+| F15 | Low | No default meta description in French: pages without their own (Assistenz, Kontakt) get `content=""` in FR (`config('seo.description_fr')` doesn't exist). | `config/seo.php` | feature | pg-seo |
+| F16 | Low | Home "Text" is required by the server but the form neither stars nor marks it; a missing text shows only the generic toast. | `home/Form.vue` | e2e | ah-required |
+| F17 | Low | A non-admin's login redirects to `/home`, which is a 404 (only `/de/home` etc. exist). Same for `RedirectIfAuthenticated`. | `LoginController::redirectTo` | feature | auth-role, auth-login |
+| F18 | Medium | Deleting an Assistenz or a Kontakt that has images **500s**: `assistant_images` and `contact_images` have no `ON DELETE CASCADE` (also in production's schema), and the controllers don't delete the images first. | schema / `AssistantController`, `ContactController` | e2e | at-assist-list, ak-list |
+| F19 | **High** | Saving the Assistenz or Kontakt form **500s** as soon as one of its images has a caption: `update()` runs `round($i['caption'], 12)`, a TypeError on PHP 8. No stored image has a caption yet, which is probably why nobody noticed; captions can't be saved for these two at all. | `AssistantController.php:125`, `ContactController.php:136` | e2e | aa-images, ak-images, im-caption |
+| F20 | Low | Clicking "Speichern" in the cropper within ~0.5 s of moving the frame saves the previous frame: vue-advanced-cropper reports changes after a 500 ms debounce. | `ImageManager.vue` | e2e | im-crop-save |
+| F21 | Low | "Kleine Schrift" has no effect on the public site: there is no CSS rule for `.fs-sm` (production's CSS had none either). It is stored correctly. | `resources/sass/web` | e2e | ed-small |
 
 ## Checklist items that don't match the code
 
@@ -446,13 +457,19 @@ compare will show it in the Luks menu. Is that a test record?
 | C2 | ah-list | "The public site follows" isn't true for the Home record (F4). | Asserts the API state; public side marked as known finding. Your call whether that's expected. |
 | C3 | am-pub-create | Server also requires `articles.de` (Artikel), not only Titel. | Asserts both messages. Checklist text should say so. |
 | C4 | aa-required | Server also requires `description.de` (Beschreibung), not only Team. | Same. |
-| C5 | ak-fields | Label says "Adresse (DE) / Text (FR, EN)"; the server requires `address.de`. | Tests the requirement as coded. |
+| C5 | ak-fields | Label says "Adresse (DE) / Text (FR, EN)"; the server requires `address.de`. "Google Maps Uri" is one value for all languages, shown on the DE tab only. | Tests the requirement as coded; Maps URI once. |
 | C6 | sh-unknown | "Note what happens" is an observation, not a pass/fail. Today: no catch-all route, so the shell renders with an empty content area. | Asserts no crash/console error; records the behaviour in the test title. Decide whether it should redirect to Not Found. |
 | C7 | sh-errors | `/forbidden` and `/not-found` are Vue routes outside `/administration`, so loading them directly hits Laravel's 404. They're only reachable in-app (after an API 403/404). | Reaches them in-app. |
 | C8 | auth-disabled | `/password/reset` is routed to the home page (200), not a 404. | Asserts there's no reset form and no `POST /password/email` route. |
 | C9 | pp-member-crops | "Compare with production": production ignores these crops, so it will differ by design. | Compares against production's image requested *with* the coords (same geometry), see Framing. |
 | C10 | im-reject, md-reject | "Rejected with a message" is client-side only (F8). | E2E asserts the Dropzone message; feature test documents the missing server check as a finding. |
 | C11 | img-cache | "Serves quickly" isn't a stable assertion. | Asserts a cache hit (cache file exists, unchanged mtime, no re-render), not timing. |
+| C12 | ah-create, ak-list | Home and Kontakt only offer "Hinzufügen" while their list is empty (there's one entry each). | Opens the create form by its URL. |
+| C13 | ah-images | No control in the admin marks a Home image as "Vorschau" (the `preview` column has no UI). | Sets `preview` on a QA image in `luvo_e2e`, then checks the label and the 1:1 crop. |
+| C14 | ed-roundtrip, ed-cleanup | The editor only rewrites a text that was changed: opening and saving unchanged keeps the stored HTML byte for byte, including old Word junk. | Types and deletes a character before saving, so the text goes through the editor. |
+| C15 | pg-desktop-menu | There are no team dropdowns on desktop: the header links go to the team pages, which show the member menu. | Checks the links and the team page's member menu. |
+| C16 | pg-plugins | lazysizes is loaded, but no template emits `.lazyload` images any more. | Checks the library is loaded. |
+| C17 | am-required | The member form's Team select always has a value (Luks by default), so "Team missing" can't happen in the UI. | The server rule is covered in PHPUnit. |
 
 ## Decisions (2026-10-02)
 
@@ -466,6 +483,126 @@ compare will show it in the Luks menu. Is that a test record?
 
 ---
 
-## Coverage (to be filled in after Phase 2)
+## Phase 2 result
 
-_Final counts per layer, how to run, findings status, and what stayed manual._
+### How to run
+
+One-time setup:
+
+```sh
+cp .env.e2e.example .env.e2e      # set APP_KEY (same as .env) and the three QA_*_PASSWORD
+npm install                        # @playwright/test 1.63.0 uses the cached Chromium 1243
+npm run test:e2e-db                # (re)creates luvo_e2e from luvo
+```
+
+| Command | Runs | Time |
+|---|---|---|
+| `composer test` | PHPUnit, 112 tests against `luvo_test` (schema from `tests/fixtures/schema.sql`, temp storage) | ~10 s |
+| `npm run test:e2e` | Playwright: public pages (1280×800, 1280×1000, 375×812), then the admin one test at a time | ~5 min |
+| `npm run test:visual` | Local vs https://luksundvogt.ch, GET only, ≤ 2 in flight | ~3 min |
+| `npm run test:results` | Merges the last results into `tests/qa-results.json` | — |
+| `npm run test:all` | All of the above; each step runs even if one before failed | ~10 min |
+| `composer test:schema` | Regenerates `tests/fixtures/schema.sql` after a schema change | — |
+
+Before running: nothing should use the dev admin (new files in `storage/app`
+are deleted after the run), and `bootstrap/cache/config.php` must not exist
+(the setup refuses to start). Port 8010 must be free.
+
+Reports: `playwright-report/` is not written (list reporter); failures leave
+screenshots and traces in `test-results/e2e/`, the visual comparison writes
+every screenshot, diff and framing crop to `test-results/visual/`.
+
+### What a run guarantees
+
+- **Databases:** PHPUnit refuses any database but `luvo_test`; the E2E and
+  visual setup refuse any but one ending in `_e2e`, and so do the clone
+  script and the DB helper. `luvo` is only read (clone, schema dump).
+- **Cleanup:** every created record is named `QA-…` and deleted by its test;
+  existing records a test changes are snapshotted and restored row by row.
+  The global teardown deletes leftover `QA-` rows (and prints them), then
+  compares a checksum of all content tables with the one taken at the start
+  and **fails the run** if anything changed. New files in `storage/app` are
+  deleted, nothing that existed before is touched.
+- **Production:** only GET, through one route handler that aborts anything
+  else; at most two requests in flight; images cached for a day in
+  `tests/.cache/prod/` (~60 requests on a cold cache, a few pages' HTML/CSS
+  per run after that). Third-party requests (analytics) are blocked.
+
+### Coverage
+
+Last two runs (2026-10-02, fresh `luvo_e2e` clone, `npm run test:all` twice
+in a row): identical results, exit code 0, no leftover `QA-` records, content
+tables unchanged, 187 + 65 new files removed from `storage/app` each run.
+
+| Suite | Tests | Passed | Known findings | Skipped |
+|---|---|---|---|---|
+| PHPUnit (`feature`) | 112 | 93 | 19 | 0 |
+| Playwright E2E | 192 | 181 | 11 | 0 |
+| Playwright visual | 88 | 77 | 0 | 11 (framing runs at 1280 only) |
+
+Checklist ids (135) by the layers that test them:
+
+| Layer | Ids with a test there | Ids tested only there |
+|---|---|---|
+| `feature` | 51 | 9 |
+| `e2e` | 111 | 69 |
+| `visual` | 5 | 2 |
+| several layers | — | 43 |
+| `manual` | — | 12 |
+
+`tests/qa-results.json`: **101 pass, 22 fail, 12 manual**. Every `fail` is a
+known finding (none unexpected):
+
+| Finding | Ids |
+|---|---|
+| F1 | pp-member-pubs |
+| F2 | pp-member-sections |
+| F3 | auth-role |
+| F4 | ah-list, at-teams-list, at-assist-list, ak-list |
+| F5 | img-guard |
+| F6 | am-fields |
+| F7 | pp-member-all |
+| F8 | im-reject, md-reject |
+| F12 | auth-expired |
+| F13 | im-crop-save |
+| F14 | pp-contact |
+| F15 | pg-seo |
+| F16 | ah-required |
+| F17 | auth-login, auth-role |
+| F18 | at-assist-list, ak-list |
+| F19 | aa-images, ak-images, im-caption |
+| F20 | im-crop-save |
+| F21 | ed-small |
+
+The planned layers (table in section 1) held, with three shifts: more ids got
+an E2E test in addition to their feature test, `pp-member-crops` and
+`pp-home-hero` are also covered by the framing comparison, and `ed-multi` is
+checked in the member form test.
+
+### Stayed manual
+
+| Id | Why |
+|---|---|
+| setup-db | Whether a rollback snapshot exists is a human check. The runs refuse to start without `luvo_e2e`. |
+| setup-browsers | Real Safari, Firefox, iOS Safari and Android. Only Chromium is installed here (no WebKit). |
+| ak-privacy | Entering the client's FR / EN privacy texts is content work. The fallback and the display are tested (`pp-privacy-lang`, `ak-fields`). |
+| dp-snapshot, dp-php, dp-env, dp-pull, dp-glide, dp-smoke-pub, dp-smoke-admin, dp-logs, dp-cleanup | Run on the production server, which the suite never touches. `test:visual` can serve as the read-only part of `dp-smoke-pub` after the deploy. |
+
+### Notes from building it
+
+- Drag and drop works with plain `locator.dragTo()` for all three lists; the
+  mouse and synthetic-event fallbacks in `dragAndDrop()` were never needed.
+- The visual comparison masks expected differences on both sides and lists
+  them in `tests/visual/expected-differences.ts`: the home hero crop, the six
+  top-left crops (four visible), and image pixels (AVIF at slot size vs
+  production's 2400 px JPEG). At 375 px the home hero is lower than
+  production's, which moves the text, so header and text are compared
+  separately there. Text lines below images may round 1 CSS px differently
+  (fractional image heights); the comparison tolerates a 1 CSS px vertical
+  shift per pixel, a real 2 px shift still fails (checked: 3.97 %).
+- Framing: every crop the local pages emit (60) is compared with
+  production's image for the same coords, both at 300 px: lowest 35.1 dB,
+  threshold 30 dB (a 10 px shift in the source scores ~22 dB).
+- The member image on tall windows (production: HTTP 400) is outside the
+  visual viewports; `pp-member-tall` checks it locally on 1280×1000.
+- `tests/qa-results.json` is gitignored (it changes every run).

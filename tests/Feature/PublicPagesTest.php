@@ -278,7 +278,7 @@ class PublicPagesTest extends TestCase
             ->assertSee(['/img/crop/qa-contact-desktop.jpg/', '/img/crop/qa-contact-mobile.jpg/'], false);
     }
 
-    #[Qa('pp-contact', 'pg-404')]
+    #[Qa('pp-contact')]
     public function test_contact_loads_with_images_for_one_device_only(): void
     {
         \App\Models\ContactImage::where('device', 'mobile')->delete();
