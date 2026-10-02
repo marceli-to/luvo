@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import type { Locator, Page } from '@playwright/test';
-import { test, expect, qa, knownFinding, type Api } from '../support/fixtures';
+import { test, expect, qa, type Api } from '../support/fixtures';
 import { answerConfirm, dragAndDrop, heading, open, row, save, tab, toast, upload } from '../support/admin';
 import { fixture } from '../support/env';
 import { setColumn } from '../support/db';
@@ -255,7 +255,6 @@ test('cropper: ratio per device, opens on the saved crop, save and cancel', asyn
 
 test('saving right after moving the crop frame keeps the new frame', async ({ page, api }) => {
   qa('im-crop-save');
-  knownFinding('F20', 'Speichern within 0.5 s of moving the frame saves the previous frame (cropper change debounce)');
   const id = await createMember(api);
   await openMemberImages(page, id);
   await uploadSaved(page, ['qa-landscape.jpg']);
@@ -268,7 +267,6 @@ test('saving right after moving the crop frame keeps the new frame', async ({ pa
 
 test('Abbrechen in the cropper also discards a Desktop / Mobile switch', async ({ page, api }) => {
   qa('im-crop-save');
-  knownFinding('F13', 'the Desktop / Mobile buttons change the device at once; Abbrechen keeps it');
   const id = await createMember(api);
   await openMemberImages(page, id);
   await uploadSaved(page, ['qa-landscape.jpg']);
@@ -427,7 +425,6 @@ for (const entity of ['assistant', 'contact'] as const) {
 
   test(`${name}: an image caption saves with the form`, async ({ page, api }) => {
     qa(entity === 'assistant' ? 'aa-images' : 'ak-images', 'im-caption');
-    knownFinding('F19', 'saving fails (500) once an image has a caption: round() on the caption');
     const id = await createRecord(api, entity);
     await open(page, `/administration/${entity}/edit/${id}`);
     await tab(page, 'Bilder');
@@ -442,7 +439,6 @@ for (const entity of ['assistant', 'contact'] as const) {
 
   test(`${name}: a record with images can be deleted`, async ({ page, api }) => {
     qa(entity === 'assistant' ? 'at-assist-list' : 'ak-list');
-    knownFinding('F18', `deleting ${entity === 'assistant' ? 'an' : 'a'} ${name} that has images fails (500): no ON DELETE CASCADE`);
     const id = await createRecord(api, entity);
     await open(page, `/administration/${entity}/edit/${id}`);
     await tab(page, 'Bilder');

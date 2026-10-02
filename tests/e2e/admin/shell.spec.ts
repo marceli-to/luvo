@@ -1,6 +1,6 @@
 import { execFileSync } from 'node:child_process';
-import { test, expect, qa, knownFinding } from '../support/fixtures';
-import { snapshot } from '../support/db';
+import { test, expect, qa } from '../support/fixtures';
+import { expireSessions, select, snapshot } from '../support/db';
 import { open, toast, row, save, heading } from '../support/admin';
 import { root, users } from '../support/env';
 import { login as storeLogin } from '../global-setup';
@@ -35,8 +35,7 @@ test.describe('login and session', () => {
 
   test('a non-admin gets 403, an unverified admin the verify notice', async ({ page, strict }) => {
     qa('auth-role');
-    // A non-admin's login redirects to /home, which doesn't exist (F17, feature test)
-    strict.allow(/403|8010\/home\b/);
+    strict.allow(/403/);
     for (const [user, check] of [
       [users.user, async () => expect(page.locator('body')).toContainText('403')],
       [users.unverified, async () => expect(page).toHaveURL('/email/verify')],
@@ -242,21 +241,25 @@ test('Not Found and Forbidden views', async ({ page, strict }) => {
   await expect(page.locator('h1', { hasText: 'Access denied' })).toBeVisible();
 });
 
-test('stale XSRF token: saving says why it failed', async ({ page, context, strict }) => {
+test('session expired on the server: saving sends you to the login, nothing is saved', async ({ page, strict }) => {
   qa('auth-expired');
-  knownFinding('F12', 'a 419 (stale XSRF token) shows no message; the save silently does nothing');
-  strict.allow(/419/);
+  strict.allow(/401/);
   const restore = snapshot('home', [1]);
   try {
     await open(page, '/administration/home/edit/1');
-    const cookie = (await context.cookies()).find(c => c.name === 'XSRF-TOKEN')!;
-    await context.addCookies([{ ...cookie, value: 'stale' }]);
+    await row(page, 'Titel').locator('input').fill('QA-nicht gespeichert');
+    // The session ends on the server (SESSION_LIFETIME) while the browser
+    // still sends its cookies
+    expireSessions(users.admin.email);
     const response = page.waitForResponse(r => r.request().method() === 'PUT');
     await page.locator('footer.module-footer button[type=submit]').click();
-    expect((await response).status()).toBe(419);
-    await expect(page.locator('.notification.error')).toBeVisible({ timeout: 5_000 });
+    expect((await response).status()).toBe(401);
+    await expect(page).toHaveURL('/login');
+    expect(select<{ t: string }>("SELECT JSON_UNQUOTE(JSON_EXTRACT(title, '$.de')) t FROM home WHERE id = 1")[0].t).not.toBe('QA-nicht gespeichert');
   }
   finally {
     restore();
+    // The stored login of the other tests ended with it
+    await storeLogin(users.admin.email, users.admin.password, users.admin.state);
   }
 });

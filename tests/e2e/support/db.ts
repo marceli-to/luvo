@@ -16,6 +16,9 @@ export function select<T = Record<string, any>>(sql: string): T[] {
 export const checksum = () => run('checksum');
 export const cleanupQaRecords = () => run('cleanup');
 
+/** Ends a user's sessions on the server (as after SESSION_LIFETIME); browsers keep their cookies. */
+export const expireSessions = (email: string) => run('expire-sessions', email);
+
 /** Sets one column of a row (for states the admin offers no control for). */
 export const setColumn = (table: string, id: number, column: string, value: string | number) => run('set', table, String(id), column, String(value));
 

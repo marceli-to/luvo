@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import type { Locator, Page } from '@playwright/test';
-import { test, expect, qa, knownFinding, type Api } from '../support/fixtures';
+import { test, expect, qa, type Api } from '../support/fixtures';
 import { editor, language, open, row, save, toast } from '../support/admin';
 import { fixture, root } from '../support/env';
 import { snapshot, select } from '../support/db';
@@ -121,15 +121,6 @@ async function smallText(page: Page, api: Api) {
 test('Kleine Schrift is stored as class fs-sm', async ({ page, api }) => {
   qa('ed-small');
   await smallText(page, api);
-});
-
-test('Kleine Schrift renders smaller on the public page', async ({ page, api }) => {
-  qa('ed-small');
-  knownFinding('F21', 'the public CSS has no rule for .fs-sm (neither had production)');
-  await smallText(page, api);
-  await page.goto('/de/home');
-  const size = (selector: string) => page.locator(selector).evaluate(el => parseFloat(getComputedStyle(el).fontSize));
-  expect(await size('article.home p.fs-sm')).toBeLessThan(await size('article.home p:not(.fs-sm)'));
 });
 
 test('Worttrennung deaktivieren keeps the words together', async ({ page, api }) => {

@@ -9,6 +9,7 @@
  *   php tests/e2e/support/db.php checksum                       md5 per content table, timestamps ignored
  *   php tests/e2e/support/db.php cleanup                        delete records named QA-…, print what went
  *   php tests/e2e/support/db.php set <table> <id> <column> <value>  set one column (states the admin can't set)
+ *   php tests/e2e/support/db.php expire-sessions <email>      delete a user's sessions (server-side expiry)
  *   php tests/e2e/support/db.php members                        team members with their public path (Str::slug)
  */
 
@@ -140,6 +141,12 @@ switch ($command) {
         }
         $statement = $pdo->prepare('UPDATE ' . table($name) . " SET `{$column}` = ? WHERE id = ?");
         $statement->execute([$value, (int) $id]);
+        out($statement->rowCount());
+        break;
+
+    case 'expire-sessions':
+        $statement = $pdo->prepare('DELETE FROM sessions WHERE user_id = (SELECT id FROM users WHERE email = ?)');
+        $statement->execute([$argv[2]]);
         out($statement->rowCount());
         break;
 

@@ -1,4 +1,4 @@
-import { test, expect, qa, knownFinding, type Api } from '../support/fixtures';
+import { test, expect, qa, type Api } from '../support/fixtures';
 import { answerConfirm, dragAndDrop, editor, heading, language, listItem, open, row, save, toast, typeInto } from '../support/admin';
 import { members } from '../support/site';
 
@@ -71,7 +71,6 @@ test('every field saves in DE / FR / EN', async ({ page, api }) => {
 
 test('SEO Beschreibung is kept when creating a member', async ({ page, api }) => {
   qa('am-fields');
-  knownFinding('F6', 'SEO Beschreibung is dropped on create');
   const firstname = `QA-SEO${Date.now()}`;
   await open(page, '/administration/team/member/create');
   await row(page, 'Vorname').locator('input').fill(firstname);

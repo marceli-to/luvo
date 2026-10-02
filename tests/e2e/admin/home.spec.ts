@@ -1,4 +1,4 @@
-import { test, expect, qa, knownFinding, type Api } from '../support/fixtures';
+import { test, expect, qa, type Api } from '../support/fixtures';
 import { answerConfirm, editor, language, listItem, open, publishRadio, row, save, tab, toast, typeInto, heading } from '../support/admin';
 import { snapshot, select } from '../support/db';
 
@@ -32,17 +32,18 @@ test('list loads; eye toggles publish', async ({ page, api }) => {
   }
 });
 
-test('public home follows the publish flag', async ({ page }) => {
+test('public home follows the publish flag', async ({ page, strict }) => {
   qa('ah-list');
-  knownFinding('F4', 'the publish flag does not hide the page');
+  strict.allow(/404/);
   const restore = snapshot('home', [1]);
   try {
     const title = select<{ t: string }>("SELECT JSON_UNQUOTE(JSON_EXTRACT(title, '$.de')) t FROM home WHERE id = 1")[0].t;
     await open(page, '/administration/home');
     await page.locator('.listing__item').first().locator('.listing__item-action a').first().click();
     await expect(toast(page, 'Status geändert')).toBeVisible();
-    await page.goto('/de/home');
-    await expect(page.locator('article.home h1')).not.toHaveText(title);
+    expect((await page.goto('/de/home'))?.status()).toBe(404);
+    await expect(page.locator('article.home h1')).toHaveCount(0);
+    expect(title).toBeTruthy();
   }
   finally {
     restore();
@@ -103,7 +104,6 @@ test('saving without Titel shows the message and marks the field', async ({ page
 
 test('saving without Text marks the Text field', async ({ page, strict }) => {
   qa('ah-required');
-  knownFinding('F16', 'Text is required by the server but not marked (no * and no has-error)');
   strict.allow(/422/);
   await open(page, '/administration/home/create');
   await row(page, 'Titel').locator('input').fill('QA-ohne Text');
