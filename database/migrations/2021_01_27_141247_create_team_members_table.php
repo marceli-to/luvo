@@ -24,7 +24,7 @@ class CreateTeamMembersTable extends Migration
             $table->tinyInteger('order')->default(-1);
             $table->tinyInteger('publish')->default(0);
             $table->unsignedBigInteger('team_id');
-            $table->foreign('team_id')->references('id')->on('teams');
+            $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');
             $table->timestamps();
         });
     }

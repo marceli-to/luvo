@@ -21,7 +21,7 @@ class CreatePublicationsTable extends Migration
             $table->tinyInteger('order')->default(-1);
             $table->tinyInteger('publish')->default(0);
             $table->unsignedBigInteger('team_member_id');
-            $table->foreign('team_member_id')->references('id')->on('team_members');
+            $table->foreign('team_member_id')->references('id')->on('team_members')->onDelete('cascade');
             $table->timestamps();
         });
     }
