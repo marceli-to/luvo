@@ -29,6 +29,7 @@ class TeamMember extends Base
     'biography',
     'membership',
     'publication',
+    'meta_description',
 		'order',
     'publish',
     'team_id',
