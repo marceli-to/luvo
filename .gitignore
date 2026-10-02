@@ -13,3 +13,12 @@ npm-debug.log
 yarn-error.log
 INSTALL.TXT
 app.tar.gz
+
+# Test runs
+/tests/.results
+/tests/.state
+/tests/.fixtures
+/tests/.cache
+/test-results
+/playwright-report
+.env.e2e
