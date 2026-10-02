@@ -5,6 +5,7 @@ use App\Http\Resources\DataCollection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
 use App\Support\Glide;
+use App\Support\Uploads;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -100,9 +101,10 @@ class AssistantImageController extends Controller
     // Delete image from database
     $record = $this->assistantImage->where('name', '=', $image)->first();
     
+    // With its upload and rendered variants
     if ($record)
     {
-      $record->delete();
+      Uploads::deleteImages([$record]);
     }
     
     return response()->json('successfully deleted');

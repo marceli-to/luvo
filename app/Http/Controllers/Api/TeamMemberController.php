@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers\Api;
+use App\Support\Uploads;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\DataCollection;
 use App\Models\TeamMember;
@@ -234,6 +235,8 @@ class TeamMemberController extends Controller
    */
   public function destroy(TeamMember $teamMember)
   {
+    // With the uploads of its images (the rows cascade)
+    Uploads::deleteImages($teamMember->images()->get());
     $teamMember->delete();
     return response()->json('successfully deleted');
   }

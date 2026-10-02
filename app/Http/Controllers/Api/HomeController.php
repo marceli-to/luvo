@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers\Api;
+use App\Support\Uploads;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\DataCollection;
 use App\Models\Home;
@@ -175,6 +176,8 @@ class HomeController extends Controller
    */
   public function destroy(Home $home)
   {
+    // With the uploads of its images (the rows cascade)
+    Uploads::deleteImages($home->images()->get());
     $home->delete();
     return response()->json('successfully deleted');
   }

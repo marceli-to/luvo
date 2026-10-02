@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers\Api;
+use App\Support\Uploads;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\DataCollection;
 use App\Models\Contact;
@@ -171,6 +172,9 @@ class ContactController extends Controller
    */
   public function destroy(Contact $contact)
   {
+    // Images first: contact_images and assistant_images don't cascade, and
+    // their uploads go too
+    Uploads::deleteImages($contact->images()->get());
     $contact->delete();
     return response()->json('successfully deleted');
   }

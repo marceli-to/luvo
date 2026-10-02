@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers\Api;
+use App\Support\Uploads;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\DataCollection;
 use App\Models\Assistant;
@@ -160,6 +161,9 @@ class AssistantController extends Controller
    */
   public function destroy(Assistant $assistant)
   {
+    // Images first: contact_images and assistant_images don't cascade, and
+    // their uploads go too
+    Uploads::deleteImages($assistant->images()->get());
     $assistant->delete();
     return response()->json('successfully deleted');
   }
