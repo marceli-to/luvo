@@ -16,6 +16,9 @@ export function select<T = Record<string, any>>(sql: string): T[] {
 export const checksum = () => run('checksum');
 export const cleanupQaRecords = () => run('cleanup');
 
+/** Sets one column of a row (for states the admin offers no control for). */
+export const setColumn = (table: string, id: number, column: string, value: string | number) => run('set', table, String(id), column, String(value));
+
 let counter = 0;
 
 /**

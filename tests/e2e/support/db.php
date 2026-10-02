@@ -8,6 +8,7 @@
  *   php tests/e2e/support/db.php restore <file>                 put saved rows back (update, re-insert)
  *   php tests/e2e/support/db.php checksum                       md5 per content table, timestamps ignored
  *   php tests/e2e/support/db.php cleanup                        delete records named QA-…, print what went
+ *   php tests/e2e/support/db.php set <table> <id> <column> <value>  set one column (states the admin can't set)
  *   php tests/e2e/support/db.php members                        team members with their public path (Str::slug)
  */
 
@@ -104,19 +105,24 @@ switch ($command) {
 
     case 'cleanup':
         $deleted = [];
+        // Children first: contact_images and assistant_images have no ON DELETE CASCADE (F18)
+        $qaHome = "SELECT id FROM home WHERE JSON_UNQUOTE(JSON_EXTRACT(title, '$.de')) LIKE 'QA-%'";
+        $qaMembers = "SELECT id FROM team_members WHERE firstname LIKE 'QA-%' OR name LIKE 'QA-%'";
+        $qaContacts = "SELECT id FROM contacts WHERE address LIKE '%QA-%'";
+        $qaAssistants = "SELECT id FROM assistants WHERE description LIKE '%QA-%'";
         $queries = [
-            'home' => "JSON_UNQUOTE(JSON_EXTRACT(title, '$.de')) LIKE 'QA-%'",
-            'teams' => "JSON_UNQUOTE(JSON_EXTRACT(title, '$.de')) LIKE 'QA-%'",
-            'team_members' => "firstname LIKE 'QA-%' OR name LIKE 'QA-%'",
-            'publications' => "JSON_UNQUOTE(JSON_EXTRACT(title, '$.de')) LIKE 'QA-%'",
-            'contacts' => "address LIKE '%QA-%'",
-            'assistants' => "description LIKE '%QA-%'",
-            'files' => "name LIKE '%qa-%'",
-            'home_images' => "name LIKE '%qa-%'",
+            'home_images' => "name LIKE '%qa-%' OR home_id IN (SELECT id FROM ({$qaHome}) q)",
             'team_images' => "name LIKE '%qa-%'",
-            'team_member_images' => "name LIKE '%qa-%'",
-            'contact_images' => "name LIKE '%qa-%'",
-            'assistant_images' => "name LIKE '%qa-%'",
+            'team_member_images' => "name LIKE '%qa-%' OR team_member_id IN (SELECT id FROM ({$qaMembers}) q)",
+            'contact_images' => "name LIKE '%qa-%' OR contact_id IN (SELECT id FROM ({$qaContacts}) q)",
+            'assistant_images' => "name LIKE '%qa-%' OR assistant_id IN (SELECT id FROM ({$qaAssistants}) q)",
+            'publications' => "JSON_UNQUOTE(JSON_EXTRACT(title, '$.de')) LIKE 'QA-%' OR team_member_id IN (SELECT id FROM ({$qaMembers}) q)",
+            'home' => "id IN (SELECT id FROM ({$qaHome}) q)",
+            'teams' => "JSON_UNQUOTE(JSON_EXTRACT(title, '$.de')) LIKE 'QA-%'",
+            'team_members' => "id IN (SELECT id FROM ({$qaMembers}) q)",
+            'contacts' => "id IN (SELECT id FROM ({$qaContacts}) q)",
+            'assistants' => "id IN (SELECT id FROM ({$qaAssistants}) q)",
+            'files' => "name LIKE '%qa-%'",
         ];
         foreach ($queries as $name => $where) {
             $count = $pdo->exec('DELETE FROM ' . table($name) . " WHERE {$where}");
@@ -125,6 +131,16 @@ switch ($command) {
             }
         }
         out($deleted);
+        break;
+
+    case 'set':
+        [, , $name, $id, $column, $value] = $argv;
+        if (!preg_match('/^[a-z_]+$/', $column)) {
+            throw new InvalidArgumentException('column');
+        }
+        $statement = $pdo->prepare('UPDATE ' . table($name) . " SET `{$column}` = ? WHERE id = ?");
+        $statement->execute([$value, (int) $id]);
+        out($statement->rowCount());
         break;
 
     case 'members':
