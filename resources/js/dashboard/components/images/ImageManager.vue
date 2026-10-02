@@ -141,6 +141,7 @@
               :src="cropSrc"
               :default-position="defaultPosition"
               :default-size="defaultSize"
+              :debounce="false"
               :stencil-props="{
                 aspectRatio: cropRatio,
                 linesClassnames: { default: 'line' },
@@ -225,6 +226,8 @@ const isCropperLoading = ref(false);
 const cropItem = ref(null);
 const cropSrc = ref(null);
 const cropRatio = ref(1);
+// Desktop / Mobile chosen in the cropper; applied to the image on save
+const cropDevice = ref(null);
 const coords = reactive({ w: 0, h: 0, x: 0, y: 0 });
 const cropSize = reactive({ w: null, h: null });
 const cropDefaults = { w: 425, h: 510, x: 0, y: 0 };
@@ -244,6 +247,7 @@ function ratioFor(image) {
 
 async function openCropper(image) {
   cropItem.value = image;
+  cropDevice.value = image.device;
   cropRatio.value = ratioFor(image);
   isCropperOpen.value = true;
   isCropperLoading.value = true;
@@ -259,9 +263,9 @@ function closeCropper() {
   isCropperOpen.value = false;
 }
 
-// Desktop/Mobile: apply that format's ratio to the image
+// Desktop/Mobile: that format's ratio; the device itself changes on Speichern
 function switchDevice(device) {
-  cropItem.value.device = device;
+  cropDevice.value = device;
   cropRatio.value = deviceRatios[device];
 }
 
@@ -294,6 +298,9 @@ function saveCrop() {
   image.coords_h = coords.h;
   image.coords_x = coords.x;
   image.coords_y = coords.y;
+  if (props.devices) {
+    image.device = cropDevice.value;
+  }
   emit('save-coords', image);
   closeCropper();
 }

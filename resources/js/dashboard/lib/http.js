@@ -35,6 +35,10 @@ export function handleErrors(router) {
       case 405:
         notify({ type: 'error', text: '405 Method Not Allowed' });
         break;
+      case 419:
+        // Stale XSRF token (e.g. after a long pause): nothing was saved
+        notify({ type: 'error', text: 'Die Sitzung ist abgelaufen, es wurde nichts gespeichert. Bitte die Seite neu laden.' });
+        break;
       case 422:
         notify({ type: 'error', text: 'Bitte alle mit * markierten Felder prüfen!' });
         break;

@@ -14,8 +14,8 @@
             <input type="text" v-model="record.title.de">
             <LabelRequired />
           </div>
-          <div class="form-row">
-            <label>Text</label>
+          <div :class="[errors.text ? 'has-error' : '', 'form-row']">
+            <label>Text*</label>
             <Editor v-model="record.text.de" />
           </div>
         </div>
