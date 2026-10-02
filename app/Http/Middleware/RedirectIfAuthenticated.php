@@ -23,7 +23,7 @@ class RedirectIfAuthenticated
       }
       else
       {
-        return redirect('/home');
+        return redirect('/');
       }
       
     }
