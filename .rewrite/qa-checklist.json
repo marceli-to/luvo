@@ -1,0 +1,752 @@
+{
+  "source": "https://claude.ai/artifact/EL4s4c7fFr6ihttLESUoBg",
+  "generated": "2026-10-02",
+  "sections": [
+    {
+      "id": "setup",
+      "title": "Setup & baseline",
+      "note": "Do this once before testing. Local DB and storage should be the production copy from 2026-09-30.",
+      "items": [
+        {
+          "id": "setup-db",
+          "text": "Local DB and storage/app are the production snapshot (rollback point exists)"
+        },
+        {
+          "id": "setup-build",
+          "text": "composer install, npm run build, php artisan optimize:clear done; public/build is current and committed"
+        },
+        {
+          "id": "setup-glide",
+          "text": "storage/app/.glide-cache exists and is writable"
+        },
+        {
+          "id": "setup-users",
+          "text": "You have an admin login, and ideally a second non-admin user to test access rules"
+        },
+        {
+          "id": "setup-browsers",
+          "text": "Test browsers ready: Chrome, Safari, Firefox desktop, plus iOS Safari and one Android browser"
+        }
+      ]
+    },
+    {
+      "id": "pub-global",
+      "title": "Public site: global",
+      "note": "Check in all three languages (de / fr / en).",
+      "items": [
+        {
+          "id": "pg-home-urls",
+          "group": "Routing & language",
+          "text": "/, /de, /fr, /en and /{de,fr,en}/home load with status 200"
+        },
+        {
+          "id": "pg-lang-attr",
+          "group": "Routing & language",
+          "text": "<html lang> matches the current language on every page type"
+        },
+        {
+          "id": "pg-switcher",
+          "group": "Routing & language",
+          "text": "Language switcher D / E / F keeps you on the same page (team, member, assistant, contact); active language is highlighted"
+        },
+        {
+          "id": "pg-localized-urls",
+          "group": "Routing & language",
+          "text": "Localized slugs work: /de/kontakt, /fr/contacter, /en/contact, /de/team-vogt/assistenz, /fr/team-luks/assistence"
+        },
+        {
+          "id": "pg-404",
+          "group": "Routing & language",
+          "text": "Unknown URL shows the styled 404 page with status 404 (not 500)"
+        },
+        {
+          "id": "pg-logo",
+          "group": "Navigation",
+          "text": "Logo links to the home page in the current language"
+        },
+        {
+          "id": "pg-desktop-menu",
+          "group": "Navigation",
+          "text": "Desktop menu: Team Luks, Team Vogt and Kontakt links work; team dropdowns open"
+        },
+        {
+          "id": "pg-mobile-menu",
+          "group": "Navigation",
+          "text": "Mobile menu (below 900 px): burger opens and closes, team submenus expand, “Über uns” and member links work"
+        },
+        {
+          "id": "pg-member-menu",
+          "group": "Navigation",
+          "text": "Team member submenu lists only published members, in the admin order, plus “Assistenz”"
+        },
+        {
+          "id": "pg-console",
+          "group": "Assets & quality",
+          "text": "No console errors and no failed requests on any page (fonts, CSS, JS from /build)"
+        },
+        {
+          "id": "pg-favicons",
+          "group": "Assets & quality",
+          "text": "Favicons, apple-touch-icon and site.webmanifest load"
+        },
+        {
+          "id": "pg-plugins",
+          "group": "Assets & quality",
+          "text": "jQuery plugins run: lazysizes loads images on scroll, simplebar scroll columns, swipers"
+        },
+        {
+          "id": "pg-seo",
+          "group": "Assets & quality",
+          "text": "Page titles and meta descriptions present (home, team, member uses SEO Beschreibung)"
+        },
+        {
+          "id": "pg-visual",
+          "group": "Assets & quality",
+          "text": "Side-by-side with production at 1280 px and 375 px: layout, fonts and spacing look identical"
+        }
+      ]
+    },
+    {
+      "id": "pub-pages",
+      "title": "Public site: pages",
+      "items": [
+        {
+          "id": "pp-home-hero",
+          "group": "Home",
+          "text": "Hero image shows with its saved crop applied",
+          "hint": "Previously the hero ignored the crop.",
+          "tag": "new"
+        },
+        {
+          "id": "pp-home-hero-sizes",
+          "group": "Home",
+          "text": "Hero switches source at 900 / 1200 / 1600 px widths; network shows AVIF or WebP"
+        },
+        {
+          "id": "pp-home-scroll",
+          "group": "Home",
+          "text": "Scroll arrow on the hero scrolls down to the text"
+        },
+        {
+          "id": "pp-home-text",
+          "group": "Home",
+          "text": "Title and text render; headings, bold, lists and links look like production"
+        },
+        {
+          "id": "pp-team-text",
+          "group": "Team Luks / Team Vogt",
+          "text": "Team text shows in the scrollable column"
+        },
+        {
+          "id": "pp-team-desktop",
+          "group": "Team Luks / Team Vogt",
+          "text": "Desktop images: vertical swiper with prev / next when more than one image"
+        },
+        {
+          "id": "pp-team-mobile",
+          "group": "Team Luks / Team Vogt",
+          "text": "Below 900 px: horizontal swiper with the mobile images"
+        },
+        {
+          "id": "pp-team-unpublished",
+          "group": "Team Luks / Team Vogt",
+          "text": "Unpublished images do not appear"
+        },
+        {
+          "id": "pp-member-all",
+          "group": "Team members",
+          "text": "Open every member page in all three languages (/team-{team}/{name}/{id})"
+        },
+        {
+          "id": "pp-member-tall",
+          "group": "Team members",
+          "text": "On a tall window (height ≥ 900 px) the member image loads",
+          "hint": "Was a broken image on production (HTTP 400).",
+          "tag": "fix"
+        },
+        {
+          "id": "pp-member-crops",
+          "group": "Team members",
+          "text": "Crops anchored at the top-left corner are now applied; compare with production",
+          "hint": "6 saved crops were ignored before (1 contact, 3 team, 2 member images).",
+          "tag": "fix"
+        },
+        {
+          "id": "pp-member-sections",
+          "group": "Team members",
+          "text": "Info, Beschreibung, Tätigkeitsgebiete, Sprachen, Werdegang, Mitgliedschaften and both Publikationen blocks show when filled and hide when empty"
+        },
+        {
+          "id": "pp-member-pubs",
+          "group": "Team members",
+          "text": "Publication articles appear in admin order; unpublished ones are hidden"
+        },
+        {
+          "id": "pp-assistant",
+          "group": "Assistenz & Kontakt",
+          "text": "Assistenz pages for both teams show description, list and images"
+        },
+        {
+          "id": "pp-contact",
+          "group": "Assistenz & Kontakt",
+          "text": "Kontakt shows address, Google Maps link, Impressum, Datenschutz and images"
+        },
+        {
+          "id": "pp-privacy-lang",
+          "group": "Assistenz & Kontakt",
+          "text": "Datenschutz in FR and EN shows the translated text once entered in the admin (falls back to German while empty)",
+          "tag": "new"
+        }
+      ]
+    },
+    {
+      "id": "images",
+      "title": "Image delivery (Glide)",
+      "note": "Watch the network tab. The first request of each variant renders it (up to ~0.7 s for AVIF); later ones come from cache.",
+      "items": [
+        {
+          "id": "img-formats",
+          "text": "Image requests return 200 as AVIF, WebP and JPG (Safari / older browsers fall back correctly)"
+        },
+        {
+          "id": "img-sizes",
+          "text": "Files match the requested slot size, not always 2400 px",
+          "hint": "E.g. a 900×600 slot downloads ~900 px wide.",
+          "tag": "fix"
+        },
+        {
+          "id": "img-framing",
+          "text": "Framing of every cropped image matches production"
+        },
+        {
+          "id": "img-original-thumb",
+          "text": "/img/original/… and /img/thumbnail/… work (admin previews use them)"
+        },
+        {
+          "id": "img-guard",
+          "text": "A crop URL with a non-whitelisted size or format is rejected instead of rendered"
+        },
+        {
+          "id": "img-cache",
+          "text": "Reloading a page serves images quickly from the Glide cache"
+        }
+      ]
+    },
+    {
+      "id": "auth",
+      "title": "Login & access",
+      "items": [
+        {
+          "id": "auth-login",
+          "text": "/login: wrong password shows an error; correct login lands in /administration"
+        },
+        {
+          "id": "auth-guest",
+          "text": "Logged out, /administration and any sub-URL redirect to login"
+        },
+        {
+          "id": "auth-api",
+          "text": "Logged out, /api/home returns 401 JSON"
+        },
+        {
+          "id": "auth-role",
+          "text": "A user without the admin role cannot open the admin (403)"
+        },
+        {
+          "id": "auth-disabled",
+          "text": "Registration and password reset are disabled (/register, /password/reset)"
+        },
+        {
+          "id": "auth-logout",
+          "text": "Logout in the sidebar ends the session; browser back does not show admin data or allow saving"
+        },
+        {
+          "id": "auth-expired",
+          "text": "With an expired session (delete the session cookie), the next save shows a clear message or sends you to login"
+        },
+        {
+          "id": "auth-password",
+          "text": "Passwort ändern (click your name): mismatch and fewer than 6 characters show validation; a valid change works and the new password logs in"
+        }
+      ]
+    },
+    {
+      "id": "shell",
+      "title": "Admin: shell & navigation",
+      "items": [
+        {
+          "id": "sh-dashboard",
+          "text": "Dashboard shows “Willkommen” with your name"
+        },
+        {
+          "id": "sh-nav",
+          "text": "Sidebar links Home, Teams, Kontakt, Dateien work; current item is highlighted"
+        },
+        {
+          "id": "sh-reload",
+          "text": "Reloading any admin URL directly (list, edit form, create form) opens that screen"
+        },
+        {
+          "id": "sh-history",
+          "text": "Browser back / forward between list and form works"
+        },
+        {
+          "id": "sh-mobile",
+          "text": "At phone width the menu opens from the header, closes with the arrow and after navigating"
+        },
+        {
+          "id": "sh-notify",
+          "text": "Success and error notifications appear and disappear"
+        },
+        {
+          "id": "sh-icons",
+          "text": "All icons render (Phosphor); no empty buttons"
+        },
+        {
+          "id": "sh-unknown",
+          "text": "Unknown admin URL (e.g. /administration/foo): note what happens"
+        },
+        {
+          "id": "sh-errors",
+          "text": "/forbidden and /not-found error views render"
+        }
+      ]
+    },
+    {
+      "id": "adm-home",
+      "title": "Admin: Home",
+      "items": [
+        {
+          "id": "ah-list",
+          "group": "List",
+          "text": "Homepage list loads; eye icon toggles publish and the public site follows"
+        },
+        {
+          "id": "ah-delete",
+          "group": "List",
+          "text": "Delete asks for confirmation; cancel keeps the entry, confirm removes it"
+        },
+        {
+          "id": "ah-create",
+          "group": "List",
+          "text": "Create a new entry, save, and find it in the list"
+        },
+        {
+          "id": "ah-required",
+          "group": "Form",
+          "text": "Saving without Titel shows the message and marks the field (422)"
+        },
+        {
+          "id": "ah-langs",
+          "group": "Form",
+          "text": "Language tabs DE / FR / EN switch Titel and Text; each language saves separately"
+        },
+        {
+          "id": "ah-publish",
+          "group": "Form",
+          "text": "“Publizieren?” radio saves"
+        },
+        {
+          "id": "ah-save",
+          "group": "Form",
+          "text": "Save shows a notification; reload shows the saved values; public page updated"
+        },
+        {
+          "id": "ah-images",
+          "group": "Form",
+          "text": "Images: upload, “Vorschau” label and 1:1 crop, captions DE / FR / EN, eye toggle, delete (see Image manager section for details)"
+        }
+      ]
+    },
+    {
+      "id": "adm-teams",
+      "title": "Admin: Teams",
+      "items": [
+        {
+          "id": "at-teams-list",
+          "group": "Teams list",
+          "text": "Teams list: toggle, edit, delete with confirmation, create"
+        },
+        {
+          "id": "at-team-form",
+          "group": "Teams list",
+          "text": "Team form: Team select (Luks / Vogt), Titel* and Text* required in DE, FR / EN optional, publish"
+        },
+        {
+          "id": "at-team-images",
+          "group": "Teams list",
+          "text": "Team images with Desktop / Mobile and translated captions; desktop caption info text shows"
+        },
+        {
+          "id": "at-members-groups",
+          "group": "Mitarbeiter list",
+          "text": "Members are grouped by team"
+        },
+        {
+          "id": "at-members-toggle",
+          "group": "Mitarbeiter list",
+          "text": "Eye toggle inside the draggable list works"
+        },
+        {
+          "id": "at-members-drag",
+          "group": "Mitarbeiter list",
+          "text": "Drag a member to a new position; reload: order kept; public menu shows new order",
+          "hint": "Native drag-and-drop could not be tested automatically."
+        },
+        {
+          "id": "at-members-crud",
+          "group": "Mitarbeiter list",
+          "text": "Edit, delete with confirmation, create"
+        },
+        {
+          "id": "at-assist-list",
+          "group": "Assistenz list",
+          "text": "Assistenz list: toggle, edit, delete with confirmation, create"
+        }
+      ]
+    },
+    {
+      "id": "adm-member",
+      "title": "Admin: Team member form",
+      "items": [
+        {
+          "id": "am-required",
+          "text": "Vorname*, Name*, Team* required; missing values show messages"
+        },
+        {
+          "id": "am-fields",
+          "text": "Info, Beschreibung, SEO Beschreibung, Tätigkeitsgebiete, Sprachen, Werdegang, Mitgliedschaften, Publikationen (Liste) save in DE / FR / EN"
+        },
+        {
+          "id": "am-name-url",
+          "text": "Changing the name updates the public URL and the member menu"
+        },
+        {
+          "id": "am-images",
+          "text": "Images with Desktop (10:12) / Mobile (3:2), single caption, publish, delete"
+        },
+        {
+          "id": "am-pub-create",
+          "group": "Publikationen (Artikel)",
+          "text": "Create a publication from the member form; Titel* required in DE; Beschreibung and Artikel save per language"
+        },
+        {
+          "id": "am-pub-edit",
+          "group": "Publikationen (Artikel)",
+          "text": "Edit, publish toggle, delete with confirmation; back link returns to the member"
+        },
+        {
+          "id": "am-pub-drag",
+          "group": "Publikationen (Artikel)",
+          "text": "Drag publications into a new order; reload: kept; public page shows new order",
+          "hint": "Native drag-and-drop could not be tested automatically."
+        }
+      ]
+    },
+    {
+      "id": "adm-assist",
+      "title": "Admin: Assistenz & Kontakt",
+      "items": [
+        {
+          "id": "aa-required",
+          "group": "Assistenz form",
+          "text": "Team* required; Beschreibung and Assistenten save per language; publish"
+        },
+        {
+          "id": "aa-images",
+          "group": "Assistenz form",
+          "text": "Images with Desktop / Mobile, caption, crop, delete"
+        },
+        {
+          "id": "ak-list",
+          "group": "Kontakt",
+          "text": "Kontakt list: toggle, edit, delete with confirmation, create"
+        },
+        {
+          "id": "ak-fields",
+          "group": "Kontakt",
+          "text": "Adresse (DE) / Text (FR, EN), Impressum, Datenschutz, Google Maps Uri save per language"
+        },
+        {
+          "id": "ak-privacy",
+          "group": "Kontakt",
+          "text": "Enter the client’s Datenschutz texts in FR and EN; check the public FR / EN contact page"
+        },
+        {
+          "id": "ak-images",
+          "group": "Kontakt",
+          "text": "Images with Desktop / Mobile, caption, crop, delete"
+        }
+      ]
+    },
+    {
+      "id": "imgmgr",
+      "title": "Admin: Image manager",
+      "note": "Run fully once (e.g. Team member), then spot-check Home, Team, Assistenz and Kontakt.",
+      "items": [
+        {
+          "id": "im-upload",
+          "group": "Upload",
+          "text": "Upload PNG, JPG and JPEG by drag-and-drop and by click; several files at once"
+        },
+        {
+          "id": "im-reject",
+          "group": "Upload",
+          "text": "GIF / PDF and files over 8 MB are rejected with a message that says why"
+        },
+        {
+          "id": "im-unsaved",
+          "group": "Upload",
+          "text": "On a new, unsaved record: upload images first, then save; images and order stay with the record"
+        },
+        {
+          "id": "im-caption",
+          "group": "Edit & crop",
+          "text": "Pencil opens the overlay; caption fields save; caption shows on the preview; close with button, ✕ and Escape"
+        },
+        {
+          "id": "im-device",
+          "group": "Edit & crop",
+          "text": "“Anwendung” switches Desktop / Mobile and the public page puts the image in the right slot"
+        },
+        {
+          "id": "im-crop-open",
+          "group": "Edit & crop",
+          "text": "Crop opens on the saved crop (same frame as before)"
+        },
+        {
+          "id": "im-crop-ratio",
+          "group": "Edit & crop",
+          "text": "Cropper ratio matches: Desktop 10:12, Mobile 3:2, Vorschau 1:1, Home default 16:10; Desktop / Mobile buttons switch it"
+        },
+        {
+          "id": "im-crop-save",
+          "group": "Edit & crop",
+          "text": "Save crop; public page shows the new framing; Abbrechen discards"
+        },
+        {
+          "id": "im-toggle",
+          "group": "Manage",
+          "text": "Eye toggle hides the image on the public page"
+        },
+        {
+          "id": "im-delete",
+          "group": "Manage",
+          "text": "Delete asks for confirmation and removes the image"
+        },
+        {
+          "id": "im-view",
+          "group": "Manage",
+          "text": "Image icon opens the cropped image in a new tab"
+        },
+        {
+          "id": "im-list",
+          "group": "Manage",
+          "text": "Grid / Listen Ansicht toggle works"
+        },
+        {
+          "id": "im-drag",
+          "group": "Manage",
+          "text": "In list view, drag images into a new order; reload: kept; public swiper follows",
+          "hint": "Native drag-and-drop could not be tested automatically."
+        }
+      ]
+    },
+    {
+      "id": "editor",
+      "title": "Admin: Rich-text editor (Tiptap)",
+      "note": "TinyMCE was replaced. Test fully in one form, then spot-check one editor in every form.",
+      "items": [
+        {
+          "id": "ed-roundtrip",
+          "group": "Existing content",
+          "text": "Open three long texts (a Werdegang, Kontakt Datenschutz, Home text), save without changes: public page looks the same"
+        },
+        {
+          "id": "ed-cleanup",
+          "group": "Existing content",
+          "text": "Texts pasted from Word / Outlook earlier now use the site font (inline fonts removed)",
+          "tag": "new"
+        },
+        {
+          "id": "ed-multi",
+          "group": "Existing content",
+          "text": "Forms with many editors (member form, language tabs) load fast and keep each editor’s content separate"
+        },
+        {
+          "id": "ed-undo",
+          "group": "Toolbar",
+          "text": "Rückgängig / Wiederholen"
+        },
+        {
+          "id": "ed-headings",
+          "group": "Toolbar",
+          "text": "Überschrift 1, 2, 3 and back to paragraph; active state shows"
+        },
+        {
+          "id": "ed-bold",
+          "group": "Toolbar",
+          "text": "Fett"
+        },
+        {
+          "id": "ed-lists",
+          "group": "Toolbar",
+          "text": "Liste and Nummerierte Liste; toggling off works; output matches public list style"
+        },
+        {
+          "id": "ed-sup",
+          "group": "Toolbar",
+          "text": "Hochgestellt"
+        },
+        {
+          "id": "ed-small",
+          "group": "Toolbar",
+          "text": "Kleine Schrift renders small on the public page"
+        },
+        {
+          "id": "ed-nowrap",
+          "group": "Toolbar",
+          "text": "Worttrennung deaktivieren keeps the words together on the public page"
+        },
+        {
+          "id": "ed-clear",
+          "group": "Toolbar",
+          "text": "Formatierung entfernen"
+        },
+        {
+          "id": "ed-link-url",
+          "group": "Links",
+          "text": "Link type URL; “open in new tab” checkbox sets target"
+        },
+        {
+          "id": "ed-link-mail",
+          "group": "Links",
+          "text": "Link type E-Mail creates a mailto: link"
+        },
+        {
+          "id": "ed-link-tel",
+          "group": "Links",
+          "text": "Link type Telefon creates a tel: link"
+        },
+        {
+          "id": "ed-link-file",
+          "group": "Links",
+          "text": "Link type Datei: pick an uploaded PDF; upload a new file from inside the dialog",
+          "tag": "new"
+        },
+        {
+          "id": "ed-link-edit",
+          "group": "Links",
+          "text": "Edit and remove an existing link; Titel (optional) is kept"
+        },
+        {
+          "id": "ed-paste",
+          "group": "Paste & keyboard",
+          "text": "Paste from Word / a web page: junk styles are dropped, structure stays"
+        },
+        {
+          "id": "ed-keys",
+          "group": "Paste & keyboard",
+          "text": "Enter, Shift+Enter line break, Cmd/Ctrl+B and Cmd/Ctrl+Z behave as expected"
+        }
+      ]
+    },
+    {
+      "id": "media",
+      "title": "Admin: Dateien",
+      "items": [
+        {
+          "id": "md-upload",
+          "text": "Upload a PDF; it appears in the list and opens"
+        },
+        {
+          "id": "md-reject",
+          "text": "Non-PDF files and PDFs over 16 MB are rejected with a reason"
+        },
+        {
+          "id": "md-delete",
+          "text": "Delete removes the entry",
+          "hint": "Known: the file itself stays on disk (unchanged behaviour)."
+        },
+        {
+          "id": "md-linkable",
+          "text": "New file is available in the editor link dialog under Datei"
+        }
+      ]
+    },
+    {
+      "id": "robust",
+      "title": "Edge cases",
+      "items": [
+        {
+          "id": "rb-double",
+          "text": "Double-clicking Save does not create duplicates"
+        },
+        {
+          "id": "rb-slow",
+          "text": "With network throttled to “Slow 4G”, loading indicators show and nothing breaks"
+        },
+        {
+          "id": "rb-server-error",
+          "text": "With APP_DEBUG=false, a server error shows the styled error page, no stack trace"
+        },
+        {
+          "id": "rb-special",
+          "text": "Umlauts, «Guillemets», & and long words save and display correctly in all fields"
+        }
+      ]
+    },
+    {
+      "id": "deploy",
+      "title": "Deploy & production smoke test",
+      "note": "After go-live on the production server.",
+      "items": [
+        {
+          "id": "dp-snapshot",
+          "group": "Before",
+          "text": "Snapshot production DB and storage/"
+        },
+        {
+          "id": "dp-php",
+          "group": "Before",
+          "text": "PHP 8.3+ for CLI and FPM; Imagick with AVIF and WebP available"
+        },
+        {
+          "id": "dp-env",
+          "group": "Before",
+          "text": ".env: APP_URL, SANCTUM_STATEFUL_DOMAINS, SESSION_SECURE_COOKIE, APP_DEBUG=false, mail settings"
+        },
+        {
+          "id": "dp-pull",
+          "group": "Deploy",
+          "text": "git pull, composer install --no-dev, php artisan optimize:clear"
+        },
+        {
+          "id": "dp-glide",
+          "group": "Deploy",
+          "text": "storage/app/.glide-cache created and writable by the web server"
+        },
+        {
+          "id": "dp-smoke-pub",
+          "group": "After",
+          "text": "Home, both teams, one member, assistant and contact load in de / fr / en with images"
+        },
+        {
+          "id": "dp-smoke-admin",
+          "group": "After",
+          "text": "Admin login, one text edit, one image upload + crop, then revert"
+        },
+        {
+          "id": "dp-logs",
+          "group": "After",
+          "text": "storage/logs shows no new errors after the smoke test"
+        },
+        {
+          "id": "dp-cleanup",
+          "group": "After",
+          "text": "Once stable, remove the old image cache storage/app/public/cache/"
+        }
+      ]
+    }
+  ]
+}
