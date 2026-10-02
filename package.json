@@ -3,10 +3,17 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "test:e2e-db": "bash scripts/e2e-db.sh",
+        "test:e2e": "playwright test",
+        "test:visual": "playwright test --config playwright.visual.config.ts",
+        "test:results": "node scripts/qa-results.mjs",
+        "test:all": "node scripts/test-all.mjs"
     },
     "devDependencies": {
+        "@playwright/test": "1.63.0",
         "@vitejs/plugin-vue": "^6.0.9",
+        "image-size": "^2.0.4",
         "laravel-vite-plugin": "^3.2.0",
         "sass": "^1.105.1",
         "vite": "^8.3.1"
