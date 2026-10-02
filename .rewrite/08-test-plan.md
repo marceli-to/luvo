@@ -449,6 +449,42 @@ F1–F13 come from reading the code (Phase 1); F14–F21 were found by the tests
 | F20 | Low | Clicking "Speichern" in the cropper within ~0.5 s of moving the frame saves the previous frame: vue-advanced-cropper reports changes after a 500 ms debounce. | `ImageManager.vue` | e2e | im-crop-save |
 | F21 | Low | "Kleine Schrift" has no effect on the public site: there is no CSS rule for `.fs-sm` (production's CSS had none either). It is stored correctly. | `resources/sass/web` | e2e | ed-small |
 
+### Fixes (branch `fix/qa-findings`, 2026-10-02)
+
+After the fixes, from a fresh `luvo_e2e`, `npm run test:all` twice in a
+row: exit 0 both times, PHPUnit 114 passed, E2E 191 passed, visual 77
+passed (11 skipped by design); `tests/qa-results.json`: **123 pass, 0 fail,
+12 manual**. Production still compares equal: nothing visible changed for
+published content.
+
+Decided: F3 (API role check) is not needed, there is effectively one role;
+its tests were removed. F21 (Kleine Schrift style) is ignored; its public
+test was removed, the test that the class is stored stays. Everything else
+is fixed; the tests that documented the findings are plain assertions now.
+
+| # | Status | Change |
+|---|---|---|
+| F1 | fixed | Member page loops `publishedPublications`. |
+| F2 | fixed | Beschreibung shows whenever it's filled. |
+| F3 | won't fix | Not needed (decision). |
+| F4 | fixed | Unpublished Home, Team, Assistenz (or its team) and Kontakt answer 404; Kontakt lists only published teams. |
+| F5 | fixed | `/img/crop` renders only the sizes in `ImageController::SIZES` and `fm` = jpg/jpeg/webp/avif; anything else is 404. Coords stay free (they're per image). |
+| F6 | fixed | `meta_description` is fillable. |
+| F7 | fixed | Unpublished members (or members of an unpublished team) answer 404. |
+| F8 | fixed | Uploads are validated on the server by content: images jpg/png ≤ 8 MB, files pdf ≤ 16 MB (422 with the reason, which Dropzone shows). |
+| F9 | fixed | The migrations have the five `ON DELETE CASCADE`s; a fresh migrate now matches `luvo` except the coords precision (`double` vs `double(16,12)`, not expressible in Laravel 11+, no loss). |
+| F10 | fixed | Deleting an image deletes its upload and Glide variants, also when its record or team is deleted. Dateien still keep their files (texts may link them). |
+| F12 | safeguard | A 419 now shows "Die Sitzung ist abgelaufen …". It turned out not to be reachable through the UI: an expired session answers 401 and goes to the login (tested), and the admin reads the XSRF cookie fresh per request. |
+| F13 | fixed | Desktop / Mobile in the cropper apply on Speichern only. |
+| F14 | fixed | Kontakt page counts images per device safely. |
+| F15 | fixed | `seo.description_fr` added (translated from German, **to be checked by the client**); the home page uses its language's default instead of the German text. |
+| F16 | fixed | Home Text is starred and marked on error. |
+| F17 | fixed | Logged-in non-admins go to `/`. |
+| F18 | fixed | Assistenz / Kontakt delete their images first. |
+| F19 | fixed | Captions are no longer passed to `round()`. |
+| F20 | fixed | Cropper debounce off: Speichern always saves the frame shown. |
+| F21 | won't fix | Ignored (decision). |
+
 ## Checklist items that don't match the code
 
 | # | Id | Issue | What the test will do |
