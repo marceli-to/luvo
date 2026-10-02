@@ -23,7 +23,11 @@ class TeamMemberController extends BaseController
 
   public function index($slugTeam = NULL, $slug = NULL, TeamMember $teamMember)
   { 
-    $teamMember = $this->teamMember->with('publishedImages', 'publications', 'team')->findOrFail($teamMember->id);
+    $teamMember = $this->teamMember
+      ->published()
+      ->whereHas('team', fn ($query) => $query->published())
+      ->with('publishedImages', 'publishedPublications', 'team')
+      ->findOrFail($teamMember->id);
     return view($this->viewPath . 'member', ['data' => $teamMember]);
   }
 }

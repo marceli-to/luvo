@@ -36,7 +36,7 @@
               {!! $data->credits !!}
             </div>
           @endif
-          @if ($data->credits)
+          @if ($data->description)
             <div class="member__description">
               {!! $data->description !!}
             </div>
@@ -100,7 +100,7 @@
               </a>
               <div style="display:none">
                 <ul>
-                @foreach($data->publications as $publication)
+                @foreach($data->publishedPublications as $publication)
                   <li>
                     <a href="javascript:;" class="btn-accordeon is-nested js-btn-member-sublist">
                       <span>{{ $publication->title }}</span>
