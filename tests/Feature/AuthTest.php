@@ -48,6 +48,17 @@ class AuthTest extends TestCase
         $this->get('/administration/team/member/edit/1')->assertForbidden();
     }
 
+    #[Qa('auth-role', 'auth-login')]
+    public function test_non_admin_login_lands_on_a_page(): void
+    {
+        $user = $this->user(['role' => 'editor']);
+        $this->teams();
+        $this->home();
+
+        $this->post('/login', ['email' => $user->email, 'password' => 'qa-password'])->assertRedirect('/home');
+        $this->knownFinding('F17', 'a non-admin login redirects to /home, which is a 404', fn () => $this->get('/home')->assertOk());
+    }
+
     #[Qa('auth-role', 'setup-users')]
     public function test_unverified_admin_cannot_open_the_admin(): void
     {

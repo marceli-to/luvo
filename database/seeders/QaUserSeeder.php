@@ -33,14 +33,19 @@ class QaUserSeeder extends Seeder
                 throw new RuntimeException("{$prefix}_EMAIL and {$prefix}_PASSWORD must be set.");
             }
 
-            // firstname and name aren't fillable
-            User::firstOrNew(['email' => $email])->forceFill([
+            // firstname and name aren't fillable. A new hash for the same
+            // password would end the user's sessions (Sanctum checks the hash).
+            $record = User::firstOrNew(['email' => $email]);
+            $record->forceFill([
                 'firstname' => 'QA',
                 'name' => $user['name'],
-                'password' => Hash::make($password),
                 'role' => $user['role'],
-                'email_verified_at' => $user['verified'] ? now() : null,
-            ])->save();
+                'email_verified_at' => $user['verified'] ? ($record->email_verified_at ?? now()) : null,
+            ]);
+            if (!$record->password || !Hash::check($password, $record->password)) {
+                $record->password = Hash::make($password);
+            }
+            $record->save();
         }
     }
 }
