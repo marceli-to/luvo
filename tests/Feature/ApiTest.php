@@ -204,6 +204,19 @@ class ApiTest extends TestCase
         $this->assertFileDoesNotExist(storage_path('app/public/uploads/qa-member.jpg'));
     }
 
+    #[Qa('aa-images', 'ak-images', 'im-caption')]
+    public function test_assistant_and_contact_save_with_image_captions(): void
+    {
+        $assistant = $this->assistant($this->team());
+        $contact = $this->contact();
+        foreach ([['assistant', $assistant, $this->assistantImage($assistant, 'qa-a.jpg')], ['contact', $contact, $this->contactImage($contact, 'qa-c.jpg')]] as [$entity, $record, $image]) {
+            $payload = $this->getJson("/api/{$entity}/{$record->id}")->json();
+            $payload['images'][0]['caption'] = 'QA-Legende';
+            $this->putJson("/api/{$entity}/{$record->id}", $payload)->assertOk();
+            $this->assertSame('QA-Legende', $image->fresh()->caption, $entity);
+        }
+    }
+
     #[Qa('at-members-drag', 'am-pub-drag')]
     public function test_order_endpoints_store_the_order(): void
     {

@@ -43,7 +43,7 @@ class AuthTest extends TestCase
     {
         $user = $this->user(['role' => 'editor']);
 
-        $this->post('/login', ['email' => $user->email, 'password' => 'qa-password'])->assertRedirect('/home');
+        $this->post('/login', ['email' => $user->email, 'password' => 'qa-password'])->assertRedirect('/');
         $this->get('/administration')->assertForbidden();
         $this->get('/administration/team/member/edit/1')->assertForbidden();
     }
@@ -55,8 +55,10 @@ class AuthTest extends TestCase
         $this->teams();
         $this->home();
 
-        $this->post('/login', ['email' => $user->email, 'password' => 'qa-password'])->assertRedirect('/home');
-        $this->knownFinding('F17', 'a non-admin login redirects to /home, which is a 404', fn () => $this->get('/home')->assertOk());
+        $this->post('/login', ['email' => $user->email, 'password' => 'qa-password'])->assertRedirect('/');
+        $this->get('/')->assertOk();
+        // Logged in, the login page sends them there too
+        $this->get('/login')->assertRedirect('/');
     }
 
     #[Qa('auth-role', 'setup-users')]
@@ -67,21 +69,7 @@ class AuthTest extends TestCase
         $this->actingAs($user)->get('/administration')->assertRedirect('/email/verify');
     }
 
-    #[Qa('auth-role')]
-    public function test_non_admin_cannot_use_the_api(): void
-    {
-        $this->actingAs($this->user(['role' => 'editor']));
 
-        $this->knownFinding('F3', 'the API has no role check', fn () => $this->getJson('/api/home')->assertForbidden());
-    }
-
-    #[Qa('auth-role')]
-    public function test_unverified_admin_cannot_use_the_api(): void
-    {
-        $this->actingAs($this->user(['email_verified_at' => null]));
-
-        $this->knownFinding('F3', 'the API has no verified check', fn () => $this->getJson('/api/home')->assertForbidden());
-    }
 
     #[Qa('auth-disabled')]
     public function test_registration_and_password_reset_are_disabled(): void

@@ -201,7 +201,7 @@ class PublicPagesTest extends TestCase
     {
         $hidden = $this->member($this->site['teams']['luks'], ['publish' => 0]);
 
-        $this->knownFinding('F7', 'unpublished member pages are public', fn () => $this->get($this->memberUrl('de', $hidden))->assertNotFound());
+        $this->get($this->memberUrl('de', $hidden))->assertNotFound();
     }
 
     #[Qa('pp-member-sections')]
@@ -230,7 +230,7 @@ class PublicPagesTest extends TestCase
     {
         $member = $this->member($this->site['teams']['luks'], ['credits' => null]);
 
-        $this->knownFinding('F2', 'Beschreibung only shows when Info is filled', fn () => $this->get($this->memberUrl('de', $member))->assertSee('<div class="member__description">', false));
+        $this->get($this->memberUrl('de', $member))->assertSee('<div class="member__description">', false);
     }
 
     #[Qa('pp-member-pubs')]
@@ -251,7 +251,7 @@ class PublicPagesTest extends TestCase
         $this->publication($member, ['title' => ['de' => 'QA-Pub sichtbar']]);
         $this->publication($member, ['title' => ['de' => 'QA-Pub versteckt'], 'publish' => 0]);
 
-        $this->knownFinding('F1', 'unpublished publications are listed', fn () => $this->get($this->memberUrl('de'))->assertSee('QA-Pub sichtbar')->assertDontSee('QA-Pub versteckt'));
+        $this->get($this->memberUrl('de'))->assertSee('QA-Pub sichtbar')->assertDontSee('QA-Pub versteckt');
     }
 
     #[Qa('pp-assistant')]
@@ -283,7 +283,10 @@ class PublicPagesTest extends TestCase
     {
         \App\Models\ContactImage::where('device', 'mobile')->delete();
 
-        $this->knownFinding('F14', 'contact page 500s without a published image per device', fn () => $this->get('/de/kontakt')->assertOk());
+        $this->get('/de/kontakt')->assertOk()->assertSee('/img/crop/qa-contact-desktop.jpg/', false);
+
+        \App\Models\ContactImage::query()->delete();
+        $this->get('/de/kontakt')->assertOk();
     }
 
     #[Qa('pp-privacy-lang')]
@@ -305,7 +308,7 @@ class PublicPagesTest extends TestCase
     {
         $this->site['home']->forceFill(['publish' => 0])->save();
 
-        $this->knownFinding('F4', 'publish flag does not hide the page', fn () => $this->get('/de')->assertDontSee('QA-Home DE'));
+        $this->get('/de')->assertNotFound();
     }
 
     #[Qa('at-teams-list')]
@@ -313,7 +316,7 @@ class PublicPagesTest extends TestCase
     {
         $this->site['teams']['luks']->forceFill(['publish' => 0])->save();
 
-        $this->knownFinding('F4', 'publish flag does not hide the page', fn () => $this->get('/de/team-luks')->assertNotFound());
+        $this->get('/de/team-luks')->assertNotFound();
     }
 
     #[Qa('at-assist-list')]
@@ -322,7 +325,7 @@ class PublicPagesTest extends TestCase
         $this->site['assistants']['luks']->forceFill(['publish' => 0])->save();
 
         $this->get('/de/team-luks')->assertDontSee('/de/team-luks/assistenz', false);
-        $this->knownFinding('F4', 'publish flag does not hide the page', fn () => $this->get('/de/team-luks/assistenz')->assertNotFound());
+        $this->get('/de/team-luks/assistenz')->assertNotFound();
     }
 
     #[Qa('ak-list')]
@@ -330,6 +333,6 @@ class PublicPagesTest extends TestCase
     {
         $this->site['contact']->forceFill(['publish' => 0])->save();
 
-        $this->knownFinding('F4', 'publish flag does not hide the page', fn () => $this->get('/de/kontakt')->assertDontSee('QA-Adresse DE'));
+        $this->get('/de/kontakt')->assertNotFound();
     }
 }
