@@ -14,6 +14,10 @@ Written so the next session can skip re-deriving all of this.
 | `04-open-questions.md` | What must be answered before starting (+ answers) |
 | `05-image-pipeline.md` | image-cache → Glide evaluation, crop rules, live bugs |
 | `06-progress.md` | What is done, verified, and left to do |
+| `07-qa-automation-prompt.md` | The brief for the automated QA suite |
+| `08-test-plan.md` | QA suite: plan, how to run it, findings and fixes |
+| `09-deploy.md` | Deploy checklist: before, during, after, content |
+| `qa-checklist.json` | The manual QA checklist (135 ids) |
 
 ## The 30-second version
 
