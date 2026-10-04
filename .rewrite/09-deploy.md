@@ -25,13 +25,19 @@ The ids in brackets are the matching items in `qa-checklist.json`.
 ```sh
 git pull
 composer install --no-dev     # needed on the first deploy on Laravel 13
+php artisan migrate --force
 php artisan optimize:clear
 ```
 
 - Make sure `storage/app/.glide-cache` exists and the web server can write to
   it (`dp-glide`).
-- There are **no migrations to run**. The edited migrations only matter for
-  fresh installs.
+- **One migration to run:**
+  `2026_10_04_120000_update_contacts_privacy_translations` replaces the
+  Datenschutz text: the cleaned-up German version (spacing now comes from
+  `.contact__privacy`, not from empty paragraphs) plus the client's French and
+  English translations. It overwrites the German text, so any edits made in
+  the admin before the deploy are lost. The other edited migrations only
+  matter for fresh installs.
 - The built assets are committed in `public/build`; nothing to build on the
   server.
 
@@ -52,9 +58,6 @@ php artisan optimize:clear
 
 - **French meta description:** `config/seo.php` → `description_fr` is a
   translation of the German text and needs the client's approval.
-- **Datenschutz in FR and EN:** still empty, so those pages show the German
-  text until the client's translations are entered in the admin (Kontakt →
-  Datenschutz, FR / EN tabs) (`ak-privacy`).
 
 ## Behaviour changes to tell the editors
 
