@@ -2,15 +2,13 @@
 namespace App\Http\Controllers;
 use App\Models\Contact;
 use App\Models\Team;
-use App\Http\Controllers\BaseController;
 
-class ContactController extends BaseController
+class ContactController extends Controller
 {
   protected $viewPath = 'web.pages.contact.';
 
   public function __construct(Contact $contact, Team $team)
   {
-    parent::__construct();
     $this->contact = $contact;
     $this->team = $team;
   }

@@ -1,9 +1,9 @@
 <?php
 namespace App\Http\Controllers\Auth;
-use App\Http\Controllers\BaseController;
+use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
-class LoginController extends BaseController
+class LoginController extends Controller
 {
   /*
   |--------------------------------------------------------------------------
@@ -25,7 +25,6 @@ class LoginController extends BaseController
    */
   public function __construct()
   {
-    parent::__construct();
     $this->middleware('guest')->except('logout');
   }
 

@@ -1,15 +1,13 @@
 <?php
 namespace App\Http\Controllers;
 use App\Models\Team;
-use App\Http\Controllers\BaseController;
 
-class TeamController extends BaseController
+class TeamController extends Controller
 {
   protected $viewPath = 'web.pages.team.';
 
   public function __construct(Team $team)
   {
-    parent::__construct();
     $this->team = $team;
   }
 

@@ -1,15 +1,13 @@
 <?php
 namespace App\Http\Controllers;
 use App\Models\Home;
-use App\Http\Controllers\BaseController;
 
-class HomeController extends BaseController
+class HomeController extends Controller
 {
   protected $viewPath = 'web.pages.home.';
 
   public function __construct(Home $home)
   {
-    parent::__construct();
     $this->home = $home;
   }
 

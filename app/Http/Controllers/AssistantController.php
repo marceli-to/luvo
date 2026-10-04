@@ -1,15 +1,13 @@
 <?php
 namespace App\Http\Controllers;
 use App\Models\Assistant;
-use App\Http\Controllers\BaseController;
 
-class AssistantController extends BaseController
+class AssistantController extends Controller
 {
   protected $viewPath = 'web.pages.team.';
 
   public function __construct(Assistant $assistant)
   {
-    parent::__construct();
     $this->assistant  = $assistant;
   }
 

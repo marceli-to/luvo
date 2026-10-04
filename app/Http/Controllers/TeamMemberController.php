@@ -1,27 +1,28 @@
 <?php
 namespace App\Http\Controllers;
 use App\Models\TeamMember;
-use App\Http\Controllers\BaseController;
 
-class TeamMemberController extends BaseController
+class TeamMemberController extends Controller
 {
   protected $viewPath = 'web.pages.team.';
 
   public function __construct(TeamMember $teamMember)
   {
-    parent::__construct();
     $this->teamMember = $teamMember;
   }
 
   /**
-   * Page: 'Team member'
-   *  
+   * Page: 'Team member'; the team and member slugs in the url are
+   * cosmetic, the member is found by its id
+   *
+   * @param string $slugTeam
+   * @param string $slugMember
    * @param TeamMember $teamMember
    * @return \Illuminate\Http\Response
    */
 
-  public function index($slugTeam = NULL, $slug = NULL, TeamMember $teamMember)
-  { 
+  public function index(string $slugTeam, string $slugMember, TeamMember $teamMember)
+  {
     $teamMember = $this->teamMember
       ->published()
       ->whereHas('team', fn ($query) => $query->published())
