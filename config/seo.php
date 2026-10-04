@@ -15,17 +15,6 @@ return [
 
   /*
   |--------------------------------------------------------------------------
-  | Seo description (General)
-  |--------------------------------------------------------------------------
-  |
-  | Used for SEO (Meta description, Open Graph Description)
-  |
-  */
-
-  'description' => 'Seit 1999 betreuen wir Privatpersonen, Unternehmen und Organisationen in privatrechtlichen Fragen. Mit Fachkompetenz, Sorgfalt, beherztem persönlichem Engagement, Effizienz und starkem Verantwortungsbewusstsein suchen wir stets die bestmögliche und auf Ihre individuellen Bedürfnisse zugeschnittene Lösung.',   
-
-  /*
-  |--------------------------------------------------------------------------
   | Seo description (General, German)
   |--------------------------------------------------------------------------
   |

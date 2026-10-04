@@ -15,6 +15,8 @@ The ids in brackets are the matching items in `qa-checklist.json`.
    server; Imagick with AVIF and WebP (`dp-php`).
 3. **Production `.env`:** check `APP_URL`, `SANCTUM_STATEFUL_DOMAINS`,
    `SESSION_SECURE_COOKIE`, `APP_DEBUG=false` and the mail settings (`dp-env`).
+   Rename `MAIL_DRIVER` to `MAIL_MAILER` (the old name is no longer read) and
+   drop `LUVO_*` and `BROADCAST_DRIVER`, which nothing reads any more.
 4. **Real browsers:** a quick pass in Safari, Firefox, iOS Safari and one
    Android browser (`setup-browsers`). The automated tests only run in Chrome.
 

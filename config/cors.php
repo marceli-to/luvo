@@ -19,7 +19,6 @@ return [
         'api/*',
         '/login',
         '/logout',
-        '/luvo/csrf-cookie'
     ],
 
     'allowed_methods' => ['*'],
