@@ -165,7 +165,6 @@ class ContactController extends Controller
   /**
    * Remove a Contact
    *
-   * \Observers\ContactObserver observes and deletes child elements.
    * @param  Contact $contact
    * @return \Illuminate\Http\Response
    */

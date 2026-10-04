@@ -6,7 +6,7 @@ use League\Glide\Server;
 use League\Glide\ServerFactory;
 
 /**
- * The Glide server for /img/... (ImageController, images:warm).
+ * The Glide server for /img/... (ImageController).
  */
 class Glide
 {

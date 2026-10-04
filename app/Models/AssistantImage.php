@@ -1,7 +1,5 @@
 <?php
 namespace App\Models;
-use App\Models\Base;
-use Illuminate\Database\Eloquent\Model;
 
 class AssistantImage extends Base
 {
@@ -18,9 +16,4 @@ class AssistantImage extends Base
     'order',
     'assistant_id',
 	];
-
-  public function contact()
-  {
-    return $this->belongsTo('App\Models\Assistant');
-  }
 }

@@ -1,6 +1,5 @@
 <?php
 namespace App\Models;
-use App\Models\Base;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 
@@ -24,9 +23,4 @@ class HomeImage extends Model
     'order',
     'home_id',
 	];
-
-  public function home()
-  {
-    return $this->belongsTo('App\Models\Home');
-  }
 }

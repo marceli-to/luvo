@@ -1,7 +1,5 @@
 <?php
 namespace App\Models;
-use App\Models\Base;
-use Illuminate\Database\Eloquent\Model;
 
 class ContactImage extends Base
 {
@@ -18,9 +16,4 @@ class ContactImage extends Base
     'order',
     'contact_id',
 	];
-
-  public function contact()
-  {
-    return $this->belongsTo('App\Models\Contact');
-  }
 }

@@ -169,7 +169,6 @@ class HomeController extends Controller
   /**
    * Remove a Home
    *
-   * \Observers\HomeObserver observes and deletes child elements.
    * @param  Home $home
    * @return \Illuminate\Http\Response
    */

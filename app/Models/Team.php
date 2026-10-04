@@ -1,7 +1,5 @@
 <?php
 namespace App\Models;
-use App\Models\Base;
-use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 
 class Team extends Base
@@ -38,17 +36,6 @@ class Team extends Base
 		return $this->hasMany('App\Models\TeamImage', 'team_id', 'id')->where('publish', '=', 1)->orderBy('order');
 	}
 
-	/**
-	 * Scope a query to only include a team by a given slug.
-	 *
-	 * @param  mixed  $slug
-	 * @return \Illuminate\Database\Eloquent\Builder
-	 */
-	public function bySlug($slug)
-	{
-		return $this->where('slug', '=', $slug);
-	}
-
   /**
    * Get capitalized
    */
@@ -57,5 +44,4 @@ class Team extends Base
   {
     return ucfirst($this->slug);
   }
-
 }

@@ -1,7 +1,5 @@
 <?php
 namespace App\Models;
-use App\Models\Base;
-use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 
 class TeamMember extends Base
@@ -34,7 +32,6 @@ class TeamMember extends Base
     'publish',
     'team_id',
   ];
-
 
 	public function team()
 	{
@@ -69,13 +66,4 @@ class TeamMember extends Base
   {
     return $this->firstname . ' ' . $this->name;
 	}
-	
-  /**
-   * Get slug
-   */
-
-  public function getSlugAttribute()
-  {
-    return \Str::slug($this->firstname . ' ' . $this->name, '-');
-  }
 }

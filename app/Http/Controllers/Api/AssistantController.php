@@ -154,7 +154,6 @@ class AssistantController extends Controller
   /**
    * Remove a Assistant
    *
-   * \Observers\AssistantObserver observes and deletes child elements.
    * @param  Assistant $assistant
    * @return \Illuminate\Http\Response
    */

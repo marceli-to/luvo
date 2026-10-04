@@ -173,7 +173,6 @@ class TeamController extends Controller
   /**
    * Remove a Team
    *
-   * \Observers\TeamObserver observes and deletes child elements.
    * @param  Team $team
    * @return \Illuminate\Http\Response
    */
