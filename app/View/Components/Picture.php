@@ -1,6 +1,5 @@
 <?php
 namespace App\View\Components;
-use App\Helpers\ImageHelper;
 use App\Support\ImageSupport;
 use Illuminate\View\Component;
 
@@ -27,11 +26,18 @@ class Picture extends Component
   public $formats;
 
   /**
+   * Show the caption below the picture
+   *
+   * @var bool
+   */
+  public $caption;
+
+  /**
    * Create a new component instance.
    *
    * @return void
    */
-  public function __construct($image, $queries, $width, $height)
+  public function __construct($image, $queries, $width, $height, $caption = true)
   {
     $this->image   = $image;
     // Callers pass 'min-width: 900px'; a media feature needs parentheses,
@@ -40,10 +46,12 @@ class Picture extends Component
     $this->width   = $width;
     $this->height  = $height;
     $this->formats = ImageSupport::modernFormats();
+    $this->caption = $caption;
   }
 
   /**
-   * Image url for a size and an optional format (avif, webp)
+   * Image url for a size, with the image's saved crop (if any)
+   * and an optional format (avif, webp)
    *
    * @param int $k index into width/height
    * @param string|null $format
@@ -51,7 +59,20 @@ class Picture extends Component
    */
   public function src($k, $format = NULL)
   {
-    return ImageHelper::cropUrl($this->image, $this->width[$k], $this->height[$k], $format);
+    $url = '/img/crop/' . $this->image->name . '/' . $this->width[$k] . '/' . $this->height[$k];
+
+    // A crop needs width and height; x/y may be 0 (crop anchored top/left)
+    if ($this->image->coords_w > 0 && $this->image->coords_h > 0)
+    {
+      $url .= '/' . implode(',', [
+        (int) $this->image->coords_w,
+        (int) $this->image->coords_h,
+        (int) $this->image->coords_x,
+        (int) $this->image->coords_y,
+      ]);
+    }
+
+    return $format ? $url . '?fm=' . $format : $url;
   }
 
   /**

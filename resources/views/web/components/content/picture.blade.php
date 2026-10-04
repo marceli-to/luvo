@@ -11,6 +11,6 @@
     @endif
   @endforeach
 </picture>
-@if ($image->caption)
+@if ($caption && $image->caption)
 <figcaption>{{$image->caption}}</figcaption>
 @endif

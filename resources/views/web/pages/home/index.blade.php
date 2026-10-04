@@ -4,15 +4,7 @@
   @foreach($data->publishedImages as $image)
     @if ($loop->first)
       <figure class="visual-wide">
-        <picture>
-          @foreach([...\App\Support\ImageSupport::modernFormats(), null] as $format)
-          <source media="(min-width: 1600px)" @if($format)type="image/{{$format}}" @endif srcset="{{ ImageHelper::cropUrl($image, 2400, 1500, $format) }}">
-          <source media="(min-width: 1200px)" @if($format)type="image/{{$format}}" @endif srcset="{{ ImageHelper::cropUrl($image, 1600, 1000, $format) }}">
-          <source media="(min-width: 900px)" @if($format)type="image/{{$format}}" @endif srcset="{{ ImageHelper::cropUrl($image, 1200, 750, $format) }}">
-          <source @if($format)type="image/{{$format}}" @endif srcset="{{ ImageHelper::cropUrl($image, 900, 560, $format) }}">
-          @endforeach
-          <img src="{{ ImageHelper::cropUrl($image, 900, 560) }}" width="900" height="560" alt="{{$image->caption}}">
-        </picture>
+        <x-picture :image="$image" :queries="['min-width: 1600px', 'min-width: 1200px', 'min-width: 900px', null]" :width="[2400,1600,1200,900]" :height="[1500,1000,750,560]" :caption="false" />
         <a href="javascript:;" class="visual-scroller js-btn-scroll"></a>
       </figure>
     @endif

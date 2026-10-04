@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Facade;
-
 return [
 
     'name' => env('APP_NAME', 'Laravel'),
@@ -36,15 +34,5 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
-
-    /*
-    | Helpers used as facades in blade views.
-    */
-    'aliases' => Facade::defaultAliases()->merge([
-        'ImageHelper' => App\Helpers\ImageHelper::class,
-        'MoneyHelper' => App\Helpers\MoneyHelper::class,
-        'AppHelper' => App\Helpers\AppHelper::class,
-        'UrlHelper' => App\Helpers\UrlHelper::class,
-    ])->toArray(),
 
 ];
