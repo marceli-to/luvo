@@ -115,7 +115,7 @@ if ($data['contact']->publishedImages)
           @if ($data['contact']->privacy)
             <div>
               <a href="javascript:;" class="anchor-imprint" data-toggle="next:div">{{__('Datenschutz')}}</a>
-              <div style="display:none" class="contact__imprint">
+              <div style="display:none" class="contact__privacy">
                 {!! $data['contact']->privacy !!}
               </div>
             </div>

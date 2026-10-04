@@ -312,6 +312,33 @@ article.contact {
     }
   }
 
+  .contact__privacy {
+    margin-bottom: $space-4x;
+    @include bp-md() {
+      margin-bottom: $space-8x;
+    }
+
+    h3 {
+      margin-bottom: $space-4x;
+    }
+
+    // Section headings (I., II., …)
+    h2 {
+      margin-bottom: $space-4x;
+      margin-top: $space-8x;
+    }
+
+    h3 + h2 {
+      margin-top: 0;
+    }
+
+    // Sub-heading directly below a section heading ("A. Einleitung")
+    h2 + h2 {
+      margin-bottom: 0;
+      margin-top: 0;
+    }
+  }
+
   .contact__members {
     border-bottom: 1px solid $color-black;
     margin-bottom: $space-4x;

@@ -101,7 +101,7 @@ test('Kontakt fields save per language and show on the public page', async ({ pa
       await page.goto(path);
       await expect(page.locator('address')).toContainText(`QA-Adresse ${locale}`);
       await page.locator('a.anchor-imprint', { hasText: /Datenschutz|Protection|Privacy|données/i }).click();
-      await expect(page.locator('.contact__imprint', { hasText: `QA-Datenschutz ${locale}` })).toBeVisible();
+      await expect(page.locator('.contact__privacy', { hasText: `QA-Datenschutz ${locale}` })).toBeVisible();
       await expect(page.locator('a.anchor-maps')).toHaveAttribute('href', 'https://maps.example.com/qa');
     }
   }
