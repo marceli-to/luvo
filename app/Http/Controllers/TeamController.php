@@ -2,7 +2,6 @@
 namespace App\Http\Controllers;
 use App\Models\Team;
 use App\Http\Controllers\BaseController;
-use Illuminate\Http\Request;
 
 class TeamController extends BaseController
 {

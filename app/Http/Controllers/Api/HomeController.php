@@ -6,7 +6,6 @@ use App\Http\Resources\DataCollection;
 use App\Models\Home;
 use App\Models\HomeImage;
 use App\Http\Requests\HomeStoreRequest;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -108,7 +107,7 @@ class HomeController extends Controller
     $home->setTranslation('title', 'de', $request->input('title.de'));
     $home->setTranslation('text', 'de', $request->input('text.de'));
 
-    // English
+    // French
     $home->setTranslation('title', 'fr', $request->input('title.fr'));
     $home->setTranslation('text', 'fr', $request->input('text.fr'));
 

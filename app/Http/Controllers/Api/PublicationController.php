@@ -14,17 +14,6 @@ class PublicationController extends Controller
   }
 
   /**
-   * Get a list of publications
-   * 
-   * @param TeamMember $teamMember
-   * @return \Illuminate\Http\Response
-   */
-  public function get(TeamMember $teamMember)
-  {
-    return new DataCollection($this->publication->where('team_member_id', '=', $teamMember->id)->get());
-  }
-
-  /**
    * Get a single publication for a given publication
    * 
    * @param Publication $publication
@@ -85,7 +74,7 @@ class PublicationController extends Controller
     $publication->setTranslation('description', 'de', $request->input('description.de'));
     $publication->setTranslation('articles', 'de', $request->input('articles.de'));
 
-    // English
+    // French
     $publication->setTranslation('title', 'fr', $request->input('title.fr'));
     $publication->setTranslation('description', 'fr', $request->input('description.fr'));
     $publication->setTranslation('articles', 'fr', $request->input('articles.fr'));

@@ -6,7 +6,6 @@ use App\Http\Resources\DataCollection;
 use App\Models\Assistant;
 use App\Models\AssistantImage;
 use App\Http\Requests\AssistantStoreRequest;
-use Illuminate\Http\Request;
 
 class AssistantController extends Controller
 {

@@ -1,9 +1,6 @@
 <?php
 namespace App\Http\Controllers\Api;
 use App\Models\HomeImage;
-use App\Http\Resources\DataCollection;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Cache;
 use App\Support\Glide;
 use App\Support\Uploads;
 use App\Http\Controllers\Controller;

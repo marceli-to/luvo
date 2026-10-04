@@ -3,8 +3,6 @@ namespace App\Http\Controllers\Api;
 use App\Models\File;
 use App\Http\Resources\DataCollection;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 
 class FileController extends Controller
@@ -48,7 +46,6 @@ class FileController extends Controller
         'title' => $file->name,
         'value' => '/storage/uploads/files/' . $file->name,
       ];
-      $file_info = pathinfo($file);
     }
 
     return response()->json($file_list);

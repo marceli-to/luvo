@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\FileController;
@@ -28,10 +27,6 @@ use App\Http\Controllers\Api\AssistantImageController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-  return $request->user();
-});
-
 Route::middleware('auth:sanctum')->group(function() {
   Route::get('user', [UserController::class, 'find']);
   Route::post('user/password', [UserController::class, 'updatePassword']);
@@ -45,14 +40,12 @@ Route::middleware('auth:sanctum')->group(function() {
   // Upload
   Route::post('image/upload', [UploadController::class, 'image']);
   Route::post('file/upload', [UploadController::class, 'file']);
-  //Route::get('files/get', [UploadController::class, 'getFiles']);
 
   // Home
   Route::get('home', [HomeController::class, 'get']);
   Route::get('home/{home}', [HomeController::class, 'find']);
   Route::post('home', [HomeController::class, 'store']);
   Route::put('home/{home}', [HomeController::class, 'update']);
-  Route::post('home/order', [HomeController::class, 'order']);
   Route::get('home/state/{home}', [HomeController::class, 'toggle']);
   Route::delete('home/{home}', [HomeController::class, 'destroy']);
 
@@ -91,12 +84,10 @@ Route::middleware('auth:sanctum')->group(function() {
   Route::get('team/{team}', [TeamController::class, 'find']);
   Route::post('team', [TeamController::class, 'store']);
   Route::put('team/{team}', [TeamController::class, 'update']);
-  Route::post('team/order', [TeamController::class, 'order']);
   Route::get('team/state/{team}', [TeamController::class, 'toggle']);
   Route::delete('team/{team}', [TeamController::class, 'destroy']);
 
   // Publication
-  Route::get('publications', [PublicationController::class, 'get']);
   Route::get('publication/{publication}', [PublicationController::class, 'find']);
   Route::post('publication', [PublicationController::class, 'store']);
   Route::put('publication/{publication}', [PublicationController::class, 'update']);
@@ -109,7 +100,6 @@ Route::middleware('auth:sanctum')->group(function() {
   Route::get('contact/{contact}', [ContactController::class, 'find']);
   Route::post('contact', [ContactController::class, 'store']);
   Route::put('contact/{contact}', [ContactController::class, 'update']);
-  Route::post('contact/order', [ContactController::class, 'order']);
   Route::get('contact/state/{contact}', [ContactController::class, 'toggle']);
   Route::delete('contact/{contact}', [ContactController::class, 'destroy']);
 
@@ -125,7 +115,6 @@ Route::middleware('auth:sanctum')->group(function() {
   Route::get('assistant/{assistant}', [AssistantController::class, 'find']);
   Route::post('assistant', [AssistantController::class, 'store']);
   Route::put('assistant/{assistant}', [AssistantController::class, 'update']);
-  Route::post('assistant/order', [AssistantController::class, 'order']);
   Route::get('assistant/state/{assistant}', [AssistantController::class, 'toggle']);
   Route::delete('assistant/{assistant}', [AssistantController::class, 'destroy']);
 

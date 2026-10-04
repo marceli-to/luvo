@@ -14,9 +14,6 @@
           <x-text-field label="E-Mail" type="email" name="email" autocomplete="false" />
           <x-text-field label="Passwort" type="password" name="password" autocomplete="false" />
           <div class="form-buttons align-justify">
-            {{-- @if (Route::has('password.request'))
-              <a href="{{ route('password.request') }}" class="form-helper">Passwort vergessen?</a>
-            @endif --}}
             <x-button label="Anmelden" name="register" btnClass="btn-primary js-btn-loader" type="submit" />
           </div>
         </form>

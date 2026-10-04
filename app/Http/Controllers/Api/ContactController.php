@@ -6,7 +6,6 @@ use App\Http\Resources\DataCollection;
 use App\Models\Contact;
 use App\Models\ContactImage;
 use App\Http\Requests\ContactStoreRequest;
-use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
@@ -108,7 +107,7 @@ class ContactController extends Controller
     $contact->setTranslation('imprint', 'de', $request->input('imprint.de'));
     $contact->setTranslation('privacy', 'de', $request->input('privacy.de'));
 
-    // English
+    // French
     $contact->setTranslation('address', 'fr', $request->input('address.fr'));
     $contact->setTranslation('imprint', 'fr', $request->input('imprint.fr'));
     $contact->setTranslation('privacy', 'fr', $request->input('privacy.fr'));

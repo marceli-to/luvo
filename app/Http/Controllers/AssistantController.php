@@ -2,7 +2,6 @@
 namespace App\Http\Controllers;
 use App\Models\Assistant;
 use App\Http\Controllers\BaseController;
-use Illuminate\Http\Request;
 
 class AssistantController extends BaseController
 {

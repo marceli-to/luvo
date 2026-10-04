@@ -1,8 +1,5 @@
 <?php
 
-use App\Models\Assistant;
-use App\Models\Team;
-use App\Models\TeamMember;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TeamController;
@@ -25,13 +22,13 @@ Auth::routes(['verify' => true, 'reset'  => false, 'register' => false]);
 Route::get('/logout', [LoginController::class, 'logout']);
 
 // password/reset
-Route::get('/password/reset', [HomeController::class, 'index'])->name('page.home');
+Route::get('/password/reset', [HomeController::class, 'index']);
 
 // Home
-Route::get('/', [HomeController::class, 'index'])->name('page.home');
-Route::get('/de', [HomeController::class, 'index'])->name('page.home');
-Route::get('/en', [HomeController::class, 'index'])->name('page.home');
-Route::get('/fr', [HomeController::class, 'index'])->name('page.home');
+Route::get('/', [HomeController::class, 'index']);
+Route::get('/de', [HomeController::class, 'index']);
+Route::get('/en', [HomeController::class, 'index']);
+Route::get('/fr', [HomeController::class, 'index']);
 Route::multilingual('/home', [HomeController::class, 'index'])->name('page.home');
 
 // Teams

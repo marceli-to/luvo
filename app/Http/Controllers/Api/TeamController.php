@@ -6,7 +6,6 @@ use App\Http\Resources\DataCollection;
 use App\Models\Team;
 use App\Models\TeamImage;
 use App\Http\Requests\TeamStoreRequest;
-use Illuminate\Http\Request;
 
 class TeamController extends Controller
 {
@@ -110,7 +109,7 @@ class TeamController extends Controller
     $team->setTranslation('title', 'de', $request->input('title.de'));
     $team->setTranslation('text', 'de', $request->input('text.de'));
 
-    // English
+    // French
     $team->setTranslation('title', 'fr', $request->input('title.fr'));
     $team->setTranslation('text', 'fr', $request->input('text.fr'));
 

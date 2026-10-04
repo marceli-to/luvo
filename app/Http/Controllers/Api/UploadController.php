@@ -4,8 +4,6 @@ use Illuminate\Http\Request;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Controller;
 
 class UploadController extends Controller
@@ -98,36 +96,6 @@ class UploadController extends Controller
     return response()->json(['name' => $name, 'type' => $filetype, 'size' => $this->filesize($filesize)], 200);
   }
   
-  public function getFiles()
-  { 
-    $allowed_files_extensions = [
-      'pdf', 'doc', 'docx', 'zip', 'tar', 'png'
-    ]; 
-
-    // Filelist
-    $file_list = [];
-
-    // Get all Files
-    $files = Storage::files('public/uploads/files');
-
-    foreach($files as $file)
-    {
-      $file_info = pathinfo($file);
-
-      if (in_array($file_info['extension'], $allowed_files_extensions))
-      {
-        $f = basename($file);
-        $file_list[] = [
-          'title' => $f,
-          'value' => '/storage/uploads/files' . $f,
-        ];
-      }
-    }
-
-    return response()->json($file_list);
-
-  }
-
   /**
    * Sanitize a filename
    *

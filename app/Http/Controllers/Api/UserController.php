@@ -3,9 +3,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use App\Http\Requests\UserChangePasswordRequest;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -24,22 +22,6 @@ class UserController extends Controller
   }
 
   /**
-   * Change a users email address
-   * 
-   * @param  \Illuminate\Http\Request $request
-   * @return \Illuminate\Http\Response
-   */
-  public function updateEmail(UserChangeEmailRequest $request)
-  {
-    $user = $this->user->findOrFail(auth()->user()->id);
-    $user->email = $request->email;
-    $user->email_verified_at = null;
-    $user->sendEmailVerificationNotification();
-    $user->save();
-    return response()->json('successfully updated');
-  }
-
-  /**
    * Change a users password
    * 
    * @param  \Illuminate\Http\Request $request
@@ -48,7 +30,7 @@ class UserController extends Controller
   public function updatePassword(UserChangePasswordRequest $request)
   {
     $user = $this->user->findOrFail(auth()->user()->id);
-    $user->password = \Hash::make($request->password);
+    $user->password = Hash::make($request->password);
     $user->save();
     return response()->json('successfully updated');
   }
