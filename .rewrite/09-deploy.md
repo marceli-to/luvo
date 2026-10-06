@@ -31,6 +31,10 @@ php artisan optimize:clear
 
 - Make sure `storage/app/.glide-cache` exists and the web server can write to
   it (`dp-glide`).
+- Optionally pre-render the images: `php artisan images:warm` crawls the
+  public pages and renders every image variant they use into the Glide cache
+  (about 30 s for the current content; reruns only render what's missing).
+  Run it as the web server user, or fix the owner of `.glide-cache` after.
 - **One migration to run:**
   `2026_10_04_120000_update_contacts_privacy_translations` replaces the
   Datenschutz text: the cleaned-up German version (spacing now comes from
