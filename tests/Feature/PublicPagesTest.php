@@ -76,7 +76,8 @@ class PublicPagesTest extends TestCase
     public function test_home_urls_load(): void
     {
         foreach (['/', '/de', '/fr', '/en', '/de/home', '/fr/home', '/en/home'] as $url) {
-            $this->get($url)->assertOk()->assertSee('QA-Home', false);
+            $this->get($url)->assertOk()->assertSee('QA-Home', false)
+                ->assertSee('class="menu-teams"', false);
         }
     }
 

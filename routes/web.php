@@ -22,13 +22,13 @@ Auth::routes(['verify' => true, 'reset'  => false, 'register' => false]);
 Route::get('/logout', [LoginController::class, 'logout']);
 
 // password/reset
-Route::get('/password/reset', [HomeController::class, 'index']);
+Route::get('/password/reset', [HomeController::class, 'index'])->name('reset.page.home');
 
-// Home
-Route::get('/', [HomeController::class, 'index']);
-Route::get('/de', [HomeController::class, 'index']);
-Route::get('/en', [HomeController::class, 'index']);
-Route::get('/fr', [HomeController::class, 'index']);
+// Home (unique names ending in page.home, so routeIs('*page.home') matches)
+Route::get('/', [HomeController::class, 'index'])->name('root.page.home');
+Route::get('/de', [HomeController::class, 'index'])->name('root-de.page.home');
+Route::get('/en', [HomeController::class, 'index'])->name('root-en.page.home');
+Route::get('/fr', [HomeController::class, 'index'])->name('root-fr.page.home');
 Route::multilingual('/home', [HomeController::class, 'index'])->name('page.home');
 
 // Teams
